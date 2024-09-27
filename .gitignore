@@ -57,12 +57,13 @@ dlldata.c
 *.log
 *.vspscc
 *.vssscc
-*.vsidx
-*.db
 .builds
 *.pidb
 *.svclog
 *.scc
+*.vsidx
+*.db
+*.suo
 
 # Chutzpah Test files
 _Chutzpah*
