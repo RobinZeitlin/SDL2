@@ -1,27 +1,31 @@
 #include "Game.h"
+#include "game/actors/Actor.h"
 
-SDL_Texture* playerTexture;
-SDL_Rect srcR, destR;
+//SDL_Texture* playerTexture;
 
-Game::Game() 
+
+Game::Game()
 {
-
+	//init actorlist
+	for (int i = 0; i < MAX_ACTORS; i++)
+	{
+		actorList[i] = nullptr;
+	}
 }
 
 Game::~Game()
-{
-
+{	 
+	
 }
 
 void Game::init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen)
 {
-	debug = new Debug();
-	debug->startUp();
+	Debug::startUp();
 
 	int flags = 0;
 	if (fullscreen)
 	{
-		debug->log("Fullscreen Active...");
+		Debug::log("Fullscreen Active...");
 		flags = SDL_WINDOW_FULLSCREEN;
 	}
 
@@ -31,14 +35,14 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 		window = SDL_CreateWindow(title, xPos, yPos, width, height, flags);
 		if (window)
 		{
-			debug->log("Window initialized");
+			Debug::log("Window initialized");
 		}
 
 		// renderer init
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 		if (renderer)
 		{
-			debug->log("Renderer initialized");
+			Debug::log("Renderer initialized");
 			SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 		}
 
@@ -49,9 +53,11 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 		isRunning = false;
 	}
 
-	SDL_Surface* tempSurface = IMG_Load("assets/cube.png");
-	playerTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-	SDL_FreeSurface(tempSurface);
+	textureManager = new TextureManager();
+	textureManager->init(renderer);
+
+	player = new Player();
+	spawnActor(player, glm::vec3(0));
 }
 
 void Game::handleEvents()
@@ -73,8 +79,13 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	destR.h = 32;
-	destR.w = 32;
+	for (int i = 0; i < MAX_ACTORS; i++)
+	{
+		if (actorList[i] != nullptr)
+		{
+			actorList[i]->update();
+		}
+	}
 }
 
 void Game::render()
@@ -83,7 +94,13 @@ void Game::render()
 
 	// pass things to render in here.
 
-	SDL_RenderCopy(renderer, playerTexture, NULL, &destR);
+	for (int i = 0; i < MAX_ACTORS; i++)
+	{
+		if (actorList[i] != nullptr)
+		{
+			actorList[i]->render(renderer);
+		}
+	}
 
 	SDL_RenderPresent(renderer);
 
@@ -94,5 +111,6 @@ void Game::clean()
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 
-	debug->warning("GAME CLOSED");
+	Debug::warning("GAME CLOSED");
 }
+

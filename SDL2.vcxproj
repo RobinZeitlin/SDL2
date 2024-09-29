@@ -101,15 +101,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Projects\SDL2\dependencies\sdl2img\include;C:\Projects\SDL2\dependencies\sdl2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Z:\Projects\SDL2\dependencies\glm\include;Z:\Projects\SDL2\dependencies\sdl2img\include;Z:\Projects\SDL2\dependencies\sdl2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Projects\SDL2\dependencies\sdl2img\lib\x64;C:\Projects\SDL2\dependencies\sdl2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>Z:\Projects\SDL2\dependencies\sdl2img\lib\x64;Z:\Projects\SDL2\dependencies\sdl2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -130,11 +131,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine\Debug.cpp" />
+    <ClCompile Include="src\engine\TextureManager.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\game\actors\Actor.cpp" />
+    <ClCompile Include="src\game\actors\Player.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Debug.h" />
+    <ClInclude Include="src\engine\TextureManager.h" />
+    <ClInclude Include="src\game\actors\Actor.h" />
+    <ClInclude Include="src\game\actors\Player.h" />
+    <ClInclude Include="src\game\components\location\Transform.h" />
+    <ClInclude Include="src\engine\Debug.h" />
     <ClInclude Include="src\Game.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
