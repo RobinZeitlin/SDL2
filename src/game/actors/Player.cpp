@@ -18,6 +18,4 @@ void Player::render(SDL_Renderer* renderer)
 	SDL_Rect destR = { 100, 100, 32, 32 };
 
 	SDL_RenderCopy(renderer, texture, &srcR, &destR);
-
-	std::cout << "Rendering " << texture << std::endl;
 }
