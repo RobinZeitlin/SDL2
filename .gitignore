@@ -118,3 +118,5 @@ test/
 examples/
 /x64/Debug
 /.vs/SDL2
+/x64
+/.vs/SDL2/v17
