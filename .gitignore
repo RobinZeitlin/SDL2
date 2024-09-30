@@ -41,7 +41,7 @@ CMakeLists.txt.user
 cmake_install.cmake
 Makefile
 
-# Visual Studio
+# Visual Studio specific
 *.vcxproj*
 *.suo
 *.user
@@ -49,6 +49,12 @@ Makefile
 *.sln.docstates
 *.VC.db
 .vs/
+.vs/*
+
+# Ignore specific Visual Studio files
+.vs/**/*.suo
+.vs/**/*.VC.db
+.vs/**/Browse.VC.db
 
 # Visual Studio Code Settings
 *.code-workspace
@@ -116,7 +122,18 @@ TestResult.xml
 # Ignore anything from SDL2 test binaries or unnecessary builds
 test/
 examples/
-/x64/Debug
-/.vs/SDL2
-/x64
-/.vs/SDL2/v17
+
+# Specific paths for SDL2 Visual Studio files and build outputs
+.vs/SDL2/
+.vs/SDL2/v17/
+x64/Debug/
+x64/Debug/*.log
+x64/Debug/*.pdb
+x64/Debug/*.idb
+x64/Debug/*.tlog/
+x64/Debug/*.tlog/*
+x64/Debug/vc143.*
+
+# Ignore specific SDL2 output files
+x64/Debug/SDL2.tlog/
+x64/Debug/SDL2.tlog/*
