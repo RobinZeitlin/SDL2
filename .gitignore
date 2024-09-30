@@ -116,3 +116,5 @@ TestResult.xml
 # Ignore anything from SDL2 test binaries or unnecessary builds
 test/
 examples/
+/x64/Debug
+/.vs/SDL2
