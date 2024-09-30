@@ -1,1 +1,0 @@
-C:\Projects\SDL2\x64\Debug\SDL2.exe
