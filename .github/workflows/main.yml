@@ -5,9 +5,14 @@ on: push
 jobs:
   notify-discord:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true  # Force Node20 for all actions
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3  # Updated to the latest version
+        with:
+          fetch-depth: 1  # Ensures we only fetch the latest commit
 
       - name: Check for changes in the specific folder
         id: check_changes
