@@ -1,0 +1,47 @@
+name: Send Commit Message to Discord
+
+on: push
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check for changes in the specific folder
+        id: check_changes
+        run: |
+          echo "Checking for changes in Source folder..."
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- "Source/")
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No changes in Source folder"
+            echo "HAS_CHANGES=false" >> $GITHUB_ENV
+          else
+            echo "Changes detected in Source folder"
+            echo "HAS_CHANGES=true" >> $GITHUB_ENV
+          fi
+
+      - name: Send commit details to Discord with image
+        run: |
+          echo "Fetching commit details..."
+          COMMIT_TITLE=$(git log -1 --pretty=format:'%s')
+          COMMIT_MESSAGE=$(git log -1 --pretty=format:'%b')
+          COMMIT_URL="https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
+
+          echo "Commit Title: $COMMIT_TITLE"
+          echo "Commit Message: $COMMIT_MESSAGE"
+          echo "Commit URL: $COMMIT_URL"
+
+          if [ "$HAS_CHANGES" == "true" ]; then
+            IMAGE_URL="https://cdn.vectorstock.com/i/500p/62/31/thumb-down-emoticon-vector-42706231.jpg"  # URL for changes in Source folder
+          else
+            IMAGE_URL="https://media.istockphoto.com/id/157030584/vector/thumb-up-emoticon.jpg?s=612x612&w=0&k=20&c=GGl4NM_6_BzvJxLSl7uCDF4Vlo_zHGZVmmqOBIewgKg="  # URL for no changes in Source folder
+          fi
+
+          # Replace this URL with your actual Discord webhook URL
+          WEBHOOK_URL="https://discord.com/api/webhooks/1290350025540636713/6XxWynLE1OZSagLNcr67bHCj_-JStDfWSyn2SktgTpeTbDT82IOkR4HWO8ymdquB47JP"
+
+          curl -X POST -H "Content-Type: application/json" \
+               -d "{\"content\": \"**Commit Title:** $COMMIT_TITLE\n**Message:** $COMMIT_MESSAGE\n[View Commit]($COMMIT_URL)\", \"embeds\": [{\"image\": {\"url\": \"$IMAGE_URL\"}}]}" \
+               $WEBHOOK_URL  # Directly use the webhook URL here
