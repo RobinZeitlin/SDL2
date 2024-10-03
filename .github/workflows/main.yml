@@ -9,16 +9,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js v20
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run the JavaScript action
-        run: node main.js
+      - name: Check for changes in the specific folder
+        id: check_changes
+        run: |
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- "Source/")
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No changes in Source folder"
+            echo "HAS_CHANGES=false" >> $GITHUB_ENV
+          else
+            echo "Changes detected in Source folder"
+            echo "HAS_CHANGES=true" >> $GITHUB_ENV
+          fi
 
       - name: Send commit details to Discord with image
         run: |
