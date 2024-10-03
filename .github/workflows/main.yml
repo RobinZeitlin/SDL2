@@ -9,29 +9,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Check for changes in the specific folder
+      - name: Check for changes in dependencies
         id: check_changes
         run: |
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- "Source/")
-          if [ -z "$CHANGED_FILES" ]; then
-            echo "No changes in Source folder"
-            echo "HAS_CHANGES=false" >> $GITHUB_ENV
+          # Extract dependencies before and after the commit
+          OLD_DEPENDENCIES=$(git show ${{ github.event.before }}:package.json | jq '.dependencies')
+          NEW_DEPENDENCIES=$(git show ${{ github.sha }}:package.json | jq '.dependencies')
+          
+          # Compare dependencies
+          if [ "$OLD_DEPENDENCIES" == "$NEW_DEPENDENCIES" ]; then
+            echo "No changes in dependencies"
+            echo "HAS_DEPENDENCY_CHANGES=false" >> $GITHUB_ENV
           else
-            echo "Changes detected in Source folder"
-            echo "HAS_CHANGES=true" >> $GITHUB_ENV
+            echo "Changes detected in dependencies"
+            echo "HAS_DEPENDENCY_CHANGES=true" >> $GITHUB_ENV
           fi
 
       - name: Send commit details to Discord with image
         run: |
-          echo "Fetching commit details..."
           COMMIT_TITLE=$(git log -1 --pretty=format:'%s')
           COMMIT_MESSAGE=$(git log -1 --pretty=format:'%b')
           COMMIT_URL="https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
 
-          if [ "$HAS_CHANGES" == "true" ]; then
-            IMAGE_URL="https://cdn.vectorstock.com/i/500p/62/31/thumb-down-emoticon-vector-42706231.jpg"
+          # Set the image based on whether dependencies were changed
+          if [ "$HAS_DEPENDENCY_CHANGES" == "true" ]; then
+            IMAGE_URL="https://cdn.vectorstock.com/i/500p/62/31/thumb-down-emoticon-vector-42706231.jpg"  # Changes detected
           else
-            IMAGE_URL="https://media.istockphoto.com/id/157030584/vector/thumb-up-emoticon.jpg?s=612x612&w=0&k=20&c=GGl4NM_6_BzvJxLSl7uCDF4Vlo_zHGZVmmqOBIewgKg="
+            IMAGE_URL="https://media.istockphoto.com/id/157030584/vector/thumb-up-emoticon.jpg?s=612x612&w=0&k=20&c=GGl4NM_6_BzvJxLSl7uCDF4Vlo_zHGZVmmqOBIewgKg="  # No changes detected
           fi
 
           curl -X POST -H "Content-Type: application/json" \
