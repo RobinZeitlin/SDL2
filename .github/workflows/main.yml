@@ -27,6 +27,14 @@ jobs:
             echo "HAS_CHANGES=true" >> $GITHUB_ENV
           fi
 
+      - name: Debug commit details
+        run: |
+          echo "Commit SHA: ${{ github.sha }}"
+          echo "Before Commit SHA: ${{ github.event.before }}"
+          echo "Commit URL: https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
+          echo "Environment Variables:"
+          env
+
       - name: Send commit details to Discord with image
         run: |
           echo "Fetching commit details..."
@@ -44,9 +52,9 @@ jobs:
             IMAGE_URL="https://media.istockphoto.com/id/157030584/vector/thumb-up-emoticon.jpg?s=612x612&w=0&k=20&c=GGl4NM_6_BzvJxLSl7uCDF4Vlo_zHGZVmmqOBIewgKg="  # URL for no changes in Source folder
           fi
 
-          # Replace this URL with your actual Discord webhook URL
+          # Directly use the webhook URL here
           WEBHOOK_URL="https://discord.com/api/webhooks/1290350025540636713/6XxWynLE1OZSagLNcr67bHCj_-JStDfWSyn2SktgTpeTbDT82IOkR4HWO8ymdquB47JP"
 
           curl -X POST -H "Content-Type: application/json" \
                -d "{\"content\": \"**Commit Title:** $COMMIT_TITLE\n**Message:** $COMMIT_MESSAGE\n[View Commit]($COMMIT_URL)\", \"embeds\": [{\"image\": {\"url\": \"$IMAGE_URL\"}}]}" \
-               $WEBHOOK_URL  # Directly use the webhook URL here
+               $WEBHOOK_URL
