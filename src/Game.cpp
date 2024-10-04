@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "game/actors/Actor.h"
+#include <string>
 
 //SDL_Texture* playerTexture;
 
@@ -43,7 +44,7 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 		if (renderer)
 		{
 			Debug::log("Renderer initialized");
-			SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		}
 
 		isRunning = true;
@@ -72,7 +73,18 @@ void Game::handleEvents()
 			isRunning = false;
 		break;
 
+		// key press
+		case SDL_KEYDOWN: 
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_ESCAPE:
+				isRunning = false;
+				break;
+			}
+			break;
+
 		default:
+
 			break;
 	}
 }
