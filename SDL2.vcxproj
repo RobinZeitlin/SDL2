@@ -131,8 +131,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\engine\Debug.cpp" />
     <ClCompile Include="src\engine\TextureManager.cpp" />
+    <ClCompile Include="src\engine\zmath.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\game\actors\Actor.cpp" />
     <ClCompile Include="src\game\actors\Player.cpp" />
@@ -140,6 +142,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\engine\TextureManager.h" />
     <ClInclude Include="src\game\actors\Actor.h" />
     <ClInclude Include="src\game\terrain\Block.h" />

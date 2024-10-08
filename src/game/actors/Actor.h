@@ -6,6 +6,8 @@
 #include "glm.hpp"
 #include "SDL_image.h"
 
+#include "../../Camera.h"
+
 class Actor
 {
 public:
@@ -13,7 +15,7 @@ public:
 	~Actor();
 
 	virtual void update() {};
-	virtual void render(SDL_Renderer* renderer) {};
+	virtual void render(SDL_Renderer* renderer, Camera* camera) {};
 
 	SDL_Texture* texture = nullptr;
 	Transform transform;

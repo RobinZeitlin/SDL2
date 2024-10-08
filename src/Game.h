@@ -12,6 +12,7 @@
 #include "game/actors/Actor.h"
 #include "game/actors/Player.h"
 #include "game/terrain/Chunk.h"
+#include "Camera.h"
 
 #include "engine/Debug.h"
 #include "engine/TextureManager.h"
@@ -51,6 +52,7 @@ public:
 	}
 
 	Actor* actorList[MAX_ACTORS];
+	Camera* camera;
 	Player* player;
 	Chunk* chunk;
 
@@ -59,5 +61,8 @@ private:
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;
+
+	float lastTime;
+	float deltaTime;
 };
 #endif // game_h

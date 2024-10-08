@@ -12,6 +12,9 @@ Game::Game()
 	{
 		actorList[i] = nullptr;
 	}
+
+	lastTime = 0;
+	deltaTime = 0.0f;
 }
 
 Game::~Game()
@@ -58,7 +61,9 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 	textureManager->init(renderer);
 
 	player = new Player();
-	spawnActor(player, glm::vec3(0));
+	spawnActor(player, glm::vec3(100));
+
+	camera = new Camera(100, 100, width, height);
 
 	chunk = new Chunk();
 	chunk->Init();
@@ -94,6 +99,10 @@ void Game::handleEvents()
 
 void Game::update()
 {
+	Uint32 currentTime = SDL_GetTicks();
+	deltaTime = (currentTime - lastTime) / 1000.0f; // Convert to seconds
+	lastTime = currentTime;
+
 	for (int i = 0; i < MAX_ACTORS; i++)
 	{
 		if (actorList[i] != nullptr)
@@ -101,19 +110,23 @@ void Game::update()
 			actorList[i]->update();
 		}
 	}
+
+	if (player != nullptr)	{
+		camera->updateCamera(actorList[0], deltaTime);
+	}
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	chunk->RenderChunk(renderer, player);
+	chunk->RenderChunk(renderer, player, camera);
 
 	for (int i = 0; i < MAX_ACTORS; i++)
 	{
 		if (actorList[i] != nullptr)
 		{
-			actorList[i]->render(renderer);
+			actorList[i]->render(renderer, camera);
 		}
 	}
 

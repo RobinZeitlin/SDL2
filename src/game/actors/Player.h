@@ -9,5 +9,5 @@ public:
 	~Player() {	};
 
 	void update() override;
-	void render(SDL_Renderer* renderer) override;
+	void render(SDL_Renderer* renderer, Camera* camera) override;
 };
