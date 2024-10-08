@@ -136,11 +136,14 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\game\actors\Actor.cpp" />
     <ClCompile Include="src\game\actors\Player.cpp" />
+    <ClCompile Include="src\game\terrain\Block.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\TextureManager.h" />
     <ClInclude Include="src\game\actors\Actor.h" />
+    <ClInclude Include="src\game\terrain\Block.h" />
+    <ClInclude Include="src\game\terrain\Chunk.h" />
     <ClInclude Include="src\game\actors\Player.h" />
     <ClInclude Include="src\game\components\location\Transform.h" />
     <ClInclude Include="src\engine\Debug.h" />

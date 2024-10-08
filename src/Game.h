@@ -11,6 +11,7 @@
 
 #include "game/actors/Actor.h"
 #include "game/actors/Player.h"
+#include "game/terrain/Chunk.h"
 
 #include "engine/Debug.h"
 #include "engine/TextureManager.h"
@@ -51,6 +52,7 @@ public:
 
 	Actor* actorList[MAX_ACTORS];
 	Player* player;
+	Chunk* chunk;
 
 private:
 	bool isRunning;

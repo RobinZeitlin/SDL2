@@ -59,6 +59,9 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 
 	player = new Player();
 	spawnActor(player, glm::vec3(0));
+
+	chunk = new Chunk();
+	chunk->Init();
 }
 
 void Game::handleEvents()
@@ -104,7 +107,7 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	// pass things to render in here.
+	chunk->RenderChunk(renderer, player);
 
 	for (int i = 0; i < MAX_ACTORS; i++)
 	{

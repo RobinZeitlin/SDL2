@@ -12,9 +12,9 @@ public:
 	Actor();
 	~Actor();
 
-	virtual void update();
-	virtual void render(SDL_Renderer* renderer);
+	virtual void update() {};
+	virtual void render(SDL_Renderer* renderer) {};
 
-	SDL_Texture* texture;
+	SDL_Texture* texture = nullptr;
 	Transform transform;
 };

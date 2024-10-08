@@ -8,8 +8,3 @@ Actor::~Actor() {
         texture = nullptr;
     }
 }
-
-void Actor::update() {  }
-
-
-void Actor::render(SDL_Renderer* renderer) {  }
