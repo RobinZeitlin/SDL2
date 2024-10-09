@@ -34,7 +34,7 @@ public:
 	void clean();
 
 	template <typename Actor>
-	void spawnActor(Actor* actor, const glm::vec3& position, const glm::vec3& scale = glm::vec3(32.0f, 32.0f, 1.0f))
+	void spawnActor(Actor* actor, const glm::vec2& position, const glm::vec2& scale = glm::vec2(32.0f, 32.0f))
 	{
 		for (int i = 0; i < MAX_ACTORS; ++i)
 		{
@@ -45,6 +45,8 @@ public:
 			}
 		}
 	}
+
+	Actor* get_overlapping_actor(Actor* other, Collision_Channel channel);
 
 	bool running()
 	{
@@ -65,4 +67,9 @@ private:
 	float lastTime;
 	float deltaTime;
 };
+
+extern Game* game;
+
 #endif // game_h
+
+

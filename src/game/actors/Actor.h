@@ -8,6 +8,15 @@
 
 #include "../../Camera.h"
 
+enum class Collision_Channel
+{
+	None,
+	Default,
+	Ignore,
+	Ground,
+	Player,
+};
+
 class Actor
 {
 public:
@@ -19,4 +28,6 @@ public:
 
 	SDL_Texture* texture = nullptr;
 	Transform transform;
+
+	Collision_Channel collision_channel = Collision_Channel::None;
 };

@@ -3,6 +3,7 @@
 Block::Block()
 {
 	texture = textureManager->getTexture("cube");
+	collision_channel = Collision_Channel::Ground;
 }
 
 void Block::render(SDL_Renderer* renderer, Camera* camera)

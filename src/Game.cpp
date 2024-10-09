@@ -1,9 +1,10 @@
-#include "Game.h"
-#include "game/actors/Actor.h"
 #include <string>
 
-//SDL_Texture* playerTexture;
+#include "Game.h"
 
+#include "engine/AABB.h"
+
+#include "game/actors/Actor.h"
 
 Game::Game()
 {
@@ -61,7 +62,7 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 	textureManager->init(renderer);
 
 	player = new Player();
-	spawnActor(player, glm::vec3(100));
+	spawnActor(player, glm::vec2(100));
 
 	camera = new Camera(100, 100, width, height);
 
@@ -120,8 +121,6 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	chunk->RenderChunk(renderer, player, camera);
-
 	for (int i = 0; i < MAX_ACTORS; i++)
 	{
 		if (actorList[i] != nullptr)
@@ -132,6 +131,22 @@ void Game::render()
 
 	SDL_RenderPresent(renderer);
 
+}
+
+Actor* Game::get_overlapping_actor(Actor* other, Collision_Channel channel)
+{
+	for (int i = 0; i < MAX_ACTORS; i++)
+	{
+		if (actorList[i] == other || actorList[i] == nullptr || actorList[i]->collision_channel != channel)
+			continue;
+
+		AABB a = AABB::from_position_size(other->transform);
+		AABB b = AABB::from_position_size(actorList[i]->transform);
+
+		if (aabb_overlap(a, b)) {
+			return actorList[i];
+		}
+	}
 }
 
 void Game::clean()

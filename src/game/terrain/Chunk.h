@@ -26,25 +26,17 @@ public:
         {
             for (int y = 0; y < chunkSize.y; y++)
             {
-                blockData[{x, y}] = new Block();
+                auto newBlock = new Block();
+                game->spawnActor<Block>(newBlock, glm::vec2(x, y));
+                blockData[{x, y}] = newBlock;
                 blockData[{x, y}]->transform.position = { x, y };
             }
         }
     }
 
-    void RenderChunk(SDL_Renderer* renderer, Player* player, Camera* camera)
+    Block* get_block(glm::vec2 blockPos)
     {
-        for (auto& [position, block] : blockData)
-        {
-            if (block)
-            {
-                float distanceSquared = (position.x * 32 - player->transform.position.x) * (position.x * 32 - player->transform.position.x) +
-                    (position.y * 32 - player->transform.position.y) * (position.y * 32 - player->transform.position.y);
-                if (distanceSquared < 200 * 200) {
-                    block->render(renderer, camera);
-                }
-            }
-        }
+        return blockData[blockPos];
     }
 
     glm::vec2 chunkSize = { 1, 2 };

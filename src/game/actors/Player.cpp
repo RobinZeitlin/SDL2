@@ -1,10 +1,13 @@
 #include "Player.h"
+#include "../../Game.h"
 
 Player::Player()
 {
 	texture = textureManager->getTexture("player");
 	transform.position.x = 100;
 	transform.position.y = 100;
+
+    collision_channel = Collision_Channel::Player;
 }
 
 void Player::update()
@@ -36,4 +39,13 @@ void Player::render(SDL_Renderer* renderer, Camera* camera)
 	SDL_Rect destR = { transform.position.x - camera->x, transform.position.y - camera->y, 32, 32 };
 
 	SDL_RenderCopy(renderer, texture, &srcR, &destR);
+}
+
+void Player::check_overlap()
+{
+    Actor* hit_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);
+    if(hit_actor != nullptr)
+    {
+        Debug::log("Grounded?");
+    }
 }
