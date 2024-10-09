@@ -2,7 +2,8 @@
 
 Block::Block()
 {
-	texture = textureManager->getTexture("cube");
+	texture = textureManager->getTexture("dirt");
+
 	collision_channel = Collision_Channel::Ground;
 }
 

@@ -30,6 +30,8 @@ void Player::update()
     {
         transform.position.x += 0.1f;
     }
+
+    check_overlap();
 }
 
 void Player::render(SDL_Renderer* renderer, Camera* camera)
@@ -46,6 +48,5 @@ void Player::check_overlap()
     Actor* hit_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);
     if(hit_actor != nullptr)
     {
-        Debug::log("Grounded?");
     }
 }

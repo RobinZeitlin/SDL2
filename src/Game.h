@@ -11,13 +11,14 @@
 
 #include "game/actors/Actor.h"
 #include "game/actors/Player.h"
-#include "game/terrain/Chunk.h"
 #include "Camera.h"
 
 #include "engine/Debug.h"
 #include "engine/TextureManager.h"
 
 #define MAX_ACTORS 100
+
+class Chunk;
 
 class Game
 {
@@ -42,6 +43,11 @@ public:
 			{
 				Actor* new_entity = new Actor();
 				actorList[i] = new_entity;
+				actorList[i]->transform.position = position;
+				actorList[i]->transform.scale = { 32, 32 };
+				std::cout << "Actor spawned with texture : " << actorList[i]->texture << std::endl;
+
+				break;
 			}
 		}
 	}

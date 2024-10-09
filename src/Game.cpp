@@ -5,6 +5,7 @@
 #include "engine/AABB.h"
 
 #include "game/actors/Actor.h"
+#include "game/terrain/Chunk.h"
 
 Game::Game()
 {
@@ -16,6 +17,8 @@ Game::Game()
 
 	lastTime = 0;
 	deltaTime = 0.0f;
+
+	player = nullptr;
 }
 
 Game::~Game()
@@ -61,8 +64,11 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 	textureManager = new TextureManager();
 	textureManager->init(renderer);
 
-	player = new Player();
-	spawnActor(player, glm::vec2(100));
+	if (player == nullptr)
+	{
+		player = new Player();
+		spawnActor(player, glm::vec2(100));
+	}
 
 	camera = new Camera(100, 100, width, height);
 
@@ -144,6 +150,7 @@ Actor* Game::get_overlapping_actor(Actor* other, Collision_Channel channel)
 		AABB b = AABB::from_position_size(actorList[i]->transform);
 
 		if (aabb_overlap(a, b)) {
+			std::cout << "coliding with : " << actorList[i]->transform.position.x << actorList[i]->transform.position.y << std::endl;
 			return actorList[i];
 		}
 	}

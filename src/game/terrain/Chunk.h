@@ -5,6 +5,7 @@
 #include <SDL.h>
 
 #include "Block.h"
+#include "../../Game.h"
 
 struct Vec2Hash {
     std::size_t operator()(const glm::vec2& v) const {
@@ -29,7 +30,6 @@ public:
                 auto newBlock = new Block();
                 game->spawnActor<Block>(newBlock, glm::vec2(x, y));
                 blockData[{x, y}] = newBlock;
-                blockData[{x, y}]->transform.position = { x, y };
             }
         }
     }
@@ -39,6 +39,6 @@ public:
         return blockData[blockPos];
     }
 
-    glm::vec2 chunkSize = { 1, 2 };
+    glm::vec2 chunkSize = { 1, 20 };
     std::unordered_map<glm::vec2, Block*, Vec2Hash> blockData;
 };
