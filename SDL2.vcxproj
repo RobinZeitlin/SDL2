@@ -140,6 +140,7 @@
     <ClCompile Include="src\game\actors\Actor.cpp" />
     <ClCompile Include="src\game\actors\Player.cpp" />
     <ClCompile Include="src\game\terrain\Block.cpp" />
+    <ClCompile Include="src\game\terrain\GrassBlock.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +154,7 @@
     <ClInclude Include="src\game\components\location\Transform.h" />
     <ClInclude Include="src\engine\Debug.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\game\terrain\GrassBlock.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

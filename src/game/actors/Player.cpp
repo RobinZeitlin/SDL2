@@ -45,8 +45,14 @@ void Player::render(SDL_Renderer* renderer, Camera* camera)
 
 void Player::check_overlap()
 {
+    glm::vec2 previous_position = transform.position;
+
     Actor* hit_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);
-    if(hit_actor != nullptr)
+    if (hit_actor != nullptr)
     {
+        glm::vec2 direction_to_actor = transform.position - hit_actor->transform.position;
+        glm::vec2 collision_normal = glm::normalize(direction_to_actor);
+
+        transform.position = previous_position + collision_normal * 0.15f;
     }
 }

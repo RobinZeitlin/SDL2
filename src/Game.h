@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include "SDL.h"
+#include "SDL_opengl.h"
 #include "SDL_image.h"
 #include "glm.hpp"
 
@@ -16,7 +17,7 @@
 #include "engine/Debug.h"
 #include "engine/TextureManager.h"
 
-#define MAX_ACTORS 100
+#define MAX_ACTORS 1000
 
 class Chunk;
 

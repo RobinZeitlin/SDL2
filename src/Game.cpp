@@ -150,10 +150,11 @@ Actor* Game::get_overlapping_actor(Actor* other, Collision_Channel channel)
 		AABB b = AABB::from_position_size(actorList[i]->transform);
 
 		if (aabb_overlap(a, b)) {
-			std::cout << "coliding with : " << actorList[i]->transform.position.x << actorList[i]->transform.position.y << std::endl;
 			return actorList[i];
 		}
 	}
+
+	return nullptr;
 }
 
 void Game::clean()

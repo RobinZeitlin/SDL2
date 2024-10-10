@@ -5,6 +5,7 @@
 #include <SDL.h>
 
 #include "Block.h"
+#include "GrassBlock.h"
 #include "../../Game.h"
 
 struct Vec2Hash {
@@ -27,9 +28,18 @@ public:
         {
             for (int y = 0; y < chunkSize.y; y++)
             {
-                auto newBlock = new Block();
-                game->spawnActor<Block>(newBlock, glm::vec2(x, y));
-                blockData[{x, y}] = newBlock;
+                if (y == 0)
+                {
+                    auto newBlock = new GrassBlock();
+                    game->spawnActor<GrassBlock>(newBlock, glm::vec2(x * 32, y * 32));
+                    blockData[{x, y}] = newBlock;
+                }
+                else
+                {
+                    auto newBlock = new Block();
+                    game->spawnActor<Block>(newBlock, glm::vec2(x * 32, y * 32));
+                    blockData[{x, y}] = newBlock;
+                }
             }
         }
     }
@@ -39,6 +49,6 @@ public:
         return blockData[blockPos];
     }
 
-    glm::vec2 chunkSize = { 1, 20 };
+    glm::vec2 chunkSize = { 100, 5 };
     std::unordered_map<glm::vec2, Block*, Vec2Hash> blockData;
 };
