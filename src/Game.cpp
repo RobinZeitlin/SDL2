@@ -6,6 +6,7 @@
 
 #include "game/actors/Actor.h"
 #include "game/terrain/Chunk.h"
+#include "game/terrain/LoadLevel.h"
 
 Game::Game()
 {
@@ -71,9 +72,13 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 	}
 
 	camera = new Camera(100, 100, width, height);
+	loadLevel = new LoadLevel();
 
-	chunk = new Chunk();
-	chunk->Init();
+	std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
+
+	loadLevel->load_level_file("src/level");
+
+
 }
 
 void Game::handleEvents()

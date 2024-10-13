@@ -19,7 +19,7 @@
 
 #define MAX_ACTORS 1000
 
-class Chunk;
+class LoadLevel;
 
 class Game
 {
@@ -63,7 +63,7 @@ public:
 	Actor* actorList[MAX_ACTORS];
 	Camera* camera;
 	Player* player;
-	Chunk* chunk;
+	LoadLevel* loadLevel;
 
 private:
 	bool isRunning;

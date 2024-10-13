@@ -83,5 +83,11 @@
     <ClInclude Include="src\game\terrain\GrassBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\game\terrain\LoadLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\level.csv" />
   </ItemGroup>
 </Project>

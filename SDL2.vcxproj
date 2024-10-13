@@ -155,6 +155,10 @@
     <ClInclude Include="src\engine\Debug.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\game\terrain\GrassBlock.h" />
+    <ClInclude Include="src\game\terrain\LoadLevel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\level.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

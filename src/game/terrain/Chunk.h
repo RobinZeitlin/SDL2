@@ -49,6 +49,6 @@ public:
         return blockData[blockPos];
     }
 
-    glm::vec2 chunkSize = { 100, 5 };
+    glm::vec2 chunkSize = { 6, 100 };
     std::unordered_map<glm::vec2, Block*, Vec2Hash> blockData;
 };
