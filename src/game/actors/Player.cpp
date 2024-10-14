@@ -8,6 +8,8 @@ Player::Player()
 	transform.position.y = 100;
 
     collision_channel = Collision_Channel::Player;
+
+    actorName = "Player";
 }
 
 void Player::update()

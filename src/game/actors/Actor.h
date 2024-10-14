@@ -26,6 +26,8 @@ public:
 	virtual void update() {};
 	virtual void render(SDL_Renderer* renderer, Camera* camera) {};
 
+	std::string actorName;
+
 	SDL_Texture* texture = nullptr;
 	Transform transform;
 

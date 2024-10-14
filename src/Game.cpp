@@ -65,20 +65,21 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 	textureManager = new TextureManager();
 	textureManager->init(renderer);
 
-	if (player == nullptr)
-	{
-		player = new Player();
-		spawnActor(player, glm::vec2(100));
-	}
-
-	camera = new Camera(100, 100, width, height);
 	loadLevel = new LoadLevel();
 
 	std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
 
 	loadLevel->load_level_file("src/level");
+}
 
+void Game::spawnPlayer(glm::vec2 position) {
+	if (player == nullptr)
+	{
+		player = new Player();
+		spawnActor(player, position);
+	}
 
+	camera = new Camera(position.x, position.y, 800, 600);
 }
 
 void Game::handleEvents()
@@ -120,11 +121,12 @@ void Game::update()
 		if (actorList[i] != nullptr)
 		{
 			actorList[i]->update();
-		}
-	}
 
-	if (player != nullptr)	{
-		camera->updateCamera(actorList[0], deltaTime);
+			if (actorList[i]->actorName == "Player")
+			{
+				camera->updateCamera(actorList[i], deltaTime);
+			}
+		}
 	}
 }
 

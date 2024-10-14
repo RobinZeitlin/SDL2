@@ -17,18 +17,28 @@ class LoadLevel
 public:
 	void spawn_level(const std::vector<std::string>& data)
 	{
-		for (int i = 0; i < data.size(); ++i) {
-			for (int j = 0; j < data[i].length(); ++j) {
+		bool shouldExit = false;
+
+		for (int i = 0; i < data.size() && !shouldExit; ++i) {
+			for (int j = 0; j < data[i].length() && !shouldExit; ++j) {
 
 				glm::vec2 position(j * 32.0f, i * 32.0f);
 				glm::vec2 scale(32.0f, 32.0f);
 
-				if (data[i][j] == '#') {
+				if (data[i][j] == 'D') {
 					game->spawnActor(new Block(), position, scale);
 				}
-				else if (data[i][j] == '¤')
+				else if (data[i][j] == 'G')
 				{
 					game->spawnActor(new GrassBlock(), position, scale);
+				}
+				else if (data[i][j] == 'P')
+				{
+					game->spawnPlayer(position);
+				}
+				else if (data[i][j] == 'Q')
+				{
+					shouldExit = true;
 				}
 			}
 		}

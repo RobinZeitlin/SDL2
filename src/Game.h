@@ -30,6 +30,8 @@ public:
 
 	void init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 
+	void spawnPlayer(glm::vec2 position);
+
 	void handleEvents();
 	void update();
 	void render();
@@ -46,8 +48,6 @@ public:
 				actorList[i] = new_entity;
 				actorList[i]->transform.position = position;
 				actorList[i]->transform.scale = { 32, 32 };
-				std::cout << "Actor spawned with texture : " << actorList[i]->texture << std::endl;
-
 				break;
 			}
 		}
