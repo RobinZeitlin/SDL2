@@ -66,9 +66,6 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 	textureManager->init(renderer);
 
 	loadLevel = new LoadLevel();
-
-	std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
-
 	loadLevel->load_level_file("src/level");
 }
 
@@ -113,7 +110,7 @@ void Game::handleEvents()
 void Game::update()
 {
 	Uint32 currentTime = SDL_GetTicks();
-	deltaTime = (currentTime - lastTime) / 1000.0f; // Convert to seconds
+	deltaTime = (currentTime - lastTime) / 1000.0f;
 	lastTime = currentTime;
 
 	for (int i = 0; i < MAX_ACTORS; i++)
@@ -148,15 +145,14 @@ void Game::render()
 
 Actor* Game::get_overlapping_actor(Actor* other, Collision_Channel channel)
 {
-	for (int i = 0; i < MAX_ACTORS; i++)
-	{
+	for (int i = 0; i < MAX_ACTORS; i++){
 		if (actorList[i] == other || actorList[i] == nullptr || actorList[i]->collision_channel != channel)
 			continue;
 
 		AABB a = AABB::from_position_size(other->transform);
 		AABB b = AABB::from_position_size(actorList[i]->transform);
 
-		if (aabb_overlap(a, b)) {
+		if (aabb_overlap(a, b)){
 			return actorList[i];
 		}
 	}

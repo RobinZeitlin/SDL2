@@ -1,19 +1,19 @@
 #pragma once
 
-#include "../actors/Actor.h"
+#include "Block.h"
 
 class Camera;
 
-class Block : public Actor
+class Stairs : public Block
 {
 public:
-	Block() 
+	Stairs()
 	{
-		texture = textureManager->getTexture("dirt");
+		texture = textureManager->getTexture("stairs");
 		collision_channel = Collision_Channel::Ground;
 	}
 
-	void render(SDL_Renderer* renderer, Camera* camera) override 
+	void render(SDL_Renderer* renderer, Camera* camera) override
 	{
 		SDL_Rect srcR = { 0, 0, 32, 32 };
 		SDL_Rect destR = { (transform.position.x) - camera->x, (transform.position.y) - camera->y, 32, 32 };

@@ -6,6 +6,7 @@ Player::Player()
 	texture = textureManager->getTexture("player");
 	transform.position.x = 100;
 	transform.position.y = 100;
+    transform.rotation = 0;
 
     collision_channel = Collision_Channel::Player;
 
@@ -16,22 +17,35 @@ void Player::update()
 {
     const Uint8* currentKeyStates = SDL_GetKeyboardState(nullptr);
 
-    if (currentKeyStates[SDL_SCANCODE_W])
-    {
+    if (currentKeyStates[SDL_SCANCODE_W]) {
         transform.position.y -= 0.1f;
     }
-    if (currentKeyStates[SDL_SCANCODE_S])
-    {
+    if (currentKeyStates[SDL_SCANCODE_S]) {
         transform.position.y += 0.1f;
     }
-    if (currentKeyStates[SDL_SCANCODE_A])
-    {
+    if (currentKeyStates[SDL_SCANCODE_A]) {
         transform.position.x -= 0.1f;
     }
-    if (currentKeyStates[SDL_SCANCODE_D])
-    {
+    if (currentKeyStates[SDL_SCANCODE_D]) {
         transform.position.x += 0.1f;
     }
+    
+    // rotate player towards the mouse position
+
+    int mouseX, mouseY;
+
+    SDL_GetMouseState(&mouseX, &mouseY);
+
+    glm::vec2 worldSpaceMousePos;
+
+    worldSpaceMousePos.x = mouseX + game->camera->x;
+    worldSpaceMousePos.y = mouseY + game->camera->y;
+
+    glm::vec2 direction = glm::normalize(worldSpaceMousePos - transform.position);
+
+    float angle = std::atan2(direction.y, direction.x);
+
+    transform.rotation = glm::degrees(angle);
 
     check_overlap();
 }
@@ -42,7 +56,7 @@ void Player::render(SDL_Renderer* renderer, Camera* camera)
 
 	SDL_Rect destR = { transform.position.x - camera->x, transform.position.y - camera->y, 32, 32 };
 
-	SDL_RenderCopy(renderer, texture, &srcR, &destR);
+	SDL_RenderCopyEx(renderer, texture, &srcR, &destR, transform.rotation, NULL, SDL_FLIP_NONE);
 }
 
 void Player::check_overlap()

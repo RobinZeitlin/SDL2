@@ -4,16 +4,16 @@
 
 class Camera;
 
-class Block : public Actor
+class Enemy : public Actor
 {
 public:
-	Block() 
+	Enemy()
 	{
-		texture = textureManager->getTexture("dirt");
-		collision_channel = Collision_Channel::Ground;
+		texture = textureManager->getTexture("enemy");
+		collision_channel = Collision_Channel::Enemy;
 	}
 
-	void render(SDL_Renderer* renderer, Camera* camera) override 
+	void render(SDL_Renderer* renderer, Camera* camera) override
 	{
 		SDL_Rect srcR = { 0, 0, 32, 32 };
 		SDL_Rect destR = { (transform.position.x) - camera->x, (transform.position.y) - camera->y, 32, 32 };

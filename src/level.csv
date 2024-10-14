@@ -2,29 +2,32 @@ DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-DDDD                          DDDD
-DDDD                          DDDD
-DDDD                          DDDD
-DDDD                          DDDD
-DDDD                          DDDD
-DDDD                          DDDD
-DDDD                          DDDD
-DDDD                    P     DDDD
-DDDD            GGGGGGGGGGGGGGDDDD
-DDDD            DDDDDDDDDDDDDDDDDD
-DDDD            DDDDDDDDDDDDDDDDDD
-DDDD            DDDDDDDDDDDDDDDDDD
-DDDD            DDDDDDDDDDDDDDDDDD
-DDDD            DDDDDDDDDDDDDDDDDD
+DDDDDD                      DDDDDD
+DDDDDD                      DDDDDD
+DDDDDD    S                 DDDDDD
+DDDDDD                      DDDDDD
+DDDDDD                      DDDDDD
+DDDDDD                 E    DDDDDD
+DDDDDD                      DDDDDD
+DDDDDD          P           DDDDDD
+DDDDDD                      DDDDDD
+DDDDDD                      DDDDDD
+DDDDDD   E                  DDDDDD
+DDDDDD                  E   DDDDDD
+DDDDDD                      DDDDDD
+DDDDDD                      DDDDDD
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+
 
 Quit map building at this point
 
 List : 
 
 P = player & camera -> spawn point
+E = enemy
 D = dirt -> block
 G = grass -> block
+S = stairs -> block

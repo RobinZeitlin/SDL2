@@ -9,6 +9,8 @@
 #include "../../Game.h"
 #include "../terrain/Block.h"
 #include "../terrain/GrassBlock.h"
+#include "../terrain/Stairs.h"
+#include "../terrain/Enemy.h"
 
 using namespace std;
 
@@ -19,26 +21,40 @@ public:
 	{
 		bool shouldExit = false;
 
-		for (int i = 0; i < data.size() && !shouldExit; ++i) {
-			for (int j = 0; j < data[i].length() && !shouldExit; ++j) {
-
+		for (int i = 0; i < data.size() && !shouldExit; ++i) 
+		{
+			for (int j = 0; j < data[i].length() && !shouldExit; ++j) 
+			{
 				glm::vec2 position(j * 32.0f, i * 32.0f);
 				glm::vec2 scale(32.0f, 32.0f);
 
-				if (data[i][j] == 'D') {
-					game->spawnActor(new Block(), position, scale);
-				}
-				else if (data[i][j] == 'G')
-				{
+				switch (data[i][j])	{
+				case 'D':
+						game->spawnActor(new Block(), position, scale);
+					break;
+
+				case 'G':
 					game->spawnActor(new GrassBlock(), position, scale);
-				}
-				else if (data[i][j] == 'P')
-				{
+					break;
+
+				case 'S':
+					game->spawnActor(new Stairs(), position, scale);
+					break;
+
+				case 'E':
+					game->spawnActor(new Enemy(), position, scale);
+					break;
+
+				case 'P':
 					game->spawnPlayer(position);
-				}
-				else if (data[i][j] == 'Q')
-				{
+					break;
+
+				case 'Q':
 					shouldExit = true;
+					break;
+
+				default:
+					break;
 				}
 			}
 		}

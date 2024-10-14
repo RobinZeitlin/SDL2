@@ -15,6 +15,7 @@ enum class Collision_Channel
 	Ignore,
 	Ground,
 	Player,
+	Enemy,
 };
 
 class Actor
