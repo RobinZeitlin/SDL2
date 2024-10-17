@@ -10,7 +10,11 @@ public:
 	Block() 
 	{
 		texture = textureManager->getTexture("dirt");
+
 		collision_channel = Collision_Channel::Ground;
+		render_layer = Render_Layer::CollisionLayer;
+
+		game->layers[static_cast<size_t>(render_layer)].push_back(this);
 	}
 
 	void render(SDL_Renderer* renderer, Camera* camera) override 

@@ -7,8 +7,11 @@ Player::Player()
 	texture = textureManager->getTexture("player");
 
     collision_channel = Collision_Channel::Player;
+    render_layer = Render_Layer::Entities;
 
     actorName = "Player";
+
+    game->layers[static_cast<size_t>(render_layer)].push_back(this);
 }
 
 void Player::update(float dt)

@@ -5,10 +5,11 @@
 
 #include <stdio.h>
 
-#include "SDL.h"
-#include "SDL_opengl.h"
-#include "SDL_image.h"
-#include "glm.hpp"
+#include <SDL.h>
+#include <SDL_opengl.h>
+#include <SDL_image.h>
+#include <glm.hpp>
+#include <array>
 
 #include "game/actors/Actor.h"
 #include "game/actors/Player.h"
@@ -49,6 +50,7 @@ public:
 				actorList[i]->transform.position = position;
 				actorList[i]->transform.rotation = rotation;
 				actorList[i]->transform.scale = { 32, 32 };
+
 				break;
 			}
 		}
@@ -62,6 +64,8 @@ public:
 	}
 
 	Actor* actorList[MAX_ACTORS];
+	std::array<std::vector<Actor*>, static_cast<size_t>(Render_Layer::LayerCount)> layers;
+
 	Camera* camera;
 	Player* player;
 	LoadLevel* loadLevel;

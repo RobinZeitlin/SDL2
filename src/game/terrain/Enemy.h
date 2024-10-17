@@ -10,7 +10,11 @@ public:
 	Enemy()
 	{
 		texture = textureManager->getTexture("enemy");
+
 		collision_channel = Collision_Channel::Enemy;
+		render_layer = Render_Layer::Entities;
+
+		game->layers[static_cast<size_t>(render_layer)].push_back(this);
 	}
 
 	void render(SDL_Renderer* renderer, Camera* camera) override

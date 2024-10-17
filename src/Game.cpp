@@ -129,16 +129,17 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	for (int i = 0; i < MAX_ACTORS; i++)
+	for (size_t layer = 0; layer < layers.size(); layer++)
 	{
-		if (actorList[i] != nullptr)
-		{
-			actorList[i]->render(renderer, camera);
+		for (auto* actor : layers[layer]) {
+			if (actor != nullptr)
+			{
+				actor->render(renderer, camera);
+			}
 		}
 	}
 
 	SDL_RenderPresent(renderer);
-
 }
 
 Actor* Game::get_overlapping_actor(Actor* other, Collision_Channel channel)

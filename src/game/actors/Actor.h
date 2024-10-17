@@ -27,6 +27,7 @@ enum class Render_Layer
 	Entities,
 	CollisionLayer,
 	UI,
+	LayerCount
 };
 
 class Actor
