@@ -5,7 +5,6 @@
 #include "engine/AABB.h"
 
 #include "game/actors/Actor.h"
-#include "game/terrain/Chunk.h"
 #include "game/terrain/LoadLevel.h"
 
 Game::Game()
