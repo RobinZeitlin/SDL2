@@ -8,8 +8,15 @@ public:
 	Player();
 	~Player() {	};
 
-	void update() override;
+	void update(float dt) override;
 	void render(SDL_Renderer* renderer, Camera* camera) override;
 
-	void check_overlap();
+	void check_overlap(float dt);
+
+	void handleEvent(const SDL_Event& event);
+
+	void shoot(Camera* camera);
+
+private:
+	bool isShooting;
 };

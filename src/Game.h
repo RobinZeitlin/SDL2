@@ -38,7 +38,7 @@ public:
 	void clean();
 
 	template <typename Actor>
-	void spawnActor(Actor* actor, const glm::vec2& position, const glm::vec2& scale = glm::vec2(32.0f, 32.0f))
+	void spawnActor(Actor* actor, const glm::vec2& position, const glm::vec2& rotation = glm::vec2(0.0f, 0.0f), const glm::vec2& scale = glm::vec2(32.0f, 32.0f))
 	{
 		for (int i = 0; i < MAX_ACTORS; ++i)
 		{
@@ -47,6 +47,7 @@ public:
 				Actor* new_entity = new Actor();
 				actorList[i] = new_entity;
 				actorList[i]->transform.position = position;
+				actorList[i]->transform.rotation = rotation;
 				actorList[i]->transform.scale = { 32, 32 };
 				break;
 			}

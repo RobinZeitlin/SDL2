@@ -15,6 +15,7 @@ enum class Collision_Channel
 	Ignore,
 	Ground,
 	Player,
+	P_Projectile,
 	Enemy,
 };
 
@@ -24,7 +25,7 @@ public:
 	Actor();
 	~Actor();
 
-	virtual void update() {};
+	virtual void update(float dt) {};
 	virtual void render(SDL_Renderer* renderer, Camera* camera) {};
 
 	std::string actorName;

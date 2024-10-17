@@ -101,8 +101,7 @@ void Game::handleEvents()
 			break;
 
 		default:
-
-			break;
+		break;
 	}
 }
 
@@ -116,7 +115,7 @@ void Game::update()
 	{
 		if (actorList[i] != nullptr)
 		{
-			actorList[i]->update();
+			actorList[i]->update(deltaTime);
 
 			if (actorList[i]->actorName == "Player")
 			{
