@@ -19,6 +19,16 @@ enum class Collision_Channel
 	Enemy,
 };
 
+enum class Render_Layer
+{
+	None,
+	Background,
+	Enviorement,
+	Entities,
+	CollisionLayer,
+	UI,
+};
+
 class Actor
 {
 public:
@@ -34,4 +44,5 @@ public:
 	Transform transform;
 
 	Collision_Channel collision_channel = Collision_Channel::None;
+	Render_Layer render_layer = Render_Layer::None;
 };
