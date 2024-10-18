@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../actors/Actor.h"
+#include "Actor.h"
 
 class Camera;
 
@@ -15,6 +15,10 @@ public:
 		render_layer = Render_Layer::Entities;
 
 		game->layers[static_cast<size_t>(render_layer)].push_back(this);
+	}
+
+	void update(float dt) {
+
 	}
 
 	void render(SDL_Renderer* renderer, Camera* camera) override

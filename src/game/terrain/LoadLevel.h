@@ -10,7 +10,7 @@
 #include "../terrain/Block.h"
 #include "../terrain/GrassBlock.h"
 #include "../terrain/Stairs.h"
-#include "../terrain/Enemy.h"
+#include "../actors/Enemy.h"
 
 using namespace std;
 

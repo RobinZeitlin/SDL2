@@ -7,6 +7,9 @@ Projectile::Projectile()
 	texture = textureManager->getTexture("projectile");
 
 	collision_channel = Collision_Channel::P_Projectile;
+	render_layer = Render_Layer::Entities;
+
+	game->layers[static_cast<size_t>(render_layer)].push_back(this);
 
 	actorName = "Bullet";
 
