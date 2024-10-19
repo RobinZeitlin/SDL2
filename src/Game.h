@@ -20,6 +20,8 @@
 
 #define MAX_ACTORS 1000
 
+#define GIZMO_COLOR { 0, 255, 0, 255 }
+
 class LoadLevel;
 
 class Game
@@ -45,11 +47,10 @@ public:
 		{
 			if (actorList[i] == nullptr)
 			{
-				Actor* new_entity = new Actor();
-				actorList[i] = new_entity;
+				actorList[i] = actor;
 				actorList[i]->transform.position = position;
 				actorList[i]->transform.rotation = rotation;
-				actorList[i]->transform.scale = { 32, 32 };
+				actorList[i]->transform.scale = scale;
 
 				break;
 			}

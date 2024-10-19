@@ -105,6 +105,7 @@ void Game::handleEvents()
 	}
 }
 
+
 void Game::update()
 {
 	Uint32 currentTime = SDL_GetTicks();
