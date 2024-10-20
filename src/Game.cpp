@@ -116,6 +116,17 @@ void Game::update()
 	{
 		if (actorList[i] != nullptr)
 		{
+			if (actorList[i]->isDestroyed) {
+				auto renderLayer = actorList[i]->render_layer;
+				auto layerIndex = static_cast<size_t>(renderLayer);
+
+				layers[layerIndex].erase(std::remove(layers[layerIndex].begin(), layers[layerIndex].end(), actorList[i]), layers[layerIndex].end());
+
+				actorList[i] = nullptr;
+
+				return;
+			}
+
 			actorList[i]->update(deltaTime);
 
 			if (actorList[i]->actorName == "Player")

@@ -102,12 +102,18 @@ void Player::check_overlap(float dt)
 {
     glm::vec2 previous_position = transform.position;
 
-    Actor* hit_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);
-    if (hit_actor != nullptr)
+    Actor* hit_ground_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);
+    if (hit_ground_actor != nullptr)
     {
-        glm::vec2 direction_to_actor = transform.position - hit_actor->transform.position;
+        glm::vec2 direction_to_actor = transform.position - hit_ground_actor->transform.position;
         glm::vec2 collision_normal = glm::normalize(direction_to_actor);
 
         transform.position = previous_position + collision_normal * 500.0f * dt;
+    }
+
+    Actor* hit_enemy_actor = game->get_overlapping_actor(this, Collision_Channel::Enemy);
+    if (hit_enemy_actor != nullptr)
+    {
+        destroy();
     }
 }

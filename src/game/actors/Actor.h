@@ -39,6 +39,10 @@ public:
 	virtual void update(float dt) {};
 	virtual void render(SDL_Renderer* renderer, Camera* camera) {};
 
+	void destroy() {
+		isDestroyed = true;
+	}
+
 	std::string actorName;
 
 	SDL_Texture* texture = nullptr;
@@ -46,4 +50,6 @@ public:
 
 	Collision_Channel collision_channel = Collision_Channel::None;
 	Render_Layer render_layer = Render_Layer::None;
+
+	bool isDestroyed = false;
 };

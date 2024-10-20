@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Actor.h"
+#include "../../engine/DebugDraw.h"
 
 class Camera;
 
@@ -30,6 +31,8 @@ public:
 
 			transform.rotation.x = glm::degrees(angle);
 		}
+
+		check_overlap();
 	}
 
 	void render(SDL_Renderer* renderer, Camera* camera) override
@@ -43,31 +46,26 @@ public:
 
 		if (distanceToPlayer - 16 > proximityRange)	{
 			SDL_Color color = GIZMO_COLOR;
+
 			SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-			 
-			const int numSegments = 20;
-			const float increment = 2.0f * M_PI / numSegments;
-			
-			std::vector<SDL_FPoint> points;
-			float angle = 0.0f;
 
-			for (int i = 0; i < numSegments; i++) {
-				float x = ((transform.position.x + transform.scale.x / 2) - camera->x + proximityRange * glm::cos(angle));
-				float y = ((transform.position.y + transform.scale.y / 2) - camera->y + proximityRange * glm::sin(angle));
-				
-				SDL_FPoint newPos = { x, y };
-				points.push_back(newPos);
-			
-				angle += increment;
-			}
+			DebugDraw::draw_debug_sphere(renderer, glm::vec2(
+				((transform.position.x + transform.scale.x / 2) - camera->x), 
+				((transform.position.y + transform.scale.y / 2) - camera->y)), 
+				proximityRange, 20);
 
-			points.push_back(points[0]);
-
-			SDL_RenderDrawLinesF(renderer, points.data(), numSegments + 1);
-			
 			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 		}
 	}
+
+	void check_overlap()
+	{
+		Actor* hit_actor = game->get_overlapping_actor(this, Collision_Channel::P_Projectile);
+		if (hit_actor != nullptr)
+		{
+			destroy();
+		}
+	};
 
 private:
 	float walkingSpeed = 100;

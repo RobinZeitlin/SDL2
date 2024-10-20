@@ -37,5 +37,4 @@ namespace zmath
     {
         return glm::vec2(EaseOutQuart(t.x), EaseOutQuart(t.y));
     }
-
 }

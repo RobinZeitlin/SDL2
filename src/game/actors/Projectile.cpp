@@ -56,5 +56,6 @@ void Projectile::check_overlap()
 	Actor* hit_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);
 	if (hit_actor != nullptr)
 	{
+		destroy();
 	}
 }
