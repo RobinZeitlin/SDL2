@@ -137,3 +137,5 @@ x64/Debug/vc143.*
 # Ignore specific SDL2 output files
 x64/Debug/SDL2.tlog/
 x64/Debug/SDL2.tlog/*
+/.vs/SDL2/v17/ipch
+/.vs/SDL2/v17
