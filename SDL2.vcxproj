@@ -134,6 +134,7 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\engine\AABB.cpp" />
     <ClCompile Include="src\engine\Debug.cpp" />
+    <ClCompile Include="src\engine\Particle.cpp" />
     <ClCompile Include="src\engine\TextureManager.cpp" />
     <ClCompile Include="src\engine\zmath.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -147,8 +148,12 @@
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\engine\AABB.h" />
+    <ClInclude Include="src\engine\DebugDraw.h" />
+    <ClInclude Include="src\engine\Particle.h" />
+    <ClInclude Include="src\engine\ParticleController.h" />
     <ClInclude Include="src\engine\TextureManager.h" />
     <ClInclude Include="src\game\actors\Actor.h" />
+    <ClInclude Include="src\game\actors\Enemy.h" />
     <ClInclude Include="src\game\actors\Projectile.h" />
     <ClInclude Include="src\game\terrain\Block.h" />
     <ClInclude Include="src\game\actors\Player.h" />

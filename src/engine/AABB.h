@@ -12,6 +12,6 @@ struct AABB
 
 	glm::vec2 min;
 	glm::vec2 max;
-};
+}; 
 
 bool aabb_overlap(AABB a, AABB b);

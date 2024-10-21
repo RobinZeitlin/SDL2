@@ -151,6 +151,11 @@ void Game::render()
 		}
 	}
 
+	for (auto* particleCtrl : particleControllers)
+	{
+		particleCtrl->render(renderer);
+	}
+
 	SDL_RenderPresent(renderer);
 }
 

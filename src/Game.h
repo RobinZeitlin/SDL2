@@ -17,6 +17,7 @@
 
 #include "engine/Debug.h"
 #include "engine/TextureManager.h"
+#include "engine/ParticleController.h"
 
 #define MAX_ACTORS 1000
 
@@ -66,19 +67,19 @@ public:
 
 	Actor* actorList[MAX_ACTORS];
 	std::array<std::vector<Actor*>, static_cast<size_t>(Render_Layer::LayerCount)> layers;
+	std::vector<ParticleController*> particleControllers;
 
 	Camera* camera;
 	Player* player;
 	LoadLevel* loadLevel;
-
-private:
-	bool isRunning;
-
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 
-	float lastTime;
 	float deltaTime;
+
+private:
+	bool isRunning;
+	float lastTime;
 };
 
 extern Game* game;
