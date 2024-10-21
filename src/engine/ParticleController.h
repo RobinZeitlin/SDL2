@@ -4,7 +4,7 @@
 
 #include "Particle.h"
 
-const int TOTAL_PARTICLES = 20;
+const int TOTAL_PARTICLES = 50;
 
 class ParticleController
 {

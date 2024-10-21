@@ -4,6 +4,8 @@
 #include <SDL.h>
 #include <random>
 
+#include "../game/components/location/Transform.h"
+
 class Particle
 {
 public:
@@ -11,10 +13,13 @@ public:
 
 	void render(SDL_Renderer* renderer);
 
-	int velX, velY;
-	int X, Y;
-	int Rot;
-
 private:
 	SDL_Texture* m_texture;
+
+	float velX, velY;
+	float rot;
+
+	glm::vec2 pos;
+
+	float speed;
 };

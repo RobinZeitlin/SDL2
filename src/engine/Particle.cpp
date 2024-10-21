@@ -3,26 +3,23 @@
 
 Particle::Particle(glm::vec2 position, SDL_Texture* texture)
 {
-	X = position.x;
-	Y = position.y;
-	
-	velX = static_cast<float>(rand() % 200 - 100);
-    velY = static_cast<float>(rand() % 200 - 100);
-	
-	if (velX == 0) velX = 1;
-	if (velY == 0) velY = 1;
-	
-	Rot = rand() % 361;
+	pos.x = position.x;
+	pos.y = position.y;
+	rot = rand() % 361;
 	m_texture = texture;
+
+	speed = 500.0f;
 }
 
 void Particle::render(SDL_Renderer* renderer)
 {
-	X += velX * game->deltaTime;
-	Y += velY * game->deltaTime;
+	float radians = glm::radians(rot);
+	glm::vec2 upVector = glm::vec2(std::cos(radians), std::sin(radians));
 
+	pos += upVector * game->deltaTime * speed;
+	
 	SDL_Rect srcR = { 0, 0, 32, 32 };
-	SDL_Rect destR = { X - game->camera->x, Y - game->camera->y, 16, 16 };
+	SDL_Rect destR = { pos.x - game->camera->x, pos.y - game->camera->y, 12, 12 };
 
-	SDL_RenderCopyEx(renderer, m_texture, &srcR, &destR, Rot, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, m_texture, &srcR, &destR, rot, NULL, SDL_FLIP_NONE);
 }
