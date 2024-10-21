@@ -30,7 +30,7 @@ void Particle::render(SDL_Renderer* renderer)
 	pos += upVector * game->deltaTime * speed;
 	
 	SDL_Rect srcR = { 0, 0, 32, 32 };
-	SDL_Rect destR = { pos.x - game->camera->x, pos.y - game->camera->y, scale, scale };
+	SDL_Rect destR = { pos.x - game->camera->x - scale / 2, pos.y - game->camera->y - scale / 2, scale, scale };
 
 	SDL_RenderCopyEx(renderer, m_texture, &srcR, &destR, rot, NULL, SDL_FLIP_NONE);
 }

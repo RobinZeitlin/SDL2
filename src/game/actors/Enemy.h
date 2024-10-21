@@ -63,13 +63,16 @@ public:
 		Actor* hit_actor = game->get_overlapping_actor(this, Collision_Channel::P_Projectile);
 		if (hit_actor != nullptr)
 		{
-			auto particleCtrl = new ParticleController(transform.position, textureManager->getTexture("enemy"), 4, 200, 0.5f);
+			auto particleCtrl = new ParticleController(transform.position, textureManager->getTexture("enemy"), 30, 12, 200, 0.5f);
 			game->particleControllers.push_back(particleCtrl);
+
+			auto particleCtrl2 = new ParticleController(transform.position, textureManager->getTexture("effectred"), 1, 100, 0, 0.5f);
+			game->particleControllers.push_back(particleCtrl2);
 			destroy();
 		}
 	};
 
 private:
-	float walkingSpeed = 100;
-	float proximityRange = 150;
+	float walkingSpeed = 250;
+	float proximityRange = 250;
 };

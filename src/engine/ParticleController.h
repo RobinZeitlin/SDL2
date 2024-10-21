@@ -4,16 +4,17 @@
 
 #include "Particle.h"
 
-const int TOTAL_PARTICLES = 50;
+const int TOTAL_PARTICLES = 1000;
 
 class ParticleController
 {
 public:
-	ParticleController(glm::vec2 pos, SDL_Texture* texture, int inScale = 5, int spd = 400, float dur = 0.2f) {
-		for (int i = 0; i < TOTAL_PARTICLES; i++)
-		{
-			if (texture == nullptr)
-			{
+	ParticleController(glm::vec2 pos, SDL_Texture* texture, int maxParticles = 25, int inScale = 5, int spd = 400, float dur = 0.2f) {
+		for (int i = 0; i < maxParticles; i++) {
+			if (i >= TOTAL_PARTICLES)
+				break;
+
+			if (texture == nullptr) {
 				Debug::warning("Cant load particle texture");
 			}
 

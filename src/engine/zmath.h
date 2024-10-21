@@ -39,13 +39,9 @@ namespace zmath
     }
 
     inline float EaseOutCubicBounce(float x) {
-        if (x < 0.5f) {
-            // First half: scale up
-            return 2 * pow(x * 2, 3) / 2;
-        }
-        else {
-            // Second half: scale down
-            return 2 * (1 - pow(2 * (x - 0.5f), 3)) / 2;
-        }
+        // scale up and down
+        return x < 0.5f ? 
+            2 * pow(x * 2, 3) / 2 : 
+            2 * (1 - pow(2 * (x - 0.5f), 3)) / 2;
     }
 }

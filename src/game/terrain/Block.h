@@ -9,7 +9,7 @@ class Block : public Actor
 public:
 	Block() 
 	{
-		texture = textureManager->getTexture("dirt");
+		texture = textureManager->getTexture("cube");
 
 		collision_channel = Collision_Channel::Ground;
 		render_layer = Render_Layer::CollisionLayer;
