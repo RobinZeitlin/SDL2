@@ -37,4 +37,15 @@ namespace zmath
     {
         return glm::vec2(EaseOutQuart(t.x), EaseOutQuart(t.y));
     }
+
+    inline float EaseOutCubicBounce(float x) {
+        if (x < 0.5f) {
+            // First half: scale up
+            return 2 * pow(x * 2, 3) / 2;
+        }
+        else {
+            // Second half: scale down
+            return 2 * (1 - pow(2 * (x - 0.5f), 3)) / 2;
+        }
+    }
 }

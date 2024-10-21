@@ -97,8 +97,6 @@ void Player::shoot(Camera* camera)
     glm::vec2 spawnPos = transform.position + direction * offsetPos;
 
     game->spawnActor(projectile, spawnPos, transform.rotation);
-
-    std::cout << "Pow" << std::endl;
 }
 
 void Player::check_overlap(float dt)

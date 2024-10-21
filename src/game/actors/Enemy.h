@@ -63,6 +63,8 @@ public:
 		Actor* hit_actor = game->get_overlapping_actor(this, Collision_Channel::P_Projectile);
 		if (hit_actor != nullptr)
 		{
+			auto particleCtrl = new ParticleController(transform.position, textureManager->getTexture("enemy"), 4, 200, 0.5f);
+			game->particleControllers.push_back(particleCtrl);
 			destroy();
 		}
 	};

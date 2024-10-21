@@ -53,11 +53,17 @@ void Projectile::check_overlap()
 {
 	glm::vec2 previous_position = transform.position;
 
-	Actor* hit_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);
-	if (hit_actor != nullptr)
+	Actor* hit_ground_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);
+	if (hit_ground_actor != nullptr)
 	{
-		auto particleCtrl = new ParticleController(transform.position, textureManager->getTexture("cube"));
+		auto particleCtrl = new ParticleController(transform.position, textureManager->getTexture("projectile"), 5, 400, 0.25f);
 		game->particleControllers.push_back(particleCtrl);
+		destroy();
+	}
+
+	Actor* hit_enemy_actor = game->get_overlapping_actor(this, Collision_Channel::Enemy);
+	if (hit_enemy_actor != nullptr)
+	{
 		destroy();
 	}
 }
