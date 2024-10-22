@@ -19,6 +19,7 @@ Game::Game()
 	deltaTime = 0.0f;
 
 	player = nullptr;
+	boomerang = nullptr;
 }
 
 Game::~Game()
@@ -69,10 +70,14 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 }
 
 void Game::spawnPlayer(glm::vec2 position) {
-	if (player == nullptr)
-	{
+	if (player == nullptr) {
 		player = new Player();
 		spawnActor(player, position);
+	}
+
+	if (boomerang == nullptr) {
+		boomerang = new Boomerang();
+		spawnActor(boomerang, position);
 	}
 
 	camera = new Camera(position.x, position.y, 800, 600);
@@ -141,21 +146,28 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	for (size_t layer = 0; layer < layers.size(); layer++)
-	{
+	for (size_t layer = 0; layer < layers.size(); layer++) {
 		for (auto* actor : layers[layer]) {
-			if (actor != nullptr)
-			{
+			if (actor != nullptr) {
 				actor->render(renderer, camera);
 			}
 		}
 	}
 
-	for (auto* particleCtrl : particleControllers)
-	{
+	for (size_t i = 0; i < particleControllers.size(); ) {
+		auto* particleCtrl = particleControllers[i];
+
+		if (particleCtrl->isEmpty()) {
+			particleControllers.erase(particleControllers.begin() + i);
+			std::cout << "Finished playing particle -> [index -> " << i << "]" << std::endl;
+			return;
+		}
+
 		particleCtrl->render(renderer);
+		++i;
 	}
 
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderPresent(renderer);
 }
 

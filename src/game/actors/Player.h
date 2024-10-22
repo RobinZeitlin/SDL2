@@ -13,7 +13,7 @@ public:
 
 	void check_overlap(float dt);
 
-	void handleEvent(const SDL_Event& event);
+	void visualise_trajectory(SDL_Renderer* renderer, Camera* camera);
 
 	void shoot(Camera* camera);
 

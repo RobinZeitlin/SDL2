@@ -43,6 +43,17 @@ public:
 		}
 	}
 
+	bool isEmpty() {
+		for (int i = 0; i < TOTAL_PARTICLES; ++i) {
+			for (auto particle : particleList[i]) {
+				if (particle != nullptr && !particle->isDestroyed()) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 private:
 	std::vector<Particle*> particleList[TOTAL_PARTICLES];
 };

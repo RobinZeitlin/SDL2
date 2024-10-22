@@ -13,6 +13,7 @@
 
 #include "game/actors/Actor.h"
 #include "game/actors/Player.h"
+#include "game/actors/Boomerang.h"
 #include "Camera.h"
 
 #include "engine/Debug.h"
@@ -71,6 +72,7 @@ public:
 
 	Camera* camera;
 	Player* player;
+	Boomerang* boomerang;
 	LoadLevel* loadLevel;
 	SDL_Window* window;
 	SDL_Renderer* renderer;

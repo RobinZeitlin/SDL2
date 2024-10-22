@@ -139,6 +139,7 @@
     <ClCompile Include="src\engine\zmath.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\game\actors\Actor.cpp" />
+    <ClCompile Include="src\game\actors\Boomerang.cpp" />
     <ClCompile Include="src\game\actors\Player.cpp" />
     <ClCompile Include="src\game\actors\Projectile.cpp" />
     <ClCompile Include="src\game\terrain\Block.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="src\engine\ParticleController.h" />
     <ClInclude Include="src\engine\TextureManager.h" />
     <ClInclude Include="src\game\actors\Actor.h" />
+    <ClInclude Include="src\game\actors\Boomerang.h" />
     <ClInclude Include="src\game\actors\Enemy.h" />
     <ClInclude Include="src\game\actors\Projectile.h" />
     <ClInclude Include="src\game\terrain\Block.h" />

@@ -56,10 +56,10 @@ void Projectile::check_overlap()
 	Actor* hit_ground_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);
 	if (hit_ground_actor != nullptr)
 	{
-		auto particleCtrl = new ParticleController(transform.position, textureManager->getTexture("effect2"), 30, 25, 250, 0.25f);
+		auto particleCtrl = new ParticleController(transform.position + (transform.scale * 0.5f), textureManager->getTexture("effect2"), 30, 25, 250, 0.25f);
 		game->particleControllers.push_back(particleCtrl);
 
-		auto particleCtrl2 = new ParticleController(transform.position, textureManager->getTexture("effect"), 1, 80, 0, 0.5f);
+		auto particleCtrl2 = new ParticleController(transform.position + (transform.scale * 0.5f), textureManager->getTexture("effect"), 1, 80, 0, 0.5f);
 		game->particleControllers.push_back(particleCtrl2);
 
 		destroy();

@@ -85,13 +85,24 @@ void Player::render(SDL_Renderer* renderer, Camera* camera)
     glm::vec2 rightVector = glm::vec2(transform.position.x + transform.get_transform_right().x * gizmoMultiplier, transform.position.y + transform.get_transform_right().y * gizmoMultiplier);
     SDL_RenderDrawLine(renderer, transform.position.x - camera->x + 16, transform.position.y - camera->y + 16, rightVector.x - camera->x + 16, rightVector.y - camera->y + 16);
 
+    visualise_trajectory(renderer, camera);
+
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
 
+void Player::visualise_trajectory(SDL_Renderer* renderer, Camera* camera)
+{
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+
+    float multiplier = 500.0f;
+    glm::vec2 upVector = glm::vec2(transform.position.x + transform.get_transform_up().x * multiplier, transform.position.y + transform.get_transform_up().y * multiplier);
+    SDL_RenderDrawLine(renderer, transform.position.x - camera->x + 16, transform.position.y - camera->y + 16, upVector.x - camera->x + 16, upVector.y - camera->y + 16);
+
+}
 void Player::shoot(Camera* camera)
 {
     const float offsetPos = 50;
-    auto projectile = new Projectile();
+    auto projectile = new Boomerang();
 
     glm::vec2 direction = transform.get_transform_up();
     glm::vec2 spawnPos = transform.position + direction * offsetPos;
