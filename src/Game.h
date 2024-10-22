@@ -60,7 +60,6 @@ public:
 	}
 
 	Actor* get_overlapping_actor(Actor* other, Collision_Channel channel);
-
 	bool running()
 	{
 		return isRunning;

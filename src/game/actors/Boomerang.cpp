@@ -25,7 +25,7 @@ void Boomerang::render(SDL_Renderer* renderer, Camera* camera)
 {
 	SDL_Rect srcR = { 0, 0, 32, 32 };
 
-	SDL_Rect destR = { transform.position.x - camera->x, transform.position.y - camera->y, 48, 48 };
+	SDL_Rect destR = { transform.position.x - camera->x, transform.position.y - camera->y, 36, 36 };
 
 	SDL_RenderCopyEx(renderer, texture, &srcR, &destR, visualRotation, NULL, SDL_FLIP_NONE);
 }

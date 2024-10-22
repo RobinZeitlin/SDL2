@@ -2,6 +2,9 @@
 #include "../../Game.h"
 #include "../actors/Projectile.h"
 #include "../../engine/ParticleController.h"
+#include "../../engine/AABB.h"
+#include "../../engine/Linetrace.h"
+#include "../../engine/LineHit.h"
 
 Player::Player()
 {
@@ -75,6 +78,8 @@ void Player::render(SDL_Renderer* renderer, Camera* camera)
 
     const int gizmoMultiplier = 50;
 
+    visualise_trajectory(renderer, camera);
+
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 
     glm::vec2 upVector = glm::vec2(transform.position.x + transform.get_transform_up().x * gizmoMultiplier, transform.position.y + transform.get_transform_up().y * gizmoMultiplier);
@@ -85,19 +90,20 @@ void Player::render(SDL_Renderer* renderer, Camera* camera)
     glm::vec2 rightVector = glm::vec2(transform.position.x + transform.get_transform_right().x * gizmoMultiplier, transform.position.y + transform.get_transform_right().y * gizmoMultiplier);
     SDL_RenderDrawLine(renderer, transform.position.x - camera->x + 16, transform.position.y - camera->y + 16, rightVector.x - camera->x + 16, rightVector.y - camera->y + 16);
 
-    visualise_trajectory(renderer, camera);
-
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
 
 void Player::visualise_trajectory(SDL_Renderer* renderer, Camera* camera)
 {
-    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 255, 120, 0, 255);
 
-    float multiplier = 500.0f;
-    glm::vec2 upVector = glm::vec2(transform.position.x + transform.get_transform_up().x * multiplier, transform.position.y + transform.get_transform_up().y * multiplier);
-    SDL_RenderDrawLine(renderer, transform.position.x - camera->x + 16, transform.position.y - camera->y + 16, upVector.x - camera->x + 16, upVector.y - camera->y + 16);
+    Linetrace linetrace;
+    LineHit result = linetrace.line_trace(transform.position, transform.get_transform_up(), Collision_Channel::Ground, 500);
 
+    if (result.hit_point != transform.position) {
+        SDL_RenderDrawLine(renderer, transform.position.x - camera->x + 16, transform.position.y - camera->y + 16,
+            result.hit_point.x - camera->x + 16, result.hit_point.y - camera->y + 16);
+    }
 }
 void Player::shoot(Camera* camera)
 {

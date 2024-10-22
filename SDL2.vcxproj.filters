@@ -57,6 +57,15 @@
     <ClCompile Include="src\game\actors\Boomerang.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\Linetrace.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\Linetrace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\LineHit.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
