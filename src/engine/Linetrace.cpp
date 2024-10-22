@@ -27,6 +27,17 @@ LineHit Linetrace::line_trace(glm::vec2 startPos, glm::vec2 dir, Collision_Chann
                 linehit.hit_point = lastImpactPoint;
                 linehit.hit_actor = game->actorList[j];
 
+                glm::vec2 hit_point_offset = (linehit.hit_point - linehit.hit_actor->transform.position);
+
+                if (fabs(hit_point_offset.x) > fabs(hit_point_offset.y)) {
+                    // left or right
+                    linehit.normal = (hit_point_offset.x > 0) ? glm::vec2(-1, 0) : glm::vec2(1, 0);
+                }
+                else {
+                    // top or bottom
+                    linehit.normal = (hit_point_offset.y > 0) ? glm::vec2(0, -1) : glm::vec2(0, 1);
+                }
+
                 return linehit;
             }
         }

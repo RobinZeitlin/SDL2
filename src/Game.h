@@ -71,7 +71,6 @@ public:
 
 	Camera* camera;
 	Player* player;
-	Boomerang* boomerang;
 	LoadLevel* loadLevel;
 	SDL_Window* window;
 	SDL_Renderer* renderer;

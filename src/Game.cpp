@@ -19,7 +19,6 @@ Game::Game()
 	deltaTime = 0.0f;
 
 	player = nullptr;
-	boomerang = nullptr;
 }
 
 Game::~Game()
@@ -73,11 +72,6 @@ void Game::spawnPlayer(glm::vec2 position) {
 	if (player == nullptr) {
 		player = new Player();
 		spawnActor(player, position);
-	}
-
-	if (boomerang == nullptr) {
-		boomerang = new Boomerang();
-		spawnActor(boomerang, position);
 	}
 
 	camera = new Camera(position.x, position.y, 800, 600);
@@ -159,7 +153,6 @@ void Game::render()
 
 		if (particleCtrl->isEmpty()) {
 			particleControllers.erase(particleControllers.begin() + i);
-			std::cout << "Finished playing particle -> [index -> " << i << "]" << std::endl;
 			return;
 		}
 
