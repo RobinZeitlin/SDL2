@@ -13,11 +13,21 @@ Player::Player()
 
     actorName = "Player";
 
+    weapon = nullptr;
+
     game->layers[static_cast<size_t>(render_layer)].push_back(this);
+
+    auto boomerang = new Boomerang();
+    game->spawnActor(boomerang, glm::vec2(300.0f));
+
+    if (boomerang)
+        std::cout << "Boomerang spawned at " << transform.position.x << "    " << transform.position.y << std::endl;
 }
 
 void Player::update(float dt)
 {
+    set_weapon_pos();
+
     const float playerSpeed = 350.0f;
     const Uint8* currentKeyStates = SDL_GetKeyboardState(nullptr);
 
@@ -62,6 +72,8 @@ void Player::update(float dt)
     else {
         isShooting = false;
     }
+
+
 }
 
 void Player::render(SDL_Renderer* renderer, Camera* camera)
@@ -91,13 +103,36 @@ void Player::render(SDL_Renderer* renderer, Camera* camera)
 
 void Player::shoot(Camera* camera)
 {
-    const float offsetPos = 50;
-    auto projectile = new Boomerang();
+    float offsetPos = 50.0f;
 
-    glm::vec2 direction = transform.get_transform_up();
-    glm::vec2 spawnPos = transform.position + direction * offsetPos;
+    glm::vec2 direction = glm::normalize(transform.get_transform_up());
 
-    game->spawnActor(projectile, spawnPos, transform.rotation);
+    std::cout << "Direction: ("
+        << direction.x << ", "
+        << direction.y << ")"
+        << std::endl;
+
+    glm::vec2 crtPos = transform.position + direction * offsetPos;
+
+    if (weapon != nullptr)
+    {
+        weapon->launch_boomerang(direction, 800.0f);
+        weapon = nullptr;
+    }
+}
+
+void Player::set_weapon_pos()
+{
+    glm::vec2 handPos = transform.position + (transform.get_transform_right() * glm::vec2(10));
+    glm::vec2 dir = glm::normalize(transform.get_transform_up());
+
+    float angleInDegrees = glm::degrees(atan2(dir.y, dir.x));
+    float handRotationOffset = 240.0f;
+
+    if (weapon != nullptr) {
+        weapon->transform.position = handPos;
+        weapon->visualRotation = angleInDegrees + handRotationOffset;
+    }
 }
 
 void Player::check_overlap(float dt)

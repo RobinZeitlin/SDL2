@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Actor.h"
+#include "Boomerang.h"
 
 class Player : public Actor 
 {
@@ -13,10 +14,24 @@ public:
 
 	void check_overlap(float dt);
 
-	void visualise_trajectory(SDL_Renderer* renderer, Camera* camera);
+	void set_weapon_pos();
 
 	void shoot(Camera* camera);
 
+	bool pick_up(Boomerang* boomerang) { 
+		if (weapon == nullptr) {
+			weapon = boomerang;
+			weapon->projectileSpeed = 0.0f;
+			return true;
+		}
+		return false;
+	}
+
 private:
 	bool isShooting;
+
+	float handRotationOffset;
+
+	// expand this with a weapon class instead.
+	Boomerang* weapon;
 };

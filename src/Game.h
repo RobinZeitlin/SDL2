@@ -36,6 +36,7 @@ public:
 	void init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 
 	void spawnPlayer(glm::vec2 position);
+	void spawn_particle_system(ParticleController* particleCtrl);
 
 	void handleEvents();
 	void update();

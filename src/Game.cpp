@@ -77,6 +77,13 @@ void Game::spawnPlayer(glm::vec2 position) {
 	camera = new Camera(position.x, position.y, 800, 600);
 }
 
+void Game::spawn_particle_system(ParticleController* particleCtrl)
+{
+	if (particleControllers.size() >= 20) return;
+
+	particleControllers.push_back(particleCtrl);
+}
+
 void Game::handleEvents()
 {
 	SDL_Event event;
@@ -153,6 +160,7 @@ void Game::render()
 
 		if (particleCtrl->isEmpty()) {
 			particleControllers.erase(particleControllers.begin() + i);
+			delete particleCtrl;
 			return;
 		}
 

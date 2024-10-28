@@ -18,14 +18,19 @@ void Boomerang::update(float dt)
 {
 	transform.position += (transform.get_transform_up() * projectileSpeed) * dt;
 
-	visualRotation += 600.0f * dt;
+	visualRotation += projectileSpeed * dt;
 
 	check_overlap();
+
+	if (projectileSpeed >= 0)
+		projectileSpeed -= 200.0f * dt;
+	else
+		projectileSpeed = 0.0f;
 }
 
 void Boomerang::render(SDL_Renderer* renderer, Camera* camera)
 {
-	visualise_trajectory(renderer, camera);
+	//visualise_trajectory(renderer, camera);
 
 	SDL_Rect srcR = { 0, 0, 32, 32 };
 
@@ -41,21 +46,38 @@ void Boomerang::check_overlap()
 	if (hit_ground_actor != nullptr)
 	{
 		auto particleCtrl = new ParticleController(transform.position + (transform.scale * 0.5f), textureManager->getTexture("effect2"), 30, 25, 250, 0.25f);
-		game->particleControllers.push_back(particleCtrl);
+		game->spawn_particle_system(particleCtrl);
 
 		auto particleCtrl2 = new ParticleController(transform.position + (transform.scale * 0.5f), textureManager->getTexture("effect"), 1, 80, 0, 0.5f);
-		game->particleControllers.push_back(particleCtrl2);
+		game->spawn_particle_system(particleCtrl2);
 
 		transform.rotation.x = getBounceDir();
+		
+		projectileSpeed += 10;
+	}
+
+	Actor* hit_enemy_actor = game->get_overlapping_actor(this, Collision_Channel::Enemy);
+	if (hit_enemy_actor != nullptr)
+	{
+		transform.rotation.x = getBounceDir();
+
+		projectileSpeed += 10;
+	}
+
+	Actor* hit_player_actor = game->get_overlapping_actor(this, Collision_Channel::Player);
+	if (hit_player_actor != nullptr)
+	{
+		game->player->pick_up(this);
 	}
 }
+
 float Boomerang::getBounceDir()
 {
 	glm::vec2 origin = transform.position;
 	glm::vec2 dir = transform.get_transform_up();
 	
 	Linetrace linetrace;
-	LineHit result = linetrace.line_trace(origin, dir, Collision_Channel::Ground, 1000);
+	LineHit result = linetrace.line_trace(origin, dir, Collision_Channel::Ground, 200);
 	
 	if (result.hit_point != origin) {
 	    if (result.hit_actor != nullptr) {
@@ -121,4 +143,13 @@ void Boomerang::visualise_trajectory(SDL_Renderer* renderer, Camera* camera)
     }
 
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+}
+
+void Boomerang::launch_boomerang(glm::vec2 dir, float speed)
+{
+	float angleInDegrees = glm::degrees(atan2(dir.y, dir.x));
+
+	projectileSpeed = speed;
+	transform.rotation.x = angleInDegrees;
+	transform.position += dir * 50.0f;
 }

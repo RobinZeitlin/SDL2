@@ -8,16 +8,15 @@ public:
 	Boomerang();
 
 	void update(float dt);
-
 	void render(SDL_Renderer* renderer, Camera* camera) override;
 
 	void check_overlap();
 
 	float getBounceDir();
+	void launch_boomerang(glm::vec2 dir, float speed);
 
 	void visualise_trajectory(SDL_Renderer* renderer, Camera* camera);
 
-private:
-	float projectileSpeed = 800.0f;
+	float projectileSpeed = 0.0f;
 	float visualRotation = 0.0f;
 };
