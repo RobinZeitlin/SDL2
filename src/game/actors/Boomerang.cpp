@@ -42,6 +42,9 @@ void Boomerang::render(SDL_Renderer* renderer, Camera* camera)
 
 void Boomerang::check_overlap()
 {
+
+	if (game->player->weapon == this) return;
+
 	Actor* hit_ground_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);
 	if (hit_ground_actor != nullptr)
 	{
@@ -51,14 +54,6 @@ void Boomerang::check_overlap()
 		auto particleCtrl2 = new ParticleController(transform.position + (transform.scale * 0.5f), textureManager->getTexture("effect"), 1, 80, 0, 0.5f);
 		game->spawn_particle_system(particleCtrl2);
 
-		transform.rotation.x = getBounceDir();
-		
-		projectileSpeed += 10;
-	}
-
-	Actor* hit_enemy_actor = game->get_overlapping_actor(this, Collision_Channel::Enemy);
-	if (hit_enemy_actor != nullptr)
-	{
 		transform.rotation.x = getBounceDir();
 
 		projectileSpeed += 10;
@@ -97,6 +92,15 @@ float Boomerang::getBounceDir()
 	    }
 	}
 	return 0;
+}
+
+void Boomerang::launch_boomerang(glm::vec2 dir, float speed)
+{
+	float angleInDegrees = glm::degrees(atan2(dir.y, dir.x));
+
+	projectileSpeed = speed;
+	transform.rotation.x = angleInDegrees;
+	transform.position += dir * 50.0f;
 }
 
 void Boomerang::visualise_trajectory(SDL_Renderer* renderer, Camera* camera)
@@ -143,13 +147,4 @@ void Boomerang::visualise_trajectory(SDL_Renderer* renderer, Camera* camera)
     }
 
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-}
-
-void Boomerang::launch_boomerang(glm::vec2 dir, float speed)
-{
-	float angleInDegrees = glm::degrees(atan2(dir.y, dir.x));
-
-	projectileSpeed = speed;
-	transform.rotation.x = angleInDegrees;
-	transform.position += dir * 50.0f;
 }

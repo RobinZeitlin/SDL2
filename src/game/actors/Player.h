@@ -27,11 +27,11 @@ public:
 		return false;
 	}
 
+	// expand this with a weapon class instead.
+	Boomerang* weapon;
+
 private:
 	bool isShooting;
 
 	float handRotationOffset;
-
-	// expand this with a weapon class instead.
-	Boomerang* weapon;
 };
