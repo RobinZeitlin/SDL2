@@ -19,9 +19,6 @@ Player::Player()
 
     auto boomerang = new Boomerang();
     game->spawnActor(boomerang, glm::vec2(300.0f));
-
-    if (boomerang)
-        std::cout << "Boomerang spawned at " << transform.position.x << "    " << transform.position.y << std::endl;
 }
 
 void Player::update(float dt)
@@ -106,12 +103,6 @@ void Player::shoot(Camera* camera)
     float offsetPos = 50.0f;
 
     glm::vec2 direction = glm::normalize(transform.get_transform_up());
-
-    std::cout << "Direction: ("
-        << direction.x << ", "
-        << direction.y << ")"
-        << std::endl;
-
     glm::vec2 crtPos = transform.position + direction * offsetPos;
 
     if (weapon != nullptr)

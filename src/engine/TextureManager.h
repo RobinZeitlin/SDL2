@@ -27,6 +27,9 @@ public:
 
 		return nullptr;
 	}
+	std::unordered_map<std::string, SDL_Texture*> getAllTextures() {
+		return textures;
+	}
 };
 
 extern TextureManager* textureManager;

@@ -24,6 +24,7 @@
 #include "engine/Debug.h"
 #include "engine/TextureManager.h"
 #include "engine/ParticleController.h"
+#include "engine/ui/LevelEditor.h"
 
 #define MAX_ACTORS 1000
 
@@ -77,7 +78,10 @@ public:
 
 	Camera* camera;
 	Player* player;
+
+	LevelEditor* levelEditor;
 	LoadLevel* loadLevel;
+
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 

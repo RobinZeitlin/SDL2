@@ -131,6 +131,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="dependencies\imgui\include\imgui.cpp" />
+    <ClCompile Include="dependencies\imgui\include\imgui_demo.cpp" />
+    <ClCompile Include="dependencies\imgui\include\imgui_draw.cpp" />
+    <ClCompile Include="dependencies\imgui\include\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="dependencies\imgui\include\imgui_impl_sdlrenderer2.cpp" />
+    <ClCompile Include="dependencies\imgui\include\imgui_tables.cpp" />
+    <ClCompile Include="dependencies\imgui\include\imgui_widgets.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\engine\AABB.cpp" />
     <ClCompile Include="src\engine\Debug.cpp" />
@@ -150,12 +157,21 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dependencies\imgui\include\imconfig.h" />
+    <ClInclude Include="dependencies\imgui\include\imgui.h" />
+    <ClInclude Include="dependencies\imgui\include\imgui_impl_sdl2.h" />
+    <ClInclude Include="dependencies\imgui\include\imgui_impl_sdlrenderer2.h" />
+    <ClInclude Include="dependencies\imgui\include\imgui_internal.h" />
+    <ClInclude Include="dependencies\imgui\include\imstb_rectpack.h" />
+    <ClInclude Include="dependencies\imgui\include\imstb_textedit.h" />
+    <ClInclude Include="dependencies\imgui\include\imstb_truetype.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\engine\AABB.h" />
     <ClInclude Include="src\engine\DebugDraw.h" />
     <ClInclude Include="src\engine\Particle.h" />
     <ClInclude Include="src\engine\ParticleController.h" />
     <ClInclude Include="src\engine\TextureManager.h" />
+    <ClInclude Include="src\engine\ui\LevelEditor.h" />
     <ClInclude Include="src\game\actors\Actor.h" />
     <ClInclude Include="src\game\actors\Boomerang.h" />
     <ClInclude Include="src\game\actors\Enemy.h" />

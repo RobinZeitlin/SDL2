@@ -73,6 +73,8 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 
 	loadLevel = new LoadLevel();
 	loadLevel->load_level_file("src/level");
+
+	levelEditor = new LevelEditor(renderer, camera);
 }
 
 void Game::spawnPlayer(glm::vec2 position) {
@@ -96,6 +98,8 @@ void Game::handleEvents()
 	SDL_Event event;
 
 	SDL_PollEvent(&event);
+
+	ImGui_ImplSDL2_ProcessEvent(&event);
 
 	switch (event.type)
 	{
@@ -179,10 +183,7 @@ void Game::render()
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::Begin("test");
-	ImGui::Text("Hello World");
-
-	ImGui::End();
+	levelEditor->render_level_editor_ui();
 
 	ImGui::Render();
 
