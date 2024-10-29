@@ -15,6 +15,8 @@ int main(int args, char *argv[])
 		game->handleEvents();
 		game->update();
 		game->render();
+
+
 	}
 
 	game->clean();

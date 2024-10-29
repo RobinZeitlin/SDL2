@@ -8,6 +8,11 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <SDL_image.h>
+
+#include <imgui.h>
+#include <imgui_impl_sdl2.h>
+#include <imgui_impl_sdlrenderer2.h>
+
 #include <glm.hpp>
 #include <array>
 

@@ -61,6 +61,13 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 		isRunning = false;
 	}
 
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
+	ImGui_ImplSDLRenderer2_Init(renderer);
+
 	textureManager = new TextureManager();
 	textureManager->init(renderer);
 
@@ -168,7 +175,21 @@ void Game::render()
 		++i;
 	}
 
+	ImGui_ImplSDLRenderer2_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+
+	ImGui::Begin("test");
+	ImGui::Text("Hello World");
+
+	ImGui::End();
+
+	ImGui::Render();
+
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer);
+
 	SDL_RenderPresent(renderer);
 }
 
@@ -191,6 +212,10 @@ Actor* Game::get_overlapping_actor(Actor* other, Collision_Channel channel)
 
 void Game::clean()
 {
+	ImGui_ImplSDLRenderer2_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 
