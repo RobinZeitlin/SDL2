@@ -1,33 +1,50 @@
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-DDDDDD                      DDDDDD
-DDDDDD                   E  DDDDDD
-DDDDDD                      DDDDDD
-DDDDDD                      DDDDDD
-DDDDDD                      DDDDDD
-DDDDDD                      DDDDDD
-DDDDDD                      DDDDDD
-DDDDDD          P           DDDDDD
-DDDDDD                      DDDDDD
-DDDDDD                      DDDDDD
-DDDDDD                      DDDDDD
-DDDDDD                      DDDDDD
-DDDDDD                      DDDDDD
-DDDDDD                      DDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-
-
-Quit map building at this point
-
-List : 
-
-P = player & camera -> spawn point
-E = enemy
-D = dirt -> block
-G = grass -> block
-S = stairs -> block
+PDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+D                                                D
+D                     E                          D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+D                                                D
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD

@@ -22,6 +22,8 @@ public:
 	LevelEditor(SDL_Renderer* gameRenderer, Camera* gameCamera) : renderer(gameRenderer), camera(gameCamera) { 
 		spawn_camera();
 
+		// shows a boring texture until the user has selected anything
+		currentlySelected = textureManager->getTexture("cube");
 	}
 
 	void spawn_camera();
@@ -31,6 +33,8 @@ public:
 
 	void render_level_editor_ui();
 	void render_grid();
+
+	SDL_Texture* currentlySelected;
 
 private:
 	std::vector<std::string> levelNames;
@@ -46,4 +50,5 @@ private:
 
 	bool bGrid = true;
 	int gridSize = 50;
+	int listbox_item_current = 0;
 };

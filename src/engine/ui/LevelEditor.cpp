@@ -53,15 +53,14 @@ void LevelEditor::render_level_editor_ui()
 		levelNamePtrs.push_back(name.c_str());
 	}
 
-	static int listbox_item_current = 0;
-
 	ImGui::Text("Selected -> %s", levelNamePtrs[listbox_item_current]);
 
 	ImGui::ListBox("<-", &listbox_item_current, levelNamePtrs.data(), static_cast<int>(levelNamePtrs.size()), 4);
 
 	if (ImGui::Button("Save Current Level"))
 	{
-		std::cout << "Clicked button!" << std::endl;
+		std::cout << "Level Saved!" << std::endl;
+		game->loadLevel->save_level(levelFolderPath + levelNamePtrs[listbox_item_current]);
 	}
 
 	if (ImGui::Button("Load Current Level"))
@@ -81,7 +80,7 @@ void LevelEditor::render_level_editor_ui()
 	ImGui::SeparatorText("Building");
 
 	ImGui::Text("Selected Block");
-	ImGui::Image((ImTextureID)textureManager->getTexture("cube"), buttonSize);
+	ImGui::Image((ImTextureID)currentlySelected, buttonSize);
 	ImGui::Text("Block List");
 
 	int count = textures.size();
@@ -89,6 +88,8 @@ void LevelEditor::render_level_editor_ui()
 	for (int i = 0; i < count; i++) {
 		if (ImGui::ImageButton((std::to_string(i)).c_str(), (ImTextureID)textures[i], buttonSize))
 		{
+			currentlySelected = textures[i];
+			std::cout << currentlySelected << std::endl;
 			std::cout << "Clicked button!" << std::endl;
 		}
 

@@ -151,10 +151,12 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\game\actors\Actor.cpp" />
     <ClCompile Include="src\game\actors\Boomerang.cpp" />
+    <ClCompile Include="src\game\actors\CameraController.cpp" />
     <ClCompile Include="src\game\actors\Player.cpp" />
     <ClCompile Include="src\game\actors\Projectile.cpp" />
     <ClCompile Include="src\game\terrain\Block.cpp" />
     <ClCompile Include="src\game\terrain\GrassBlock.cpp" />
+    <ClCompile Include="src\game\terrain\LoadLevel.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
