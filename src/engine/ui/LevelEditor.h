@@ -12,16 +12,25 @@
 
 #include "../TextureManager.h"
 
+#include "../../game/actors/CameraController.h"
+
 class LevelEditor
 {
 public:
-	LevelEditor(SDL_Renderer* gameRenderer, Camera* gameCamera) : renderer(gameRenderer), camera(gameCamera) { }
+	LevelEditor(SDL_Renderer* gameRenderer, Camera* gameCamera) : renderer(gameRenderer), camera(gameCamera) { 
+		spawn_camera();
+	}
 
-	SDL_Renderer* renderer;
-	Camera* camera;
+	void spawn_camera();
 
-	bool bGrid = true;
-	int gridSize = 50;
+	void render() {
+		render_level_editor_ui();
+	}
+
+	void update(float dt) {
+		if (cameraController != nullptr)
+			cameraController->update(dt);
+	}
 
 	void render_level_editor_ui()
 	{
@@ -112,4 +121,13 @@ public:
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	}
+
+	private:
+		SDL_Renderer* renderer;
+		Camera* camera;
+
+		CameraController* cameraController = nullptr;
+
+		bool bGrid = true;
+		int gridSize = 50;
 };

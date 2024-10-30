@@ -61,6 +61,11 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 		isRunning = false;
 	}
 
+	if (bEditor)
+		Debug::log("In Editor Mode");
+	else
+		Debug::log("Not In Editor Mode");
+
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -74,13 +79,18 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 	loadLevel = new LoadLevel();
 	loadLevel->load_level_file("src/level");
 
-	levelEditor = new LevelEditor(renderer, camera);
+	if(bEditor)
+		levelEditor = new LevelEditor(renderer, camera);
 }
 
 void Game::spawnPlayer(glm::vec2 position) {
-	if (player == nullptr) {
-		player = new Player();
-		spawnActor(player, position);
+
+	if (!bEditor)
+	{
+		if (player == nullptr) {
+			player = new Player();
+			spawnActor(player, position);
+		}
 	}
 
 	camera = new Camera(position.x, position.y, 800, 600);
@@ -152,6 +162,9 @@ void Game::update()
 			}
 		}
 	}
+
+	if (bEditor)
+		levelEditor->update(deltaTime);
 }
 
 void Game::render()
@@ -183,7 +196,8 @@ void Game::render()
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	levelEditor->render_level_editor_ui();
+	if(bEditor)
+	levelEditor->render();
 
 	ImGui::Render();
 

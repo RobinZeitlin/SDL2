@@ -20,6 +20,8 @@ public:
 
 	void update(float dt) {
 
+		if (game->bEditor) return;
+
 		float distanceToPlayer = transform.get_distance(transform.position, game->player->transform.position);
 
 		if (distanceToPlayer - 16 < proximityRange) {
@@ -42,7 +44,13 @@ public:
 
 		SDL_RenderCopyEx(renderer, texture, &srcR, &destR, transform.rotation.x, NULL, SDL_FLIP_NONE);
 		
-		float distanceToPlayer = transform.get_distance(transform.position, game->player->transform.position);
+
+		float distanceToPlayer;
+
+		if (!game->bEditor)
+			distanceToPlayer = transform.get_distance(transform.position, game->player->transform.position);
+		else
+			distanceToPlayer = 100.0f;
 
 		if (distanceToPlayer - 16 > proximityRange)	{
 			SDL_Color color = GIZMO_COLOR;

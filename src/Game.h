@@ -35,8 +35,10 @@ class LoadLevel;
 class Game
 {
 public:
-	Game();
 
+	bool bEditor = true;
+
+	Game();
 	~Game();
 
 	void init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
