@@ -11,10 +11,11 @@
 class TextureManager
 {
 public:
+	std::unordered_map<std::string, std::string> texturePaths;
 	std::unordered_map<std::string, SDL_Texture*> textures;
 
 	void init(SDL_Renderer* renderer);
-	void loadTexture(std::string textureName, SDL_Renderer* renderer);
+	void loadTexture(std::string textureName, const std::string filePath, SDL_Renderer* renderer);
 
 	SDL_Texture* getTexture(std::string fileName)
 	{

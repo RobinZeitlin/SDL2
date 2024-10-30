@@ -187,7 +187,8 @@
     <ClInclude Include="src\game\terrain\LoadLevel.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\level.csv" />
+    <None Include="src\levels\level.csv" />
+    <None Include="src\levels\level2.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

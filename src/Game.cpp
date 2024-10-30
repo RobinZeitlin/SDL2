@@ -77,7 +77,7 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 	textureManager->init(renderer);
 
 	loadLevel = new LoadLevel();
-	loadLevel->load_level_file("src/level");
+	loadLevel->load_level_file("src/levels/level", true);
 
 	if(bEditor)
 		levelEditor = new LevelEditor(renderer, camera);

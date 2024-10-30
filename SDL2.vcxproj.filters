@@ -87,6 +87,9 @@
     <ClCompile Include="dependencies\imgui\include\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\ui\LevelEditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -172,6 +175,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\level.csv" />
+    <None Include="src\levels\level2.csv" />
+    <None Include="src\levels\level.csv" />
   </ItemGroup>
 </Project>

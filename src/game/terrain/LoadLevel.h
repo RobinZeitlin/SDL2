@@ -17,7 +17,25 @@ using namespace std;
 class LoadLevel
 {
 public:
-	void spawn_level(const std::vector<std::string>& data)
+
+	std::vector<Actor*> currentLevel;
+
+	void add_actor(Actor* actor) { currentLevel.push_back(actor); }
+
+	void clear_current_level() {
+
+		if (currentLevel.size() == 0)
+			return;
+
+		for (auto actor : currentLevel)
+		{
+			actor->destroy();
+			std::cout << "Destroyed" << std::endl;
+		}
+	}
+
+
+	void spawn_level(const std::vector<std::string>& data, bool bSpawnPlayer)
 	{
 		bool shouldExit = false;
 
@@ -27,25 +45,31 @@ public:
 			{
 				glm::vec2 position(j * 32.0f, i * 32.0f);
 				glm::vec2 scale(32.0f, 32.0f);
+				Actor* actor = nullptr;
 
 				switch (data[i][j])	{
 				case 'D':
-						game->spawnActor(new Block(), position, scale);
+				    actor = new Block();
+					game->spawnActor(actor, position, scale);
 					break;
 
 				case 'G':
-					game->spawnActor(new GrassBlock(), position, scale);
+					actor = new GrassBlock();
+					game->spawnActor(actor, position, scale);
 					break;
 
 				case 'S':
-					game->spawnActor(new Stairs(), position, scale);
+				    actor = new Stairs();
+					game->spawnActor(actor, position, scale);
 					break;
 
 				case 'E':
-					game->spawnActor(new Enemy(), position, scale);
+				    actor = new Enemy();
+					game->spawnActor(actor, position, scale);
 					break;
 
 				case 'P':
+					if(bSpawnPlayer)
 					game->spawnPlayer(position);
 					break;
 
@@ -56,11 +80,14 @@ public:
 				default:
 					break;
 				}
+
+				if(actor != nullptr)
+				add_actor(actor);
 			}
 		}
 	}
 
-	void load_level_file(string filePath)
+	void load_level_file(string filePath, bool bSpawnPlayer)
 	{
 		ifstream file(filePath + ".csv");
 		if (!file.is_open()) {
@@ -77,6 +104,7 @@ public:
 
 		file.close();
 
-		spawn_level(data);
+		clear_current_level();
+		spawn_level(data, bSpawnPlayer);
 	}
 };
