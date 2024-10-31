@@ -26,7 +26,8 @@ void LevelEditor::spawn_camera()
 			auto newTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
 			SDL_FreeSurface(tempSurface);
 
-			textures.push_back(newTexture);
+			std::string textureName = entry.path().stem().string();
+			textures[textureName] = newTexture;
 		}
 	}
 }
@@ -83,17 +84,17 @@ void LevelEditor::render_level_editor_ui()
 	ImGui::Image((ImTextureID)currentlySelected, buttonSize);
 	ImGui::Text("Block List");
 
-	int count = textures.size();
-
-	for (int i = 0; i < count; i++) {
-		if (ImGui::ImageButton((std::to_string(i)).c_str(), (ImTextureID)textures[i], buttonSize))
+	for (const auto& [textureName, texture] : textures) {
+		if (ImGui::ImageButton(textureName.c_str(), (ImTextureID)texture, buttonSize))
 		{
-			currentlySelected = textures[i];
-			std::cout << currentlySelected << std::endl;
+			currentlySelected = texture;
+			currentlySelectedName = textureName;
+
+			std::cout << "Selected Texture: " << textureName << std::endl;
 			std::cout << "Clicked button!" << std::endl;
 		}
 
-		if (i % 2 == 1 && i < count - 1) {
+		if ((std::distance(textures.begin(), textures.find(textureName)) + 1) % 2 == 0) {
 			ImGui::NewLine();
 		}
 		else {

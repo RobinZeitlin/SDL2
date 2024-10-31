@@ -23,7 +23,9 @@ public:
 		spawn_camera();
 
 		// shows a boring texture until the user has selected anything
-		currentlySelected = textureManager->getTexture("cube");
+		std::string nameOfFile = "cube";
+		currentlySelected = textureManager->getTexture(nameOfFile);
+		currentlySelectedName = nameOfFile;
 	}
 
 	void spawn_camera();
@@ -35,10 +37,11 @@ public:
 	void render_grid();
 
 	SDL_Texture* currentlySelected;
+	std::string currentlySelectedName;
 
 private:
 	std::vector<std::string> levelNames;
-	std::vector<SDL_Texture*> textures;
+	std::unordered_map<std::string, SDL_Texture*> textures;
 
 	std::string levelFolderPath = "src/levels/";
 	std::string texturesFolderPath = "src/assets/textures/placeables/";

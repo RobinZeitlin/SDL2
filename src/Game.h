@@ -36,7 +36,7 @@ class Game
 {
 public:
 
-	bool bEditor = false;
+	bool bEditor = true;
 
 	Game();
 	~Game();
