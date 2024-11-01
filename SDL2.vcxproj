@@ -147,6 +147,8 @@
     <ClCompile Include="src\engine\Linetrace.h" />
     <ClCompile Include="src\engine\TextureManager.cpp" />
     <ClCompile Include="src\engine\ui\LevelEditor.cpp" />
+    <ClCompile Include="src\engine\ui\Spline.cpp" />
+    <ClCompile Include="src\engine\ui\Spline.h" />
     <ClCompile Include="src\engine\zmath.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\game\actors\Actor.cpp" />
@@ -175,6 +177,7 @@
     <ClInclude Include="src\engine\ParticleController.h" />
     <ClInclude Include="src\engine\TextureManager.h" />
     <ClInclude Include="src\engine\ui\LevelEditor.h" />
+    <ClInclude Include="src\engine\ui\SelectionBar.h" />
     <ClInclude Include="src\game\actors\Actor.h" />
     <ClInclude Include="src\game\actors\Boomerang.h" />
     <ClInclude Include="src\game\actors\CameraController.h" />

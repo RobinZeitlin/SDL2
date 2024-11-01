@@ -32,9 +32,13 @@ void LevelEditor::spawn_camera()
 	}
 }
 
-void LevelEditor::render()
+void LevelEditor::render(SDL_Renderer* renderer)
 {
 	render_level_editor_ui();
+	render_spline_ui();
+
+	spline->render_debug(renderer);
+	selectionBar->render_selection_bar();
 }
 
 void LevelEditor::update(float dt)
@@ -45,6 +49,9 @@ void LevelEditor::update(float dt)
 
 void LevelEditor::render_level_editor_ui()
 {
+	if (bGrid)
+		render_grid();
+
 	ImGui::Begin("Level Editor");
 
 	ImGui::SeparatorText("File Handling");
@@ -89,21 +96,48 @@ void LevelEditor::render_level_editor_ui()
 		{
 			currentlySelected = texture;
 			currentlySelectedName = textureName;
-
-			std::cout << "Selected Texture: " << textureName << std::endl;
-			std::cout << "Clicked button!" << std::endl;
 		}
 
-		if ((std::distance(textures.begin(), textures.find(textureName)) + 1) % 2 == 0) {
-			ImGui::NewLine();
-		}
-		else {
-			ImGui::SameLine();
-		}
+		((std::distance(textures.begin(), textures.find(textureName)) + 1) % 2 == 0) ? ImGui::NewLine() : ImGui::SameLine();
 	}
 
-	if (bGrid)
-		render_grid();
+	ImGui::NewLine();
+
+	ImGui::End();
+}
+
+void LevelEditor::render_spline_ui()
+{
+	ImGui::Begin("Spline Editor");
+
+	ImGui::SeparatorText("Camera Spline");
+
+	splinePointLabels.clear();
+	int i = 0;
+	for (const glm::vec2& point : spline->splinePoints) {
+		splinePointLabels.push_back("X: " + std::to_string((int)point.x) + " - Y: " + std::to_string((int)point.y));
+	}
+
+	std::vector<const char*> splinePointPtrs;
+	for (const std::string& label : splinePointLabels) {
+		splinePointPtrs.push_back(label.c_str());
+	}
+
+	ImGui::ListBox(" ", &listbox_spline_point_current, splinePointPtrs.data(), static_cast<int>(splinePointPtrs.size()), 4);
+
+	ImGui::SameLine();
+
+	// remove spline point
+	if (ImGui::Button("-")) {
+		spline->remove_spline_point();
+	}
+
+	ImGui::SameLine();
+
+	// add spline point
+	if (ImGui::Button("+")) {
+		spline->add_spline_point();
+	}
 
 	ImGui::End();
 }

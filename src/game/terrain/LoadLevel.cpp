@@ -55,8 +55,9 @@ void LoadLevel::clear_current_level()
 	for (auto actor : currentLevel)
 	{
 		actor->destroy();
-		std::cout << "Destroyed" << std::endl;
 	}
+
+	std::cout << "Cleared Grid" << std::endl;
 
 	currentLevel.clear();
 }

@@ -197,7 +197,7 @@ void Game::render()
 	ImGui::NewFrame();
 
 	if(bEditor)
-	levelEditor->render();
+	levelEditor->render(renderer);
 
 	ImGui::Render();
 
