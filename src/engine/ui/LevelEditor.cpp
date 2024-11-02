@@ -114,8 +114,8 @@ void LevelEditor::render_spline_ui()
 
 	splinePointLabels.clear();
 	int i = 0;
-	for (const glm::vec2& point : spline->splinePoints) {
-		splinePointLabels.push_back("X: " + std::to_string((int)point.x) + " - Y: " + std::to_string((int)point.y));
+	for (const auto& point : spline->splinePoints) {
+		splinePointLabels.push_back("X: " + std::to_string((int)point->pos.x) + " - Y: " + std::to_string((int)point->pos.y));
 	}
 
 	std::vector<const char*> splinePointPtrs;
