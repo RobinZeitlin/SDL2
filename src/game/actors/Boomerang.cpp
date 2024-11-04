@@ -56,14 +56,6 @@ void Boomerang::check_overlap()
 		projectileSpeed += 10;
 	}
 
-	Actor* hit_enemy_actor = game->get_overlapping_actor(this, Collision_Channel::Enemy);
-	if (hit_enemy_actor != nullptr)
-	{
-		transform.rotation.x = getBounceDir();
-
-		projectileSpeed += 10;
-	}
-
 	Actor* hit_player_actor = game->get_overlapping_actor(this, Collision_Channel::Player);
 	if (hit_player_actor != nullptr)
 	{

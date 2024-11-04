@@ -145,6 +145,7 @@
     <ClCompile Include="src\engine\Particle.cpp" />
     <ClCompile Include="src\engine\Linetrace.cpp" />
     <ClCompile Include="src\engine\Linetrace.h" />
+    <ClCompile Include="src\engine\ParticleController.cpp" />
     <ClCompile Include="src\engine\TextureManager.cpp" />
     <ClCompile Include="src\engine\ui\LevelEditor.cpp" />
     <ClCompile Include="src\engine\ui\Spline.cpp" />

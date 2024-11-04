@@ -8,16 +8,11 @@ void LevelEditor::spawn_camera()
 	cameraController = new CameraController();
 	game->spawnActor(cameraController, glm::vec2(0));
 
-	for (const auto& entry : std::filesystem::directory_iterator(levelFolderPath))
-	{
-		if (entry.is_regular_file())
-		{
-			std::string levelName = entry.path().stem().string();
-			levelNames.push_back(levelName);
-			std::cout << "Found level: " << levelName << std::endl;
-		}
-	}
+	load_textures();
+	load_levels();
+}
 
+void LevelEditor::load_textures() {
 	for (const auto& entry : std::filesystem::directory_iterator(texturesFolderPath))
 	{
 		if (entry.is_regular_file())
@@ -31,29 +26,43 @@ void LevelEditor::spawn_camera()
 		}
 	}
 }
+void LevelEditor::load_levels() {
+	for (const auto& entry : std::filesystem::directory_iterator(levelFolderPath))
+	{
+		if (entry.is_regular_file())
+		{
+			std::string levelName = entry.path().stem().string();
+			levelNames.push_back(levelName);
+			std::cout << "Found level: " << levelName << std::endl;
+		}
+	}
+}
 
-void LevelEditor::render(SDL_Renderer* renderer)
-{
+void LevelEditor::render(SDL_Renderer* renderer) {
 	render_level_editor_ui();
 	render_spline_ui();
 
 	spline->render_debug(renderer);
 	selectionBar->render_selection_bar();
 }
-
-void LevelEditor::update(float dt)
-{
+void LevelEditor::update(float dt) {
 	if (cameraController != nullptr)
 		cameraController->update(dt);
 }
 
-void LevelEditor::render_level_editor_ui()
-{
+void LevelEditor::render_level_editor_ui() {
+	ImGui::Begin("Level Editor");
+
+	render_level_list();
+	render_settings();
+	render_block_selection();
+
 	if (bGrid)
 		render_grid();
 
-	ImGui::Begin("Level Editor");
-
+	ImGui::End();
+}
+void LevelEditor::render_level_list() {
 	ImGui::SeparatorText("File Handling");
 
 	std::vector<const char*> levelNamePtrs;
@@ -76,16 +85,18 @@ void LevelEditor::render_level_editor_ui()
 		std::cout << "Level Loaded!" << std::endl;
 		game->loadLevel->load_level_file(levelFolderPath + levelNamePtrs[listbox_item_current], false);
 	}
-
-	ImVec2 buttonSize = { 50 , 50 };
-
+}
+void LevelEditor::render_settings() {
 	ImGui::SeparatorText("Settings");
 
 	ImGui::Checkbox("Grid", &bGrid);
 
 	ImGui::SliderInt("Grid Size", &gridSize, 0, 100);
-
+}
+void LevelEditor::render_block_selection() {
 	ImGui::SeparatorText("Building");
+
+	const ImVec2 buttonSize = { 50 , 50 };
 
 	ImGui::Text("Selected Block");
 	ImGui::Image((ImTextureID)currentlySelected, buttonSize);
@@ -102,12 +113,8 @@ void LevelEditor::render_level_editor_ui()
 	}
 
 	ImGui::NewLine();
-
-	ImGui::End();
 }
-
-void LevelEditor::render_spline_ui()
-{
+void LevelEditor::render_spline_ui() {
 	ImGui::Begin("Spline Editor");
 
 	ImGui::SeparatorText("Camera Spline");
@@ -141,9 +148,7 @@ void LevelEditor::render_spline_ui()
 
 	ImGui::End();
 }
-
-void LevelEditor::render_grid()
-{
+void LevelEditor::render_grid() {
 	SDL_SetRenderDrawColor(renderer, 160, 160, 160, 255);
 
 	for (int x = 0; x < gridSize; x++)

@@ -1,21 +1,19 @@
+#include "Particle.h"
+
 #include "../engine/zmath.h"
 
-#include "Particle.h"
 #include "../Game.h"
 
 Particle::Particle(glm::vec2 position, SDL_Texture* texture, int inScale, int spd, float dur)
+	: pos(position), speed(spd), duration(dur)
 {
-	pos.x = position.x;
-	pos.y = position.y;
 	rot = rand() % 361;
+
 	initialScale = rand() % inScale + 4;
 	scale = initialScale;
+	currentDuration = duration;
 
 	m_texture = texture;
-
-	speed = spd;
-	duration = dur;
-	currentDuration = duration;
 }
 
 void Particle::render(SDL_Renderer* renderer)

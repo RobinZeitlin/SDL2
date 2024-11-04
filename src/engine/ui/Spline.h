@@ -12,6 +12,7 @@ public:
         for (auto point : splinePoints)
             delete point;
 
+        clear_spline_points();
         splinePoints.clear();
     }
 
@@ -27,6 +28,12 @@ public:
         if (splinePoints.size() > 0) {
             delete splinePoints.back();     
             splinePoints.pop_back();
+        }
+    }
+
+    void clear_spline_points() {
+        for (auto& point : splinePoints) {
+            delete point;
         }
     }
 

@@ -25,7 +25,6 @@ public:
 	LevelEditor(SDL_Renderer* gameRenderer, Camera* gameCamera) : renderer(gameRenderer), camera(gameCamera) { 
 		spawn_camera();
 
-		// shows a boring texture until the user has selected anything
 		std::string nameOfFile = "cube";
 		currentlySelected = textureManager->getTexture(nameOfFile);
 		currentlySelectedName = nameOfFile;
@@ -40,6 +39,11 @@ public:
 		delete spline;
 	}
 	void spawn_camera();
+	void load_textures();
+	void load_levels();
+	void render_level_list();
+	void render_settings();
+	void render_block_selection();
 
 	void render(SDL_Renderer* renderer);
 	void update(float dt);
@@ -60,8 +64,8 @@ private:
 
 	std::unordered_map<std::string, SDL_Texture*> textures;
 
-	std::string levelFolderPath = "src/levels/";
-	std::string texturesFolderPath = "src/assets/textures/placeables/";
+	const std::string levelFolderPath = "src/levels/";
+	const std::string texturesFolderPath = "src/assets/textures/placeables/";
 
 	SDL_Renderer* renderer;
 	Camera* camera;

@@ -22,13 +22,11 @@ public:
 private:
 	SDL_Texture* m_texture;
 	
-	float velX, velY;
-	float rot;
+	glm::vec2 pos;
 
+	float rot;
 	float scale;
 	float initialScale;
-
-	glm::vec2 pos;
 
 	float speed;
 	float duration;

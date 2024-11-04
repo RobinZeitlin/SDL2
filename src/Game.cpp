@@ -182,7 +182,7 @@ void Game::render()
 	for (size_t i = 0; i < particleControllers.size(); ) {
 		auto* particleCtrl = particleControllers[i];
 
-		if (particleCtrl->isEmpty()) {
+		if (particleCtrl->is_empty()) {
 			particleControllers.erase(particleControllers.begin() + i);
 			delete particleCtrl;
 			return;
