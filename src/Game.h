@@ -26,7 +26,7 @@
 #include "engine/ParticleController.h"
 #include "engine/ui/LevelEditor.h"
 
-#define MAX_ACTORS 1000
+#define MAX_ACTORS 5000
 
 #define GIZMO_COLOR { 0, 255, 0, 255 }
 
@@ -36,7 +36,7 @@ class Game
 {
 public:
 
-	bool bEditor = false;
+	bool bEditor = true;
 
 	Game();
 	~Game();

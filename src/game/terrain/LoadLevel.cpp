@@ -1,164 +1,199 @@
 #include "LoadLevel.h"
+#include <queue>
+#include <algorithm>
 
 void LoadLevel::save_level(const std::string& saveFile)
 {
-	int maxX = 0, maxY = 0;
-	for (const auto& actor : currentLevel) {
-		glm::vec2 pos = actor->transform.position;
-		maxX = std::max(maxX, static_cast<int>(pos.x / 32.0f));
-		maxY = std::max(maxY, static_cast<int>(pos.y / 32.0f));
-	}
+    int maxX = actorGrid.size();
+    int maxY = maxX > 0 ? actorGrid[0].size() : 0;
 
-	// init empty grid
-	std::vector<std::string> levelGrid(maxY + 1, std::string(maxX + 1, ' '));
+    std::vector<std::string> levelGrid(maxY, std::string(maxX, ' '));
 
-	// populate grid
-	for (const auto& actor : currentLevel) {
-		glm::vec2 pos = actor->transform.position;
-		int x = static_cast<int>(pos.x / 32.0f);
-		int y = static_cast<int>(pos.y / 32.0f);
+    for (int x = 0; x < maxX; ++x) {
+        for (int y = 0; y < maxY; ++y) {
+            if (actorGrid[x][y]) {
+                if (dynamic_cast<Block*>(actorGrid[x][y])) levelGrid[y][x] = 'D';
+                else if (dynamic_cast<GrassBlock*>(actorGrid[x][y])) levelGrid[y][x] = 'G';
+                else if (dynamic_cast<Stairs*>(actorGrid[x][y])) levelGrid[y][x] = 'S';
+                else if (dynamic_cast<Enemy*>(actorGrid[x][y])) levelGrid[y][x] = 'E';
+            }
+        }
+    }
 
-		char symbol;
-		if (dynamic_cast<Block*>(actor)) symbol = 'D';
-		else if (dynamic_cast<GrassBlock*>(actor)) symbol = 'G';
-		else if (dynamic_cast<Stairs*>(actor)) symbol = 'S';
-		else if (dynamic_cast<Enemy*>(actor)) symbol = 'E';
-		else continue;
+    levelGrid[0][0] = 'P';
 
-		if (y < levelGrid.size() && x < levelGrid[y].size()) {
-			levelGrid[y][x] = symbol;
-		}
-	}
+    std::ofstream file(saveFile + ".csv");
+    if (!file.is_open()) {
+        Debug::log("File did not open correctly for saving.");
+        return;
+    }
 
-	levelGrid[0][0] = 'P';
+    for (const auto& row : levelGrid) {
+        file << row << '\n';
+    }
 
-	// save the grid to the file
-	std::ofstream file(saveFile + ".csv");
-	if (!file.is_open()) {
-		Debug::log("File did not open correctly for saving.");
-		return;
-	}
-
-	for (const auto& row : levelGrid) {
-		file << row << '\n';
-	}
-
-	file.close();
-	Debug::log("Level saved successfully.");
+    file.close();
+    Debug::log("Level saved successfully.");
 }
 
 void LoadLevel::clear_current_level()
 {
-	if (currentLevel.size() == 0)
-		return;
-
-	for (auto actor : currentLevel)
-	{
-		actor->destroy();
-	}
-
-	std::cout << "Cleared Grid" << std::endl;
-
-	currentLevel.clear();
+    for (auto& row : actorGrid) {
+        for (auto& actor : row) {
+            if (actor) {
+                actor->destroy();
+                actor = nullptr;
+            }
+        }
+    }
+    std::cout << "Cleared Grid" << std::endl;
 }
 
 void LoadLevel::place_actor(glm::vec2 atPos, Actor* actor)
 {
-	if (atPos.x < 0 || atPos.y < 0) return;
+    int x = static_cast<int>(atPos.x / 32);
+    int y = static_cast<int>(atPos.y / 32);
 
-	glm::vec2 flooredPos = glm::vec2((int)(atPos.x / 32) * 32, (int)(atPos.y / 32) * 32);
-
-	game->spawnActor(actor, flooredPos);
-
-	currentLevel.push_back(actor);
+    if (x >= 0 && y >= 0 && x < actorGrid.size() && y < actorGrid[0].size()) {
+        if (actorGrid[x][y] == nullptr) {
+            game->spawnActor(actor, glm::vec2(x * 32, y * 32));
+            actorGrid[x][y] = actor;
+        }
+    }
 }
+
+void LoadLevel::add_actor(glm::vec2 gridPos, Actor* actor)
+{
+    int x = static_cast<int>(gridPos.x);
+    int y = static_cast<int>(gridPos.y);
+
+    if (y >= actorGrid.size()) {
+        actorGrid.resize(y + 1);
+    }
+    if (x >= actorGrid[y].size()) {
+        actorGrid[y].resize(x + 1, nullptr);
+    }
+
+    actorGrid[y][x] = actor;
+}
+
+void LoadLevel::fill_tool(glm::vec2 clickedPos) {
+    int currentX = clickedPos.x / 32;
+    int currentY = clickedPos.y / 32;
+
+    if (currentX < 0 || currentX >= actorGrid.size() ||
+        currentY < 0 || currentY >= actorGrid[0].size()) {
+        return;
+    }
+
+    std::queue<glm::vec2> queue;
+    queue.push({ currentX, currentY });
+
+    std::vector<std::vector<bool>> visited(actorGrid.size(), std::vector<bool>(actorGrid[0].size(), false));
+    visited[currentX][currentY] = true;
+
+    std::vector<glm::vec2> directions = { 
+        {1, 0}, 
+        {0, 1}, 
+        {-1, 0}, 
+        {0, -1} 
+    };
+
+    while (!queue.empty()) {
+        glm::vec2 pos = queue.front();
+        queue.pop();
+
+        game->levelEditor->place_actor({ pos.x * 32, pos.y * 32 });
+
+        for (const auto& dir : directions) {
+            int newX = pos.x + dir.x;
+            int newY = pos.y + dir.y;
+
+            if (newX >= 0 && newY >= 0 && newX < actorGrid.size() && newY < actorGrid[0].size()) {
+                if (!visited[newX][newY] && actorGrid[newX][newY] == nullptr) {
+                    queue.push({ newX, newY });
+                    visited[newX][newY] = true;
+                }
+            }
+        }
+    }
+}
+
+
+
 
 void LoadLevel::destroy_actor(glm::vec2 atPos)
 {
-	glm::vec2 flooredPos = glm::vec2((int)(atPos.x / 32) * 32, (int)(atPos.y / 32) * 32);
-	for (int i = 0; i < currentLevel.size(); i++)
-	{
-		auto actorInLevel = currentLevel[i];
-		if (actorInLevel == nullptr) return;
+    int x = static_cast<int>(atPos.x / 32);
+    int y = static_cast<int>(atPos.y / 32);
 
-		if (actorInLevel->transform.position == flooredPos)
-		{
-			actorInLevel->destroy();
-			currentLevel.erase(currentLevel.begin() + i);
-			break;
-		}
-	}
+    if (x >= 0 && y >= 0 && x < actorGrid.size() && y < actorGrid[0].size()) {
+        if (actorGrid[x][y]) {
+            actorGrid[x][y]->destroy();
+            actorGrid[x][y] = nullptr;
+        }
+    }
 }
 
 void LoadLevel::spawn_level(const std::vector<std::string>& data, bool bSpawnPlayer)
 {
-	bool shouldExit = false;
+    int maxX = data[0].size();
+    int maxY = data.size();
+    actorGrid.resize(maxX, std::vector<Actor*>(maxY, nullptr));
 
-	for (int i = 0; i < data.size() && !shouldExit; ++i)
-	{
-		for (int j = 0; j < data[i].length() && !shouldExit; ++j)
-		{
-			glm::vec2 position(j * 32.0f, i * 32.0f);
-			glm::vec2 scale(32.0f, 32.0f);
-			Actor* actor = nullptr;
+    for (int y = 0; y < maxY; ++y) {
+        for (int x = 0; x < maxX; ++x) {
+            glm::vec2 position(x * 32.0f, y * 32.0f);
+            glm::vec2 scale(32.0f, 32.0f);
+            Actor* actor = nullptr;
 
-			switch (data[i][j]) {
-			case 'D':
-				actor = new Block();
-				game->spawnActor(actor, position, scale);
-				break;
+            switch (data[y][x]) {
+            case 'D':
+                actor = new Block();
+                break;
+            case 'G':
+                actor = new GrassBlock();
+                break;
+            case 'S':
+                actor = new Stairs();
+                break;
+            case 'E':
+                actor = new Enemy();
+                break;
+            case 'P':
+                if (bSpawnPlayer) game->spawnPlayer(position);
+                break;
+            case 'Q':
+                return;
+            default:
+                break;
+            }
 
-			case 'G':
-				actor = new GrassBlock();
-				game->spawnActor(actor, position, scale);
-				break;
-
-			case 'S':
-				actor = new Stairs();
-				game->spawnActor(actor, position, scale);
-				break;
-
-			case 'E':
-				actor = new Enemy();
-				game->spawnActor(actor, position, scale);
-				break;
-
-			case 'P':
-				if (bSpawnPlayer)
-					game->spawnPlayer(position);
-				break;
-
-			case 'Q':
-				shouldExit = true;
-				break;
-
-			default:
-				break;
-			}
-
-			if (actor != nullptr)
-				add_actor(actor);
-		}
-	}
+            if (actor != nullptr) {
+                game->spawnActor(actor, position, scale);
+                actorGrid[x][y] = actor;
+            }
+        }
+    }
 }
 
 void LoadLevel::load_level_file(string filePath, bool bSpawnPlayer)
 {
-	ifstream file(filePath + ".csv");
-	if (!file.is_open()) {
-		Debug::log("File did not open correctly.");
-		return;
-	}
+    std::ifstream file(filePath + ".csv");
+    if (!file.is_open()) {
+        Debug::log("File did not open correctly.");
+        return;
+    }
 
-	vector<string> data;
-	string line;
+    std::vector<std::string> data;
+    std::string line;
 
-	while (getline(file, line)) {
-		data.push_back(line);
-	}
+    while (std::getline(file, line)) {
+        data.push_back(line);
+    }
 
-	file.close();
+    file.close();
 
-	clear_current_level();
-	spawn_level(data, bSpawnPlayer);
+    clear_current_level();
+    spawn_level(data, bSpawnPlayer);
 }

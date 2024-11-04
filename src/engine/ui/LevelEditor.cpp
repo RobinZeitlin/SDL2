@@ -3,6 +3,28 @@
 #include "../../Game.h"
 #include "../../game/terrain/LoadLevel.h"
 
+void LevelEditor::place_actor(glm::vec2 alignedPos)
+{
+	if (currentlySelectedName == "cube")
+	{
+		game->loadLevel->destroy_actor(alignedPos);
+		auto actor = new Block();
+		game->loadLevel->place_actor(alignedPos, actor);
+	}
+	if (currentlySelectedName == "dirt")
+	{
+		game->loadLevel->destroy_actor(alignedPos);
+		auto actor = new GrassBlock();
+		game->loadLevel->place_actor(alignedPos, actor);
+	}
+	if (currentlySelectedName == "enemy")
+	{
+		game->loadLevel->destroy_actor(alignedPos);
+		auto actor = new Enemy();
+		game->loadLevel->place_actor(alignedPos, actor);
+	}
+}
+
 void LevelEditor::spawn_camera()
 {
 	cameraController = new CameraController();
@@ -42,7 +64,7 @@ void LevelEditor::render(SDL_Renderer* renderer) {
 	render_level_editor_ui();
 	render_spline_ui();
 
-	spline->render_debug(renderer);
+	//spline->render_debug(renderer);
 	selectionBar->render_selection_bar();
 }
 void LevelEditor::update(float dt) {

@@ -16,7 +16,7 @@ public:
         splinePoints.clear();
     }
 
-    void render_debug(SDL_Renderer* renderer);
+    //void render_debug(SDL_Renderer* renderer);
 
     void add_spline_point() {
         auto newPoint = new SplinePoint();

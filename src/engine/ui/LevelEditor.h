@@ -38,6 +38,8 @@ public:
 		splinePointLabels.clear();
 		delete spline;
 	}
+
+	void place_actor(glm::vec2 alignedPos);
 	void spawn_camera();
 	void load_textures();
 	void load_levels();

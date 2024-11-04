@@ -1,9 +1,10 @@
 #include "Spline.h"
 
 #include "../../Game.h"
-
+/*
 void Spline::render_debug(SDL_Renderer* renderer)
 {
+    
     glm::vec2 lastPoint = glm::vec2(0);
 
     for (auto point : splinePoints) {
@@ -24,3 +25,4 @@ void Spline::render_debug(SDL_Renderer* renderer)
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
+*/

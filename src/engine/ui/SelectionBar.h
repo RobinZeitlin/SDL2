@@ -14,15 +14,15 @@ public:
 		ImGui::Begin("Selection Bar", nullptr, ImGuiWindowFlags_NoCollapse);
 
 		// change to builder tool
-		if (ImGui::Button("--[]")) {
+		if (ImGui::Button("Build:[B]")) {
 			std::cout << "Builder Tool Selected" << std::endl;
 		}
 
 		ImGui::SameLine();
 
 		// change to spline tool
-		if (ImGui::Button("_/\_")) {
-			std::cout << "Spline Tool Selected" << std::endl;
+		if (ImGui::Button("Fill:[F]")) {
+			std::cout << "Fill Tool Selected" << std::endl;
 		}
 
 		ImGui::End();

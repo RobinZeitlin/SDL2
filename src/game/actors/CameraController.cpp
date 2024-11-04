@@ -21,6 +21,13 @@ void CameraController::update(float dt)
         transform.position.x += playerSpeed * dt;
     }
 
+    if (currentKeyStates[SDL_SCANCODE_B]) {
+        crtEditorTool = CurrentEditorTool::BuilderTool;
+    }
+    if (currentKeyStates[SDL_SCANCODE_F]) {
+        crtEditorTool = CurrentEditorTool::BucketTool;
+    }
+
     int mouseX, mouseY;
 
     SDL_GetMouseState(&mouseX, &mouseY);
@@ -39,25 +46,15 @@ void CameraController::update(float dt)
         game->loadLevel->destroy_actor(alignedPos);
     }
     if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+        switch (crtEditorTool)
+        {
+            case CurrentEditorTool::BuilderTool:
+                game->levelEditor->place_actor(alignedPos);
+            break;
 
-        if (game->levelEditor->currentlySelectedName == "cube")
-        {
-            game->loadLevel->destroy_actor(alignedPos);
-            auto actor = new Block();
-            game->loadLevel->place_actor(alignedPos, actor);
+            case CurrentEditorTool::BucketTool:
+                game->loadLevel->fill_tool(alignedPos);
+            break;
         }
-        if (game->levelEditor->currentlySelectedName == "dirt")
-        {
-            game->loadLevel->destroy_actor(alignedPos);
-            auto actor = new GrassBlock();
-            game->loadLevel->place_actor(alignedPos, actor);
-        }
-        if (game->levelEditor->currentlySelectedName == "enemy")
-        {
-            game->loadLevel->destroy_actor(alignedPos);
-            auto actor = new Enemy();
-            game->loadLevel->place_actor(alignedPos, actor);
-        }
-
     }
 }
