@@ -158,6 +158,8 @@
     <ClCompile Include="src\game\actors\CameraController.cpp" />
     <ClCompile Include="src\game\actors\Player.cpp" />
     <ClCompile Include="src\game\actors\Projectile.cpp" />
+    <ClCompile Include="src\game\ai\PathFinding.cpp" />
+    <ClCompile Include="src\game\ai\PathFinding.h" />
     <ClCompile Include="src\game\terrain\Block.cpp" />
     <ClCompile Include="src\game\terrain\GrassBlock.cpp" />
     <ClCompile Include="src\game\terrain\LoadLevel.cpp" />
@@ -186,6 +188,7 @@
     <ClInclude Include="src\game\actors\CameraController.h" />
     <ClInclude Include="src\game\actors\Enemy.h" />
     <ClInclude Include="src\game\actors\Projectile.h" />
+    <ClInclude Include="src\game\ai\PathNode.h" />
     <ClInclude Include="src\game\terrain\Block.h" />
     <ClInclude Include="src\game\actors\Player.h" />
     <ClInclude Include="src\game\components\location\Transform.h" />
