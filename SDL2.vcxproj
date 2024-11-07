@@ -160,6 +160,7 @@
     <ClCompile Include="src\game\actors\Projectile.cpp" />
     <ClCompile Include="src\game\ai\PathFinding.cpp" />
     <ClCompile Include="src\game\ai\PathFinding.h" />
+    <ClCompile Include="src\game\ai\PathFindingManager.cpp" />
     <ClCompile Include="src\game\terrain\Block.cpp" />
     <ClCompile Include="src\game\terrain\GrassBlock.cpp" />
     <ClCompile Include="src\game\terrain\LoadLevel.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="src\engine\DebugDraw.h" />
     <ClInclude Include="src\engine\Particle.h" />
     <ClInclude Include="src\engine\ParticleController.h" />
+    <ClInclude Include="src\game\ai\PathFindingManager.h" />
     <ClInclude Include="src\engine\TextureManager.h" />
     <ClInclude Include="src\engine\ui\LevelEditor.h" />
     <ClInclude Include="src\engine\ui\SelectionBar.h" />

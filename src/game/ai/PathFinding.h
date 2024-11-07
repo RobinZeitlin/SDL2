@@ -19,12 +19,11 @@ public:
 	PathFinding(int width, int height);
 
 	std::vector<PathNode*> FindPath(int startX, int startY, int endX, int endY);
+	std::vector<PathNode*> GetNeighbourList(PathNode* pathNode);
+	std::vector<PathNode*> CalculatePath(PathNode* endNode);
 
 	PathNode* GetNode(int x, int y) const;
-
-	int CalculateDistanceCost(PathNode* a, PathNode* b);
-
 	PathNode* GetLowestFCostNode(std::vector<PathNode*> pathNodeList);
 
-	std::vector<PathNode*> CalculatePath(PathNode* endNode);
+	int CalculateDistanceCost(PathNode* a, PathNode* b);
 };

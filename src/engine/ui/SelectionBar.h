@@ -9,7 +9,7 @@ public:
 
 	void render_selection_bar()
 	{
-		ImGui::SetNextWindowSize(ImVec2(125, 60));
+		ImGui::SetNextWindowSize(ImVec2(220, 60));
 
 		ImGui::Begin("Selection Bar", nullptr, ImGuiWindowFlags_NoCollapse);
 

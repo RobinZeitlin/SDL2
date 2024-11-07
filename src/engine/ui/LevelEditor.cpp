@@ -156,14 +156,12 @@ void LevelEditor::render_spline_ui() {
 
 	ImGui::SameLine();
 
-	// remove spline point
 	if (ImGui::Button("-")) {
 		spline->remove_spline_point();
 	}
 
 	ImGui::SameLine();
 
-	// add spline point
 	if (ImGui::Button("+")) {
 		spline->add_spline_point();
 	}

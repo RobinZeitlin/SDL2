@@ -30,6 +30,8 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 {
 	Debug::startUp();
 
+	pathFindingManager = new PathFindingManager(50, 50);
+
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -132,7 +134,6 @@ void Game::handleEvents()
 	}
 }
 
-
 void Game::update()
 {
 	Uint32 currentTime = SDL_GetTicks();
@@ -148,7 +149,6 @@ void Game::update()
 				auto layerIndex = static_cast<size_t>(renderLayer);
 
 				layers[layerIndex].erase(std::remove(layers[layerIndex].begin(), layers[layerIndex].end(), actorList[i]), layers[layerIndex].end());
-
 				actorList[i] = nullptr;
 
 				return;
@@ -200,6 +200,8 @@ void Game::render()
 	levelEditor->render(renderer);
 
 	ImGui::Render();
+
+	pathFindingManager->render_grid(renderer);
 
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 

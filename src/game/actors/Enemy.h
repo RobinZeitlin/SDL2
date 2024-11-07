@@ -3,6 +3,8 @@
 #include "Actor.h"
 #include "../../engine/DebugDraw.h"
 
+#include <queue>
+
 class Camera;
 
 class Enemy : public Actor
@@ -16,18 +18,23 @@ public:
 		render_layer = Render_Layer::Entities;
 
 		game->layers[static_cast<size_t>(render_layer)].push_back(this);
+
+		pathPositions = game->pathFindingManager->get_path_from_to(transform.position / glm::vec2(32), glm::vec2(0));
+
+		std::cout << "Initialized pathPositions size: " << pathPositions.size() << std::endl;
 	}
 
 	void update(float dt) {
+		std::cout << "Current pathPositions size: " << pathPositions.size() << std::endl;
 
 		if (game->bEditor) return;
 
 		float distanceToPlayer = transform.get_distance(transform.position, game->player->transform.position);
 
-		if (distanceToPlayer - 16 < proximityRange) {
+		if (distanceToPlayer - 16 < proximityRange && pathPositions.size() > 0) {
 			transform.position += (-transform.get_transform_up() * walkingSpeed) * dt;
 
-			glm::vec2 direction = transform.get_direction_towards(transform.position, game->player->transform.position);
+			glm::vec2 direction = transform.get_direction_towards(transform.position, pathPositions.back());
 
 			float angle = std::atan2(direction.y, direction.x);
 
@@ -43,7 +50,6 @@ public:
 		SDL_Rect destR = { (transform.position.x) - camera->x, (transform.position.y) - camera->y, 32, 32 };
 
 		SDL_RenderCopyEx(renderer, texture, &srcR, &destR, transform.rotation.x, NULL, SDL_FLIP_NONE);
-		
 
 		float distanceToPlayer;
 
@@ -83,4 +89,6 @@ public:
 private:
 	float walkingSpeed = 250;
 	float proximityRange = 250;
+
+	std::queue<glm::vec2> pathPositions;
 };

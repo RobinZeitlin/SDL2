@@ -114,6 +114,9 @@
     <ClCompile Include="src\game\ai\PathFinding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\ai\PathFindingManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -204,6 +207,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\game\ai\PathNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\ai\PathFindingManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

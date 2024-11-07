@@ -16,10 +16,12 @@
 #include <glm.hpp>
 #include <array>
 
+#include "Camera.h"
+
 #include "game/actors/Actor.h"
 #include "game/actors/Player.h"
 #include "game/actors/Boomerang.h"
-#include "Camera.h"
+#include "game/ai/PathFindingManager.h"
 
 #include "engine/Debug.h"
 #include "engine/TextureManager.h"
@@ -36,7 +38,7 @@ class Game
 {
 public:
 
-	bool bEditor = true;
+	bool bEditor = false;
 
 	Game();
 	~Game();
@@ -83,6 +85,7 @@ public:
 
 	LevelEditor* levelEditor;
 	LoadLevel* loadLevel;
+	PathFindingManager* pathFindingManager;
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;
