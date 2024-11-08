@@ -7,19 +7,16 @@ void LevelEditor::place_actor(glm::vec2 alignedPos)
 {
 	if (currentlySelectedName == "cube")
 	{
-		game->loadLevel->destroy_actor(alignedPos);
 		auto actor = new Block();
 		game->loadLevel->place_actor(alignedPos, actor);
 	}
 	if (currentlySelectedName == "dirt")
 	{
-		game->loadLevel->destroy_actor(alignedPos);
 		auto actor = new GrassBlock();
 		game->loadLevel->place_actor(alignedPos, actor);
 	}
 	if (currentlySelectedName == "enemy")
 	{
-		game->loadLevel->destroy_actor(alignedPos);
 		auto actor = new Enemy();
 		game->loadLevel->place_actor(alignedPos, actor);
 	}

@@ -2,6 +2,9 @@
 
 class PathNode {
 public:
+
+	PathNode(int posX, int posY) : x(posX), y(posY) { };
+
 	int x;
 	int y;
 

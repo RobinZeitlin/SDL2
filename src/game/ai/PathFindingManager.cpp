@@ -17,7 +17,7 @@ std::queue<glm::vec2> PathFindingManager::get_path_from_to(glm::vec2 from, glm::
             for (auto* pathNode : path) {
                 if (pathNode != nullptr) {
                     std::cout << "X: " << pathNode->x << " Y: " << pathNode->y << std::endl;
-                    positions.push({ pathNode->x, pathNode->y });
+                    positions.push({ pathNode->x * 32, pathNode->y * 32 });
                 }
             }
         }

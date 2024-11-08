@@ -1,11 +1,13 @@
 #include "PathFinding.h"
 
-PathFinding::PathFinding(int width, int height)
-{
-	grid.resize(height);
-	for (int i = 0; i < height; ++i) {
-		grid[i].resize(width, nullptr);
-	}
+PathFinding::PathFinding(int width, int height) {
+    grid.resize(height);
+    for (int y = 0; y < height; ++y) {
+        grid[y].resize(width);
+        for (int x = 0; x < width; ++x) {
+            grid[y][x] = new PathNode(x, y);
+        }
+    }
 }
 
 std::vector<PathNode*> PathFinding::FindPath(int startX, int startY, int endX, int endY)

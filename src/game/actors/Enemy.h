@@ -19,26 +19,35 @@ public:
 
 		game->layers[static_cast<size_t>(render_layer)].push_back(this);
 
-		pathPositions = game->pathFindingManager->get_path_from_to(transform.position / glm::vec2(32), glm::vec2(0));
 
-		std::cout << "Initialized pathPositions size: " << pathPositions.size() << std::endl;
 	}
 
 	void update(float dt) {
-		std::cout << "Current pathPositions size: " << pathPositions.size() << std::endl;
+
+		if (pathPositions.empty()) {
+			std::cout << "Enemy position before pathfinding: " << transform.position.x << ", " << transform.position.y << std::endl;
+
+			pathPositions = game->pathFindingManager->get_path_from_to(transform.position / glm::vec2(32), glm::vec2(0));
+
+			pathPositions.push({ 1000, 1000 });
+			std::cout << "Initialized pathPositions size: " << pathPositions.size() << std::endl;
+		}
 
 		if (game->bEditor) return;
 
 		float distanceToPlayer = transform.get_distance(transform.position, game->player->transform.position);
 
-		if (distanceToPlayer - 16 < proximityRange && pathPositions.size() > 0) {
-			transform.position += (-transform.get_transform_up() * walkingSpeed) * dt;
+		if (distanceToPlayer - 16 < proximityRange && pathPositions.size() > 0 && !pathPositions.empty()) {
+				float distanceToNextGoal = transform.get_distance(transform.position, pathPositions.front());
+				if (distanceToNextGoal < 1) pathPositions.pop();
 
-			glm::vec2 direction = transform.get_direction_towards(transform.position, pathPositions.back());
+				transform.position += (-transform.get_transform_up() * walkingSpeed) * dt;
 
-			float angle = std::atan2(direction.y, direction.x);
+				glm::vec2 direction = transform.get_direction_towards(transform.position, pathPositions.front());
 
-			transform.rotation.x = glm::degrees(angle);
+				float angle = std::atan2(direction.y, direction.x);
+
+				transform.rotation.x = glm::degrees(angle);
 		}
 
 		check_overlap();
@@ -52,6 +61,24 @@ public:
 		SDL_RenderCopyEx(renderer, texture, &srcR, &destR, transform.rotation.x, NULL, SDL_FLIP_NONE);
 
 		float distanceToPlayer;
+
+		std::vector<glm::vec2> positions;
+		std::queue<glm::vec2> positionsCopy = pathPositions;
+
+		while (!positionsCopy.empty()) {
+			positions.push_back(positionsCopy.front());
+			positionsCopy.pop();
+		}
+
+		for (size_t i = 1; i < positions.size(); ++i) {
+			const glm::vec2& lastPos = positions[i - 1];
+			const glm::vec2& pos = positions[i];
+
+			SDL_Color color = GIZMO_COLOR;
+			SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+			SDL_RenderDrawLineF(renderer, lastPos.x - game->camera->x, lastPos.y - game->camera->y, pos.x - game->camera->x, pos.y - game->camera->y);
+		}
+
 
 		if (!game->bEditor)
 			distanceToPlayer = transform.get_distance(transform.position, game->player->transform.position);
