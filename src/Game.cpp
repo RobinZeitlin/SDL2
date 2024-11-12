@@ -30,8 +30,6 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 {
 	Debug::startUp();
 
-	pathFindingManager = new PathFindingManager(50, 50);
-
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -80,6 +78,8 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 
 	loadLevel = new LoadLevel();
 	loadLevel->load_level_file("src/levels/level", true);
+
+	pathFindingManager = new PathFindingManager(50, 50);
 
 	if(bEditor)
 		levelEditor = new LevelEditor(renderer, camera);

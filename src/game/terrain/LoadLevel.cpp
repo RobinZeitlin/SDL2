@@ -197,3 +197,21 @@ void LoadLevel::load_level_file(string filePath, bool bSpawnPlayer)
     clear_current_level();
     spawn_level(data, bSpawnPlayer);
 }
+
+bool LoadLevel::is_walkable(glm::vec2 posInGrid)
+{
+    int x = static_cast<int>(posInGrid.x);
+    int y = static_cast<int>(posInGrid.y);
+
+    if (actorGrid.empty()) return true;
+
+    if (x < 0 || x >= actorGrid.size() || y < 0 || y >= actorGrid[x].size()) {
+        return false;
+    }
+
+    if (actorGrid[x][y] != nullptr) {
+        return false;
+    }
+
+    return true;
+}

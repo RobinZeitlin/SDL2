@@ -18,8 +18,6 @@ public:
 		render_layer = Render_Layer::Entities;
 
 		game->layers[static_cast<size_t>(render_layer)].push_back(this);
-
-
 	}
 
 	void update(float dt) {

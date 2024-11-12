@@ -32,6 +32,8 @@ public:
 	void spawn_level(const std::vector<std::string>& data, bool bSpawnPlayer);
 	void load_level_file(string filePath, bool bSpawnPlayer);
 
+	bool is_walkable(glm::vec2 posInGrid);
+
 	std::vector<std::vector<Actor*>> actorGrid;
 	std::vector<Actor*> currentLevel;
 };

@@ -1,11 +1,15 @@
 #include "PathFinding.h"
 
+#include "../../Game.h"
+#include "../terrain/LoadLevel.h"
+
 PathFinding::PathFinding(int width, int height) {
     grid.resize(height);
     for (int y = 0; y < height; ++y) {
         grid[y].resize(width);
         for (int x = 0; x < width; ++x) {
             grid[y][x] = new PathNode(x, y);
+            grid[y][x]->isWalkable = game->loadLevel->is_walkable({ x, y });
         }
     }
 }
@@ -62,6 +66,12 @@ std::vector<PathNode*> PathFinding::FindPath(int startX, int startY, int endX, i
                     << currentNode->x << ", " << currentNode->y << ")" << std::endl;
                 continue;
             }
+            if (!neighbourNode->isWalkable) {
+                closedList.push_back(neighbourNode);
+                continue;
+            }
+
+
             if (std::find(closedList.begin(), closedList.end(), neighbourNode) != closedList.end())
                 continue;
 

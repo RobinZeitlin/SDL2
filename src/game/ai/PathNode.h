@@ -12,6 +12,8 @@ public:
 	int hCost;
 	int fCost;
 
+	bool isWalkable;
+
 	PathNode* cameFromNode;
 
 	void CalculateFCost() {
