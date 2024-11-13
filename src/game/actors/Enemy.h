@@ -20,25 +20,27 @@ public:
 		game->layers[static_cast<size_t>(render_layer)].push_back(this);
 	}
 
+	glm::vec2 lastPlayerPos = glm::vec2(0);
+
 	void update(float dt) {
-
-		if (pathPositions.empty()) {
-			std::cout << "Enemy position before pathfinding: " << transform.position.x << ", " << transform.position.y << std::endl;
-
-			pathPositions = game->pathFindingManager->get_path_from_to(transform.position / glm::vec2(32), glm::vec2(0));
-
-			pathPositions.push({ 1000, 1000 });
-			std::cout << "Initialized pathPositions size: " << pathPositions.size() << std::endl;
-		}
 
 		if (game->bEditor) return;
 
+		glm::vec2 playerPos = game->player->transform.position;
 		float distanceToPlayer = transform.get_distance(transform.position, game->player->transform.position);
 
-		if (distanceToPlayer - 16 < proximityRange && pathPositions.size() > 0 && !pathPositions.empty()) {
-				float distanceToNextGoal = transform.get_distance(transform.position, pathPositions.front());
-				if (distanceToNextGoal < 1) pathPositions.pop();
 
+		if (pathPositions.empty() || glm::distance(lastPlayerPos, playerPos) > 10.0f) {
+			lastPlayerPos = playerPos;
+			pathPositions = game->pathFindingManager->get_path_from_to(
+				transform.position / glm::vec2(32),
+				playerPos / glm::vec2(32)
+			);
+		}
+
+
+		if (distanceToPlayer - 16 < proximityRange && pathPositions.size() > 0) {
+			
 				transform.position += (-transform.get_transform_up() * walkingSpeed) * dt;
 
 				glm::vec2 direction = transform.get_direction_towards(transform.position, pathPositions.front());
@@ -46,6 +48,11 @@ public:
 				float angle = std::atan2(direction.y, direction.x);
 
 				transform.rotation.x = glm::degrees(angle);
+
+				float distanceToNextGoal = transform.get_distance(transform.position, pathPositions.front());
+				if (distanceToNextGoal < 1) {
+					pathPositions.pop();
+				}
 		}
 
 		check_overlap();

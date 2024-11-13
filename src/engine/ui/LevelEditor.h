@@ -66,16 +66,19 @@ private:
 
 	std::unordered_map<std::string, SDL_Texture*> textures;
 
-	const std::string levelFolderPath = "src/levels/";
-	const std::string texturesFolderPath = "src/assets/textures/placeables/";
-
 	SDL_Renderer* renderer;
 	Camera* camera;
 
 	CameraController* cameraController = nullptr;
 
+	const std::string levelFolderPath = "src/levels/";
+	const std::string texturesFolderPath = "src/assets/textures/placeables/";
+
 	bool bGrid = true;
+
 	int gridSize = 50;
+	
+	// imgui
 	int listbox_item_current = 0;
 	int listbox_spline_point_current = 0;
 };

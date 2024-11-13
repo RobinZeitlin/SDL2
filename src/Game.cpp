@@ -23,7 +23,6 @@ Game::Game()
 
 Game::~Game()
 {	 
-	
 }
 
 void Game::init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen)
@@ -169,6 +168,14 @@ void Game::update()
 
 void Game::render()
 {
+	static float lastTime = 0.0f;
+	static float deltaTime = 0.0f;
+	float currentTime = SDL_GetTicks() / 1000.0f;
+	deltaTime = currentTime - lastTime;
+	lastTime = currentTime;
+
+	float fps = 1.0f / deltaTime;
+
 	SDL_RenderClear(renderer);
 
 	for (size_t layer = 0; layer < layers.size(); layer++) {
@@ -179,17 +186,16 @@ void Game::render()
 		}
 	}
 
-	for (size_t i = 0; i < particleControllers.size(); ) {
+	for (size_t i = 0; i < particleControllers.size(); i++) {
 		auto* particleCtrl = particleControllers[i];
 
 		if (particleCtrl->is_empty()) {
 			particleControllers.erase(particleControllers.begin() + i);
 			delete particleCtrl;
-			return;
+			continue;
 		}
-
+		else
 		particleCtrl->render(renderer);
-		++i;
 	}
 
 	ImGui_ImplSDLRenderer2_NewFrame();
@@ -198,6 +204,12 @@ void Game::render()
 
 	if(bEditor)
 	levelEditor->render(renderer);
+
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
+	ImGui::SetNextWindowBgAlpha(0);
+	ImGui::Begin("FPS Display", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar);
+	ImGui::Text("FPS: %.1f", fps);
+	ImGui::End();
 
 	ImGui::Render();
 

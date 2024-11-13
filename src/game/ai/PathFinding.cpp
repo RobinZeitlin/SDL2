@@ -3,11 +3,9 @@
 #include "../../Game.h"
 #include "../terrain/LoadLevel.h"
 
-PathFinding::PathFinding(int width, int height) {
-    grid.resize(height);
-    for (int y = 0; y < height; ++y) {
-        grid[y].resize(width);
-        for (int x = 0; x < width; ++x) {
+PathFinding::PathFinding() {
+    for (int y = 0; y < grid.size(); ++y) {
+        for (int x = 0; x < grid[y].size(); ++x) {
             grid[y][x] = new PathNode(x, y);
             grid[y][x]->isWalkable = game->loadLevel->is_walkable({ x, y });
         }
@@ -20,8 +18,6 @@ std::vector<PathNode*> PathFinding::FindPath(int startX, int startY, int endX, i
     PathNode* endNode = GetNode(endX, endY);
 
     if (startNode == nullptr || endNode == nullptr) {
-        std::cout << "Error: Missing start or end node at (" << startX << ", " << startY
-            << ") or (" << endX << ", " << endY << ")" << std::endl;
         return std::vector<PathNode*>();
     }
 
@@ -33,7 +29,6 @@ std::vector<PathNode*> PathFinding::FindPath(int startX, int startY, int endX, i
         for (int y = 0; y < grid[x].size(); y++) {
             PathNode* pathNode = grid[x][y];
             if (pathNode == nullptr) {
-                std::cout << "Error: Found nullptr in grid at (" << x << ", " << y << ")" << std::endl;
                 continue;
             }
             pathNode->gCost = std::numeric_limits<int>::max();
@@ -49,7 +44,6 @@ std::vector<PathNode*> PathFinding::FindPath(int startX, int startY, int endX, i
     while (!openList.empty()) {
         PathNode* currentNode = GetLowestFCostNode(openList);
         if (currentNode == nullptr) {
-            std::cout << "Error: GetLowestFCostNode returned nullptr" << std::endl;
             return std::vector<PathNode*>();
         }
 
@@ -62,8 +56,6 @@ std::vector<PathNode*> PathFinding::FindPath(int startX, int startY, int endX, i
 
         for (PathNode* neighbourNode : GetNeighbourList(currentNode)) {
             if (neighbourNode == nullptr) {
-                std::cout << "Error: Found nullptr in neighbor list of node at ("
-                    << currentNode->x << ", " << currentNode->y << ")" << std::endl;
                 continue;
             }
             if (!neighbourNode->isWalkable) {
@@ -140,16 +132,10 @@ PathNode* PathFinding::GetNode(int x, int y) const {
     if (y >= 0 && y < grid.size() && x >= 0 && x < grid[y].size()) {
         PathNode* node = grid[y][x];
         if (node) {
-            std::cout << "Retrieved node at (" << x << ", " << y << ")" << std::endl;
             return node;
         }
-        else {
-            std::cout << "No node found at (" << x << ", " << y << ")" << std::endl;
-        }
     }
-    else {
-        std::cout << "Coordinates (" << x << ", " << y << ") are out of grid bounds." << std::endl;
-    }
+
     return nullptr;
 }
 

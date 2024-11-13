@@ -2,6 +2,10 @@
 
 ParticleController::ParticleController(glm::vec2 pos, SDL_Texture* texture, int maxParticles, int inScale, int spd, float dur)
 {
+	for (int i = 0; i < MAX_PARTICLES; ++i) {
+		particleList[i].reserve(maxParticles);
+	}
+
 	for (int i = 0; i < maxParticles; i++) {
 		if (i >= MAX_PARTICLES)
 			break;
@@ -16,18 +20,23 @@ ParticleController::ParticleController(glm::vec2 pos, SDL_Texture* texture, int 
 void ParticleController::render(SDL_Renderer* renderer)
 {
 	for (int i = 0; i < MAX_PARTICLES; ++i) {
-		for (auto particle : particleList[i]) {
-			if (particle == nullptr)
-				return;
+		for (auto it = particleList[i].begin(); it != particleList[i].end();) {
+			auto particle = *it;
+
+			if (particle == nullptr) {
+				++it;
+				continue;
+			}
 
 			if (particle->isDestroyed()) {
-				particleList->at(i) = nullptr;
+				it = particleList[i].erase(it);
 				delete particle;
-
-				return;
+				continue;
 			}
 
 			particle->render(renderer);
+			++it;
+
 		}
 	}
 }

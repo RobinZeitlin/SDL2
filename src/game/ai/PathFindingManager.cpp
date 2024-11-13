@@ -12,24 +12,18 @@ std::queue<glm::vec2> PathFindingManager::get_path_from_to(glm::vec2 from, glm::
         std::vector<PathNode*> path = pathFinding->FindPath(from.x, from.y, to.x, to.y);
 
         if (!path.empty()) {
-            std::cout << "Found Path at:" << std::endl;
 
             for (auto* pathNode : path) {
                 if (pathNode != nullptr) {
-                    std::cout << "X: " << pathNode->x << " Y: " << pathNode->y << std::endl;
                     positions.push({ pathNode->x * 32, pathNode->y * 32 });
                 }
             }
         }
-        else
-        {
-            std::cout << "No path found from (" << from.x << ", " << from.y << ") to (" << to.x << ", " << to.y << ")" << std::endl;
-        }
+
     }
-    else
-    {
-        std::cout << "PathFinding instance is nullptr." << std::endl;
-    }
+
+    if (positions.size() > 1)
+        positions.pop();
 
     return positions;
 }
