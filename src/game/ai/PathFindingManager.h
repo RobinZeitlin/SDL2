@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PathFinding.h"
+
 #include <SDL.h>
 #include <queue>
 

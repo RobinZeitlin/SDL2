@@ -13,9 +13,7 @@ public:
     ~ParticleController() {
         for (int i = 0; i < MAX_PARTICLES; ++i) {
             for (auto particle : particleList[i]) {
-                if (particle != nullptr) {
                     delete particle;
-                }
             }
             particleList[i].clear();
         }

@@ -21,7 +21,6 @@ std::queue<glm::vec2> PathFindingManager::get_path_from_to(glm::vec2 from, glm::
                 }
             }
         }
-
     }
 
     if (positions.size() > 1)
