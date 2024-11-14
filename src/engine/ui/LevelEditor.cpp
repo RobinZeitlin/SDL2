@@ -5,19 +5,17 @@
 
 void LevelEditor::place_actor(glm::vec2 alignedPos)
 {
-	if (currentlySelectedName == "cube")
-	{
+	if (currentlySelectedName == "cube") {
 		auto actor = new Block();
 		game->loadLevel->place_actor(alignedPos, actor);
-	}
-	if (currentlySelectedName == "dirt")
-	{
+	} else if (currentlySelectedName == "dirt") {
 		auto actor = new GrassBlock();
 		game->loadLevel->place_actor(alignedPos, actor);
-	}
-	if (currentlySelectedName == "enemy")
-	{
+	} else if (currentlySelectedName == "enemy") {
 		auto actor = new Enemy();
+		game->loadLevel->place_actor(alignedPos, actor);
+	} else if (currentlySelectedName == "playerspawnpoint") {
+		auto actor = new SpawnPoint();
 		game->loadLevel->place_actor(alignedPos, actor);
 	}
 }

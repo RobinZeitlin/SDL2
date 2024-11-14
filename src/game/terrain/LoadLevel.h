@@ -12,6 +12,7 @@
 #include "../terrain/GrassBlock.h"
 #include "../terrain/Stairs.h"
 #include "../actors/Enemy.h"
+#include "../terrain/SpawnPoint.h"
 
 using namespace std;
 

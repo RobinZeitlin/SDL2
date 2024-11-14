@@ -6,7 +6,7 @@
 class Player : public Actor 
 {
 public:
-	Player();
+	Player(glm::vec2 startPos);
 	~Player() {	};
 
 	void update(float dt) override;

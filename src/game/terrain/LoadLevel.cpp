@@ -12,15 +12,14 @@ void LoadLevel::save_level(const std::string& saveFile)
     for (int x = 0; x < maxX; ++x) {
         for (int y = 0; y < maxY; ++y) {
             if (actorGrid[x][y]) {
-                if (dynamic_cast<Block*>(actorGrid[x][y])) levelGrid[y][x] = 'D';
-                else if (dynamic_cast<GrassBlock*>(actorGrid[x][y])) levelGrid[y][x] = 'G';
+                if (dynamic_cast<GrassBlock*>(actorGrid[x][y])) levelGrid[y][x] = 'G';
                 else if (dynamic_cast<Stairs*>(actorGrid[x][y])) levelGrid[y][x] = 'S';
                 else if (dynamic_cast<Enemy*>(actorGrid[x][y])) levelGrid[y][x] = 'E';
+                else if (dynamic_cast<SpawnPoint*>(actorGrid[x][y])) levelGrid[y][x] = 'P';
+                else if (dynamic_cast<Block*>(actorGrid[x][y])) levelGrid[y][x] = 'D';
             }
         }
     }
-
-    levelGrid[0][0] = 'P';
 
     std::ofstream file(saveFile + ".csv");
     if (!file.is_open()) {
@@ -119,9 +118,6 @@ void LoadLevel::fill_tool(glm::vec2 clickedPos) {
     }
 }
 
-
-
-
 void LoadLevel::destroy_actor(glm::vec2 atPos)
 {
     int x = static_cast<int>(atPos.x / 32);
@@ -161,7 +157,9 @@ void LoadLevel::spawn_level(const std::vector<std::string>& data, bool bSpawnPla
                 actor = new Enemy();
                 break;
             case 'P':
-                if (bSpawnPlayer) game->spawnPlayer(position);
+                if (bSpawnPlayer) {
+                    game->spawnPlayer(position);
+                }
                 break;
             case 'Q':
                 return;

@@ -81,16 +81,12 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 }
 
 void Game::spawnPlayer(glm::vec2 position) {
-
-	if (!bEditor)
-	{
-		if (player == nullptr) {
-			player = new Player();
-			spawnActor(player, position);
-		}
+	if (!bEditor) {
+		player = new Player(position);
+		spawnActor(player, position);
 	}
 
-	camera = new Camera(position.x, position.y, 800, 600);
+	camera = new Camera(position.x, position.y, 1000, 800);
 }
 
 void Game::spawn_particle_system(std::unique_ptr<ParticleController> particleCtrl)

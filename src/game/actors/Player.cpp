@@ -4,7 +4,7 @@
 #include "../../engine/ParticleController.h"
 #include "../../engine/AABB.h"
 
-Player::Player()
+Player::Player(glm::vec2 startPos)
 {
 	texture = textureManager->getTexture("player");
 
@@ -13,12 +13,14 @@ Player::Player()
 
     actorName = "Player";
 
+    transform.position = startPos;
+
     weapon = nullptr;
 
     game->layers[static_cast<size_t>(render_layer)].push_back(this);
 
     auto boomerang = new Boomerang();
-    game->spawnActor(boomerang, glm::vec2(300.0f));
+    game->spawnActor(boomerang, glm::vec2(startPos));
 }
 
 void Player::update(float dt)

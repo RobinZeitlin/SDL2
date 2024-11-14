@@ -117,6 +117,12 @@
     <ClCompile Include="src\game\ai\PathFindingManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\terrain\SpawnPoint.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\terrain\SpawnPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">

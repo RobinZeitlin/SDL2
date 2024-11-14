@@ -12,8 +12,7 @@ PathFinding::PathFinding() {
     }
 }
 
-PathFinding::~PathFinding()
-{
+PathFinding::~PathFinding() {
     for (int y = 0; y < grid.size(); y++) {
         for (int x = 0; x < grid[y].size(); x++) {
             delete grid[y][x];

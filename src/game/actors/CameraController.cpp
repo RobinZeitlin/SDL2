@@ -5,6 +5,7 @@
 
 void CameraController::update(float dt)
 {
+    std::cout << "Spawned Camera Controller" << std::endl;
     const float playerSpeed = 350.0f;
     const Uint8* currentKeyStates = SDL_GetKeyboardState(nullptr);
 

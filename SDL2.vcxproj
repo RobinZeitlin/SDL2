@@ -164,6 +164,8 @@
     <ClCompile Include="src\game\terrain\Block.cpp" />
     <ClCompile Include="src\game\terrain\GrassBlock.cpp" />
     <ClCompile Include="src\game\terrain\LoadLevel.cpp" />
+    <ClCompile Include="src\game\terrain\SpawnPoint.cpp" />
+    <ClCompile Include="src\game\terrain\SpawnPoint.h" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>

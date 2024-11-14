@@ -41,7 +41,7 @@ public:
 	bool bEditor = false;
 
 	Game();
-	~Game() = default;
+	~Game();
 
 	void init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 
