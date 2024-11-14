@@ -21,10 +21,6 @@ Game::Game()
 	player = nullptr;
 }
 
-Game::~Game()
-{	 
-}
-
 void Game::init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen)
 {
 	Debug::startUp();
@@ -97,11 +93,11 @@ void Game::spawnPlayer(glm::vec2 position) {
 	camera = new Camera(position.x, position.y, 800, 600);
 }
 
-void Game::spawn_particle_system(ParticleController* particleCtrl)
+void Game::spawn_particle_system(std::unique_ptr<ParticleController> particleCtrl)
 {
 	if (particleControllers.size() >= 20) return;
 
-	particleControllers.push_back(particleCtrl);
+	particleControllers.push_back(std::move(particleCtrl));
 }
 
 void Game::handleEvents()
@@ -187,11 +183,10 @@ void Game::render()
 	}
 
 	for (size_t i = 0; i < particleControllers.size(); i++) {
-		auto* particleCtrl = particleControllers[i];
+		ParticleController* particleCtrl = particleControllers[i].get();
 
 		if (particleCtrl->is_empty()) {
 			particleControllers.erase(particleControllers.begin() + i);
-			delete particleCtrl;
 			continue;
 		}
 		else

@@ -10,19 +10,11 @@ class ParticleController
 {
 public:
 	ParticleController(glm::vec2 pos, SDL_Texture* texture, int maxParticles = 25, int inScale = 5, int spd = 400, float dur = 0.2f);
-    ~ParticleController() {
-        for (int i = 0; i < MAX_PARTICLES; ++i) {
-            for (auto particle : particleList[i]) {
-                    delete particle;
-            }
-            particleList[i].clear();
-        }
-    }
-
+	~ParticleController() = default;
 	void render(SDL_Renderer* renderer);
 
 	bool is_empty();
 
 private:
-	std::vector<Particle*> particleList[MAX_PARTICLES];
+	std::vector<std::unique_ptr<Particle>> particleList[MAX_PARTICLES];
 };

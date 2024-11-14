@@ -41,12 +41,12 @@ public:
 	bool bEditor = false;
 
 	Game();
-	~Game();
+	~Game() = default;
 
 	void init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 
 	void spawnPlayer(glm::vec2 position);
-	void spawn_particle_system(ParticleController* particleCtrl);
+	void spawn_particle_system(std::unique_ptr<ParticleController> particleCtrl);
 
 	void handleEvents();
 	void update();
@@ -78,7 +78,7 @@ public:
 
 	Actor* actorList[MAX_ACTORS];
 	std::array<std::vector<Actor*>, static_cast<size_t>(Render_Layer::LayerCount)> layers;
-	std::vector<ParticleController*> particleControllers;
+	std::vector<std::unique_ptr<ParticleController>> particleControllers;
 
 	Camera* camera;
 	Player* player;
