@@ -213,8 +213,6 @@ void Game::render()
 
 	ImGui::Render();
 
-	pathFindingManager->render_grid(renderer);
-
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
 	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer);

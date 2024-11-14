@@ -12,6 +12,15 @@ PathFinding::PathFinding() {
     }
 }
 
+PathFinding::~PathFinding()
+{
+    for (int y = 0; y < grid.size(); y++) {
+        for (int x = 0; x < grid[y].size(); x++) {
+            delete grid[y][x];
+        }
+    }
+}
+
 std::vector<PathNode*> PathFinding::FindPath(int startX, int startY, int endX, int endY)
 {
     PathNode* startNode = GetNode(startX, startY);
@@ -158,4 +167,15 @@ PathNode* PathFinding::GetLowestFCostNode(std::vector<PathNode*> pathNodeList)
 	}
 
 	return lowestFCostNode;
+}
+
+bool PathFinding::is_on_grid(glm::vec2 posA)
+{
+    const int x = (int)posA.x;
+    const int y = (int)posA.y;
+
+    if (x < 0 || x >= gridSize || y < 0 || y >= gridSize)
+        return false;
+
+    return true;
 }

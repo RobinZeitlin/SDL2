@@ -16,7 +16,6 @@ public:
 	}
 
 	std::queue<glm::vec2> get_path_from_to(glm::vec2 from, glm::vec2 to);
-	void render_grid(SDL_Renderer* renderer);
 
 private: 
 	PathFinding* pathFinding;

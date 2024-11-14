@@ -12,7 +12,9 @@ public:
 	const int MOVE_STRAIGHT_COST = 10;
 	const int MOVE_DIAGONAL_COST = 14;
 
-	std::array<std::array<PathNode*, 50>, 50> grid;
+	static const int gridSize = 45;
+
+	std::array<std::array<PathNode*, gridSize>, gridSize> grid;
 	std::vector<PathNode*> openList;
 	std::vector<PathNode*> closedList;
 
@@ -25,6 +27,8 @@ public:
 
 	PathNode* GetNode(int x, int y) const;
 	PathNode* GetLowestFCostNode(std::vector<PathNode*> pathNodeList);
+
+	bool is_on_grid(glm::vec2 posA);
 
 	int CalculateDistanceCost(PathNode* a, PathNode* b);
 };
