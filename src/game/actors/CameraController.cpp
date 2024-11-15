@@ -5,7 +5,6 @@
 
 void CameraController::update(float dt)
 {
-    std::cout << "Spawned Camera Controller" << std::endl;
     const float playerSpeed = 350.0f;
     const Uint8* currentKeyStates = SDL_GetKeyboardState(nullptr);
 
@@ -22,11 +21,14 @@ void CameraController::update(float dt)
         transform.position.x += playerSpeed * dt;
     }
 
-    if (currentKeyStates[SDL_SCANCODE_B]) {
+    if (currentKeyStates[SDL_SCANCODE_C]) {
         crtEditorTool = CurrentEditorTool::BuilderTool;
     }
-    if (currentKeyStates[SDL_SCANCODE_F]) {
+    if (currentKeyStates[SDL_SCANCODE_V]) {
         crtEditorTool = CurrentEditorTool::BucketTool;
+    }
+    if (currentKeyStates[SDL_SCANCODE_B]) {
+        crtEditorTool = CurrentEditorTool::SplineTool;
     }
 
     int mouseX, mouseY;
@@ -43,19 +45,24 @@ void CameraController::update(float dt)
         (int((worldSpaceMousePos.y) / 32) * 32)
     );
 
-    if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
-        game->loadLevel->destroy_actor(alignedPos);
-    }
-    if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-        switch (crtEditorTool)
-        {
+    if (!ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow | ImGuiHoveredFlags_AllowWhenBlockedByActiveItem)) {
+        if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
+            game->loadLevel->destroy_actor(alignedPos);
+        }
+        if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+            switch (crtEditorTool)
+            {
             case CurrentEditorTool::BuilderTool:
                 game->levelEditor->place_actor(alignedPos);
-            break;
+                break;
 
             case CurrentEditorTool::BucketTool:
                 game->loadLevel->fill_tool(alignedPos);
-            break;
+                break;
+
+            case CurrentEditorTool::SplineTool:
+                break;
+            }
         }
     }
 }

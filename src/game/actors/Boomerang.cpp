@@ -42,6 +42,8 @@ void Boomerang::render(SDL_Renderer* renderer, Camera* camera)
 
 void Boomerang::check_overlap()
 {
+	if (game->player->weapon != nullptr) return;
+
 	Actor* hit_ground_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);
 	if (hit_ground_actor != nullptr)
 	{
@@ -69,7 +71,7 @@ float Boomerang::getBounceDir()
 	glm::vec2 dir = transform.get_transform_up();
 	
 	Linetrace linetrace;
-	LineHit result = linetrace.line_trace(origin, dir, Collision_Channel::Ground, 200);
+	LineHit result = linetrace.line_trace(origin, dir, { Collision_Channel::Ground } , 200);
 	
 	if (result.hit_point != origin) {
 	    if (result.hit_actor != nullptr) {
@@ -99,7 +101,7 @@ void Boomerang::visualise_trajectory(SDL_Renderer* renderer, Camera* camera)
     glm::vec2 dir = transform.get_transform_up();
 
     Linetrace linetrace;
-    LineHit result = linetrace.line_trace(origin, dir, Collision_Channel::Ground, 1000);
+	LineHit result = linetrace.line_trace(origin, dir, { Collision_Channel::Ground }, 1000);
 
     if (result.hit_point != origin) {
 

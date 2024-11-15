@@ -4,7 +4,7 @@
 #include "AABB.h"
 #include "glm.hpp"
 
-LineHit Linetrace::line_trace(glm::vec2 startPos, glm::vec2 dir, Collision_Channel hitLayer, int rayLength)
+LineHit Linetrace::line_trace(glm::vec2 startPos, glm::vec2 dir, std::vector<Collision_Channel> hitLayer, int rayLength)
 {
     LineHit linehit;
 
@@ -14,7 +14,9 @@ LineHit Linetrace::line_trace(glm::vec2 startPos, glm::vec2 dir, Collision_Chann
         glm::vec2 upVector = startPos + dir * static_cast<float>(i);
 
         for (int j = 0; j < MAX_ACTORS; j++) {
-            if (game->actorList[j] == nullptr || game->actorList[j]->collision_channel != hitLayer) continue;
+            if (game->actorList[j] == nullptr) continue;
+
+            if (std::find(hitLayer.begin(), hitLayer.end(), game->actorList[j]->collision_channel) == hitLayer.end()) continue;
 
             AABB actorAABB = AABB::from_position_size(game->actorList[j]->transform);
 

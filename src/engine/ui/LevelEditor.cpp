@@ -59,7 +59,7 @@ void LevelEditor::render(SDL_Renderer* renderer) {
 	render_level_editor_ui();
 	render_spline_ui();
 
-	//spline->render_debug(renderer);
+	spline->render_debug(renderer);
 	selectionBar->render_selection_bar();
 }
 void LevelEditor::update(float dt) {
@@ -133,13 +133,11 @@ void LevelEditor::render_block_selection() {
 }
 void LevelEditor::render_spline_ui() {
 	ImGui::Begin("Spline Editor");
-
 	ImGui::SeparatorText("Camera Spline");
-
 	splinePointLabels.clear();
 	int i = 0;
 	for (const auto& point : spline->splinePoints) {
-		splinePointLabels.push_back("X: " + std::to_string((int)point->pos.x) + " - Y: " + std::to_string((int)point->pos.y));
+		splinePointLabels.push_back("X: " + std::to_string((int)point->transform.position.x) + " - Y: " + std::to_string((int)point->transform.position.y));
 	}
 
 	std::vector<const char*> splinePointPtrs;
@@ -191,4 +189,11 @@ void LevelEditor::render_grid() {
 	}
 
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+}
+
+bool LevelEditor::is_over_splinepoint(glm::vec2 mousePos)
+{
+	for (SplinePoint* point : spline->splinePoints) {
+	}
+	return false;
 }

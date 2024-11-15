@@ -54,6 +54,8 @@ public:
 	void render_spline_ui();
 	void render_grid();
 
+	bool is_over_splinepoint(glm::vec2 mousePos); 
+
 	SDL_Texture* currentlySelected;
 	std::string currentlySelectedName;
 

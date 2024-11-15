@@ -16,11 +16,11 @@ public:
         splinePoints.clear();
     }
 
-    //void render_debug(SDL_Renderer* renderer);
+    void render_debug(SDL_Renderer* renderer);
 
     void add_spline_point() {
         auto newPoint = new SplinePoint();
-        newPoint->pos = glm::vec2(100 * (splinePoints.size() + 1), 50 + 50 * (splinePoints.size() + 1));
+        newPoint->transform.position = glm::vec2(100 * (splinePoints.size() + 1), 50 + 50 * (splinePoints.size() + 1));
 
         splinePoints.push_back(newPoint);
     }

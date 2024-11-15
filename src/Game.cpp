@@ -131,10 +131,8 @@ void Game::update()
 	deltaTime = (currentTime - lastTime) / 1000.0f;
 	lastTime = currentTime;
 
-	for (int i = 0; i < MAX_ACTORS; i++)
-	{
-		if (actorList[i] != nullptr)
-		{
+	for (int i = 0; i < MAX_ACTORS; i++) {
+		if (actorList[i] != nullptr) {
 			if (actorList[i]->isDestroyed) {
 				auto renderLayer = actorList[i]->render_layer;
 				auto layerIndex = static_cast<size_t>(renderLayer);
@@ -147,8 +145,7 @@ void Game::update()
 
 			actorList[i]->update(deltaTime);
 
-			if (actorList[i]->actorName == "Player")
-			{
+			if (actorList[i]->actorName == "Player") {
 				camera->updateCamera(actorList[i], deltaTime);
 			}
 		}
@@ -213,14 +210,14 @@ void Game::render()
 
 Actor* Game::get_overlapping_actor(Actor* other, Collision_Channel channel)
 {
-	for (int i = 0; i < MAX_ACTORS; i++){
+	for (int i = 0; i < MAX_ACTORS; i++) {
 		if (actorList[i] == other || actorList[i] == nullptr || actorList[i]->collision_channel != channel)
 			continue;
 
 		AABB a = AABB::from_position_size(other->transform);
 		AABB b = AABB::from_position_size(actorList[i]->transform);
 
-		if (aabb_overlap(a, b)){
+		if (aabb_overlap(a, b)) {
 			return actorList[i];
 		}
 	}

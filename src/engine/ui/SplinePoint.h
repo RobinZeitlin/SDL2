@@ -2,12 +2,13 @@
 
 #include <SDL.h>
 
+#include "../../game/components/location/Transform.h"
 #include "glm.hpp"
 
 class SplinePoint
 {
 public:
-	glm::vec2 pos;
+	Transform transform;
 	float rotation;
 
 	void render_point();

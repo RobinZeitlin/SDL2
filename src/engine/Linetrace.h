@@ -4,6 +4,6 @@
 
 class Linetrace {
 public:
-    LineHit line_trace(glm::vec2 startPos, glm::vec2 dir, Collision_Channel hitLayer, int rayLength = 200);
+    LineHit line_trace(glm::vec2 startPos, glm::vec2 dir, std::vector<Collision_Channel> hitLayer, int rayLength = 200);
 };
 
