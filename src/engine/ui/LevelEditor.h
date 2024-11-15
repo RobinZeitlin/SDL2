@@ -17,6 +17,7 @@
 #include "../../game/actors/CameraController.h"
 
 #include "../../engine/ui/Spline.h"
+#include "../../engine/ui/SplinePoint.h"
 #include "../../engine/ui/SelectionBar.h"
 
 class LevelEditor
@@ -54,7 +55,8 @@ public:
 	void render_spline_ui();
 	void render_grid();
 
-	bool is_over_splinepoint(glm::vec2 mousePos); 
+	SplinePoint* is_over_splinepoint(glm::vec2 mousePos);
+	SplinePoint* selectedSplinePoint;
 
 	SDL_Texture* currentlySelected;
 	std::string currentlySelectedName;

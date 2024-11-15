@@ -17,7 +17,7 @@ Enemy::Enemy()
 
 void Enemy::update(float dt)
 {
-	if (game->bEditor) return;
+	if (game->bEditor || game->player == nullptr) return;
 
 	glm::vec2 playerPos = game->player->transform.position;
 	float distanceToPlayer = transform.get_distance(transform.position, game->player->transform.position);
@@ -51,6 +51,8 @@ void Enemy::update(float dt)
 
 void Enemy::render(SDL_Renderer* renderer, Camera* camera)
 {
+	if (game->player == nullptr) return;
+
 	SDL_Rect srcR = { 0, 0, 32, 32 };
 	SDL_Rect destR = { (transform.position.x) - camera->x, (transform.position.y) - camera->y, 32, 32 };
 

@@ -191,9 +191,14 @@ void LevelEditor::render_grid() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
 
-bool LevelEditor::is_over_splinepoint(glm::vec2 mousePos)
+SplinePoint* LevelEditor::is_over_splinepoint(glm::vec2 mousePos)
 {
 	for (SplinePoint* point : spline->splinePoints) {
+		if (point->transform.get_distance(point->transform.position, mousePos) < point->transform.scale.x) {
+			
+			selectedSplinePoint = point;
+			return point;
+		}
 	}
-	return false;
+	return nullptr;
 }

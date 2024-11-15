@@ -11,6 +11,8 @@ public:
 	Transform transform;
 	float rotation;
 
+	SplinePoint();
+
 	void render_point();
 	void render_handle(SDL_Renderer* renderer);
 };

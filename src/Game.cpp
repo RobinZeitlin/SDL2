@@ -71,6 +71,8 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 	textureManager = new TextureManager();
 	textureManager->init(renderer);
 
+	camera = new Camera(0, 0, 1000, 800);
+
 	loadLevel = new LoadLevel();
 	loadLevel->load_level_file("src/levels/level", true);
 
@@ -86,7 +88,7 @@ void Game::spawnPlayer(glm::vec2 position) {
 		spawnActor(player, position);
 	}
 
-	camera = new Camera(position.x, position.y, 1000, 800);
+	
 }
 
 void Game::spawn_particle_system(std::unique_ptr<ParticleController> particleCtrl)
