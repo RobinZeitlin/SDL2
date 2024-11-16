@@ -31,6 +31,19 @@ void CameraController::update(float dt)
         crtEditorTool = CurrentEditorTool::SplineTool;
     }
 
+    // allign
+    if (currentKeyStates[SDL_SCANCODE_X]) {
+        switch (crtEditorTool)
+        {
+        case SplineTool:
+            Transform* sSplinePoint = &levelEditor->selectedSplinePoint->transform;
+            sSplinePoint->position = glm::vec2(
+                (int((sSplinePoint->position.x) / 32) * 32),
+                (int((sSplinePoint->position.y) / 32) * 32));
+            break;
+        };
+    }
+
     int mouseX, mouseY;
 
     SDL_GetMouseState(&mouseX, &mouseY);
@@ -47,21 +60,35 @@ void CameraController::update(float dt)
 
     if (!ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow | ImGuiHoveredFlags_AllowWhenBlockedByActiveItem)) {
         if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
-            game->loadLevel->destroy_actor(alignedPos);
+            switch (crtEditorTool)
+            {
+            case CurrentEditorTool::BuilderTool:
+                loadLevel->destroy_actor(alignedPos);
+                break;
+
+            case CurrentEditorTool::BucketTool:
+                loadLevel->destroy_actor(alignedPos);
+                break;
+
+            case CurrentEditorTool::SplineTool:
+                if(levelEditor->selectedSplinePoint != nullptr)
+                levelEditor->selectedSplinePoint->move_to(worldSpaceMousePos);
+                break;
+            }
         }
         if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
             switch (crtEditorTool)
             {
             case CurrentEditorTool::BuilderTool:
-                game->levelEditor->place_actor(alignedPos);
+                levelEditor->place_actor(alignedPos);
                 break;
 
             case CurrentEditorTool::BucketTool:
-                game->loadLevel->fill_tool(alignedPos);
+                loadLevel->fill_tool(alignedPos);
                 break;
 
             case CurrentEditorTool::SplineTool:
-                auto clickedPoint = game->levelEditor->is_over_splinepoint(worldSpaceMousePos);
+                auto clickedPoint = levelEditor->is_over_splinepoint(worldSpaceMousePos);
                 break;
             }
         }

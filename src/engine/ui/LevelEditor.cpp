@@ -22,7 +22,7 @@ void LevelEditor::place_actor(glm::vec2 alignedPos)
 
 void LevelEditor::spawn_camera()
 {
-	cameraController = new CameraController();
+	cameraController = new CameraController(this, game->loadLevel);
 	game->spawnActor(cameraController, glm::vec2(0));
 
 	load_textures();

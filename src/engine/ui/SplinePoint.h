@@ -15,4 +15,6 @@ public:
 
 	void render_point();
 	void render_handle(SDL_Renderer* renderer);
+
+	void move_to(glm::vec2 newPos) { transform.position = newPos; }
 };
