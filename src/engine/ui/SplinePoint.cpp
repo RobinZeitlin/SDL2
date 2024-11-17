@@ -5,10 +5,12 @@
 SplinePoint::SplinePoint()
 {
 	transform.scale.x = 10.0f;
+	transform.rotation = glm::vec2(270, 0);
 }
 
 void SplinePoint::render_point()
 {
+
 	auto renderer = game->renderer;
 
 	if (game->levelEditor->selectedSplinePoint == this) {
@@ -32,19 +34,13 @@ void SplinePoint::render_point()
 	}
 }
 
-void SplinePoint::render_handle(SDL_Renderer* renderer) {
-	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+void SplinePoint::render_handle(SDL_Renderer* renderer)
+{
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-	SDL_RenderDrawLineF(renderer,
-		transform.position.x - game->camera->x,
-		transform.position.y - game->camera->y,
-		transform.position.x - game->camera->x,
-		transform.position.y - game->camera->y - 50);
+	glm::vec2 offset = transform.get_transform_up() * 50.0f;
+	glm::vec2 cameraPos = glm::vec2(game->camera->x, game->camera->y);
 
-	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-
-	DebugDraw::draw_debug_sphere(renderer, glm::vec2(
-		transform.position.x - game->camera->x,
-		transform.position.y - game->camera->y - 50),
-		5, 10);
+	DebugDraw::draw_debug_sphere(renderer, transform.position + offset - cameraPos,
+		transform.scale.x * 0.6f, 10);
 }

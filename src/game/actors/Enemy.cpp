@@ -51,12 +51,12 @@ void Enemy::update(float dt)
 
 void Enemy::render(SDL_Renderer* renderer, Camera* camera)
 {
-	if (game->player == nullptr) return;
-
 	SDL_Rect srcR = { 0, 0, 32, 32 };
 	SDL_Rect destR = { (transform.position.x) - camera->x, (transform.position.y) - camera->y, 32, 32 };
 
 	SDL_RenderCopyEx(renderer, texture, &srcR, &destR, transform.rotation.x, NULL, SDL_FLIP_NONE);
+
+	if (game->player == nullptr) return;
 
 	float distanceToPlayer;
 
