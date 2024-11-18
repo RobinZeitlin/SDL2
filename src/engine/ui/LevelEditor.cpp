@@ -134,7 +134,11 @@ void LevelEditor::render_block_selection() {
 void LevelEditor::render_spline_ui() {
 	ImGui::Begin("Spline Editor");
 	ImGui::SeparatorText("Camera Spline");
+
 	splinePointLabels.clear();
+
+	ImGui::Checkbox("Loop", &spline->loopSpline);
+
 	int i = 0;
 	for (const auto& point : spline->splinePoints) {
 		splinePointLabels.push_back("X: " + std::to_string((int)point->transform.position.x) + " - Y: " + std::to_string((int)point->transform.position.y));

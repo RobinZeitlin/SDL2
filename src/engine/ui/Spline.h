@@ -43,4 +43,6 @@ public:
 	std::vector<SplinePoint*> splinePoints;
 
     float interpolateAmount;
+
+    bool loopSpline;
 };
