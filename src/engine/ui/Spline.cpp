@@ -31,10 +31,10 @@ void Spline::render_debug(SDL_Renderer* renderer)
         Transform a = splinePoints[0]->transform;
         Transform b = splinePoints[1]->transform;
 
-        glm::vec2 aOffset = a.get_transform_up() * 80.0f;
+        glm::vec2 aOffset = splinePoints[0]->handles->get_handle_a_offset();
         glm::vec2 aHandle = a.position + aOffset;
 
-        glm::vec2 bOffset = b.get_transform_up() * 80.0f;
+        glm::vec2 bOffset = splinePoints[1]->handles->get_handle_b_offset();
         glm::vec2 bHandle = b.position + bOffset;
         
         glm::vec2 interpolatedPos = cubic_lerp(a.position, aHandle, bHandle, b.position, interpolateAmount);

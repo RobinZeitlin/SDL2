@@ -89,6 +89,8 @@ void CameraController::update(float dt)
 
             case CurrentEditorTool::SplineTool:
                 auto clickedPoint = levelEditor->is_over_splinepoint(worldSpaceMousePos);
+                if (!clickedPoint && levelEditor->selectedSplinePoint != nullptr)
+                    levelEditor->selectedSplinePoint->update_handles_and_rotation(worldSpaceMousePos);
                 break;
             }
         }

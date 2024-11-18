@@ -150,6 +150,7 @@
     <ClCompile Include="src\engine\ui\LevelEditor.cpp" />
     <ClCompile Include="src\engine\ui\Spline.cpp" />
     <ClCompile Include="src\engine\ui\Spline.h" />
+    <ClCompile Include="src\engine\ui\SplineHandles.cpp" />
     <ClCompile Include="src\engine\ui\SplinePoint.cpp" />
     <ClCompile Include="src\engine\zmath.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="src\engine\DebugDraw.h" />
     <ClInclude Include="src\engine\Particle.h" />
     <ClInclude Include="src\engine\ParticleController.h" />
+    <ClInclude Include="src\engine\ui\SplineHandles.h" />
     <ClInclude Include="src\game\ai\PathFindingManager.h" />
     <ClInclude Include="src\engine\TextureManager.h" />
     <ClInclude Include="src\engine\ui\LevelEditor.h" />
