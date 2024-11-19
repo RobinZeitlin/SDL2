@@ -13,6 +13,7 @@ public:
 	void render(SDL_Renderer* renderer, Camera* camera) override;
 
 	void check_overlap(float dt);
+	void check_for_spline_attachment(float dt);
 
 	void set_weapon_pos();
 

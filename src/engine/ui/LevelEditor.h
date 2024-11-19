@@ -29,15 +29,12 @@ public:
 		std::string nameOfFile = "cube";
 		currentlySelected = textureManager->getTexture(nameOfFile);
 		currentlySelectedName = nameOfFile;
-
-		spline = new Spline();
 		selectionBar = new SelectionBar();
 	}
 
 	~LevelEditor() {
 		levelNames.clear();
 		splinePointLabels.clear();
-		delete spline;
 	}
 
 	void place_actor(glm::vec2 alignedPos);
@@ -65,7 +62,6 @@ private:
 	std::vector<std::string> levelNames;
 	std::vector<std::string> splinePointLabels;
 
-	Spline* spline;
 	SelectionBar* selectionBar;
 
 	std::unordered_map<std::string, SDL_Texture*> textures;

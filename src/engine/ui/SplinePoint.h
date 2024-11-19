@@ -23,5 +23,5 @@ public:
 
 	Transform transform;
 
-	SplineHandles* handles;
+	SplineHandles* handles = nullptr;
 };

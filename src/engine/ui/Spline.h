@@ -13,7 +13,6 @@ public:
             delete point;
 
         clear_spline_points();
-        splinePoints.clear();
     }
 
     void render_debug(SDL_Renderer* renderer);
@@ -25,15 +24,16 @@ public:
         splinePoints.push_back(newPoint);
     }
     void remove_spline_point() {
-        if (splinePoints.size() > 0) {
+        if (!splinePoints.empty()) {
             delete splinePoints.back();     
             splinePoints.pop_back();
         }
     }
 
     void clear_spline_points() {
-        for (auto& point : splinePoints) {
-            delete point;
+        while(!splinePoints.empty()) {
+            delete splinePoints.back();
+            splinePoints.pop_back();
         }
     }
 

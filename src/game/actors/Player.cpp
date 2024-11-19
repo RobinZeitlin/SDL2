@@ -4,6 +4,8 @@
 #include "../../engine/ParticleController.h"
 #include "../../engine/AABB.h"
 
+#include "../../engine/zmath.h"
+
 Player::Player(glm::vec2 startPos)
 {
 	texture = textureManager->getTexture("player");
@@ -72,8 +74,10 @@ void Player::update(float dt)
         isShooting = false;
     }
 
-
+    if (game->spline != nullptr)
+        check_for_spline_attachment(dt);
 }
+
 
 void Player::render(SDL_Renderer* renderer, Camera* camera)
 {
@@ -98,6 +102,21 @@ void Player::render(SDL_Renderer* renderer, Camera* camera)
     SDL_RenderDrawLine(renderer, transform.position.x - camera->x + 16, transform.position.y - camera->y + 16, rightVector.x - camera->x + 16, rightVector.y - camera->y + 16);
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+}
+void Player::check_for_spline_attachment(float dt) {
+
+    glm::vec2 globalPlayerPos = transform.position;
+    glm::vec2 positionOnSpline = game->spline->get_closest_point_on_spline(globalPlayerPos);
+
+    float range = 150.0f;
+    float dist = zmath::get_distance(globalPlayerPos, positionOnSpline);
+    if (dist < range) {
+        game->camera->updateCamera(positionOnSpline, dt);
+    } else
+    {
+        game->camera->updateCamera(transform.position, dt);
+    }
+        
 }
 
 void Player::shoot(Camera* camera)

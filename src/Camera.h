@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm.hpp>
+
 class Actor;
 
 class Camera {
@@ -9,5 +11,6 @@ public:
 	float x, y;
 	float width, height;
 
-	void updateCamera(Actor* actor, float deltaTime);
+	void updateCamera(glm::vec2 pos, float deltaTime);
+	glm::vec2 get_pos() { return glm::vec2(x, y); }
 };

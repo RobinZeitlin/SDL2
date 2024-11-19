@@ -9,10 +9,10 @@ Camera::Camera(float posX, float posY, float screenWidth, float screenHeight)
 	height = screenHeight;
 }
 
-void Camera::updateCamera(Actor* actor, float deltaTime)
+void Camera::updateCamera(glm::vec2 pos, float deltaTime)
 {
-    float actorX = actor->transform.position.x + 32 / 2;
-    float actorY = actor->transform.position.y + 32 / 2;
+    float actorX = pos.x + 32 / 2;
+    float actorY = pos.y + 32 / 2;
 
 	float newX = actorX - (width / 2);
 	float newY = actorY - (height / 2);

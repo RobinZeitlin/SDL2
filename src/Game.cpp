@@ -19,6 +19,7 @@ Game::Game()
 	deltaTime = 0.0f;
 
 	player = nullptr;
+	spline = new Spline();
 }
 
 void Game::init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen)
@@ -87,8 +88,6 @@ void Game::spawnPlayer(glm::vec2 position) {
 		player = new Player(position);
 		spawnActor(player, position);
 	}
-
-	
 }
 
 void Game::spawn_particle_system(std::unique_ptr<ParticleController> particleCtrl)
@@ -146,10 +145,6 @@ void Game::update()
 			}
 
 			actorList[i]->update(deltaTime);
-
-			if (actorList[i]->actorName == "Player") {
-				camera->updateCamera(actorList[i], deltaTime);
-			}
 		}
 	}
 
@@ -194,6 +189,8 @@ void Game::render()
 
 	if(bEditor)
 	levelEditor->render(renderer);
+
+	spline->render_debug(renderer);
 
 	//ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
 	//ImGui::SetNextWindowBgAlpha(0);

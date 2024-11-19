@@ -32,40 +32,10 @@ void Spline::render_debug(SDL_Renderer* renderer)
 
             glm::vec2 interpolatedPos = zmath::cubic_lerp(a.position, aHandle, bHandle, b.position, interpolateAmount);
 
-            SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 
-            DebugDraw::draw_debug_sphere(renderer,
-                interpolatedPos - glm::vec2(game->camera->x, game->camera->y)
-                , 5, 10);
-
-            int mouseX, mouseY;
-
-            SDL_GetMouseState(&mouseX, &mouseY);
-
-            glm::vec2 worldSpaceMousePos;
-
-            worldSpaceMousePos.x = mouseX + game->camera->x;
-            worldSpaceMousePos.y = mouseY + game->camera->y;
-
-            glm::vec2 positionOnSpline = get_closest_point_on_spline(worldSpaceMousePos);
-
-            float range = 110.0f;
-            if (zmath::get_distance(worldSpaceMousePos, positionOnSpline) < range) {
-            DebugDraw::draw_debug_sphere(renderer,
-                positionOnSpline - glm::vec2(game->camera->x, game->camera->y)
-                , 10, 10);
-            }
-
-            SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
-
-            DebugDraw::draw_debug_sphere(renderer,
-                worldSpaceMousePos - glm::vec2(game->camera->x, game->camera->y)
-                , range, 25);
-
-            // draw curve
             int resolution = 10;
             glm::vec2 lastPointOnCurve = splinePoints[i]->transform.position;
-            for (int j = 0; j < resolution; j++) {
+            for (size_t j = 0; j < resolution; j++) {
                 SDL_SetRenderDrawColor(renderer, 234, 239, 44, 255);
                 float t = static_cast<float>(j) / static_cast<float>(resolution - 1);
                 glm::vec2 newPoint = zmath::cubic_lerp(a.position, aHandle, bHandle, b.position, t);
@@ -109,7 +79,7 @@ glm::vec2 Spline::get_global_position(float globalProgress)
         glm::vec2 lastPoint = a;
         int resolution = 10;
 
-        for (int j = 1; j <= resolution; j++) {
+        for (size_t j = 1; j <= resolution; j++) {
             float t = static_cast<float>(j) / resolution;
             glm::vec2 point = zmath::cubic_lerp(a, aHandle, bHandle, b, t);
 
@@ -148,14 +118,14 @@ glm::vec2 Spline::get_global_position(float globalProgress)
 }
 
 glm::vec2 Spline::get_closest_point_on_spline(glm::vec2 comparisonPos) {
-    const int resolution = 250;
+    const int resolution = 100;
 
     float closestDistance = std::numeric_limits<float>::max();
 
     glm::vec2 closestPoint;
     glm::vec2 points[resolution];
 
-    for (int i = 0; i < resolution; i++) {
+    for (size_t i = 0; i < resolution; i++) {
         float splineProgress = static_cast<float>(i) / (resolution - 1);
 
         glm::vec2 positionOnSpline = get_global_position(splineProgress);

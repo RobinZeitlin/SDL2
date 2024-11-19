@@ -31,6 +31,16 @@ void LoadLevel::save_level(const std::string& saveFile)
         file << row << '\n';
     }
 
+    file << "---SPLINES---\n";
+
+    for (const auto& splinePoint : game->spline->splinePoints) {
+        file << splinePoint->transform.position.x << ","
+            << splinePoint->transform.position.y << ","
+            << splinePoint->transform.rotation.x << ","
+            << splinePoint->transform.rotation.y << ","
+            << splinePoint->handles->distance << '\n';
+    }
+
     file.close();
     Debug::log("Level saved successfully.");
 }
@@ -177,6 +187,8 @@ void LoadLevel::spawn_level(const std::vector<std::string>& data, bool bSpawnPla
 
 void LoadLevel::load_level_file(string filePath, bool bSpawnPlayer)
 {
+    if (!game->spline->splinePoints.empty()) game->spline->clear_spline_points();
+
     std::ifstream file(filePath + ".csv");
     if (!file.is_open()) {
         Debug::log("File did not open correctly.");
@@ -186,8 +198,29 @@ void LoadLevel::load_level_file(string filePath, bool bSpawnPlayer)
     std::vector<std::string> data;
     std::string line;
 
+    bool readingGrid = true;
     while (std::getline(file, line)) {
-        data.push_back(line);
+        if (line == "---SPLINES---") {
+            readingGrid = false;
+            continue;
+        }
+
+        if (readingGrid) {
+            data.push_back(line);
+        }
+        else {
+            std::istringstream stream(line);
+            float px, py, rx, ry, d;
+            char comma;
+
+            if (stream >> px >> comma >> py >> comma >> rx >> comma >> ry >> comma >> d) {
+                SplinePoint* splinePoint = new SplinePoint();
+                splinePoint->transform.position = glm::vec2(px, py);
+                splinePoint->transform.rotation = glm::vec2(rx, ry);
+                splinePoint->handles->distance = d;
+                game->spline->splinePoints.push_back(splinePoint);
+            }
+        }
     }
 
     file.close();

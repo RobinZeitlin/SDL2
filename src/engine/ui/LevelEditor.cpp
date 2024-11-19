@@ -59,7 +59,6 @@ void LevelEditor::render(SDL_Renderer* renderer) {
 	render_level_editor_ui();
 	render_spline_ui();
 
-	spline->render_debug(renderer);
 	selectionBar->render_selection_bar();
 }
 void LevelEditor::update(float dt) {
@@ -137,10 +136,10 @@ void LevelEditor::render_spline_ui() {
 
 	splinePointLabels.clear();
 
-	ImGui::Checkbox("Loop", &spline->loopSpline);
+	ImGui::Checkbox("Loop", &game->spline->loopSpline);
 
 	int i = 0;
-	for (const auto& point : spline->splinePoints) {
+	for (const auto& point : game->spline->splinePoints) {
 		splinePointLabels.push_back("X: " + std::to_string((int)point->transform.position.x) + " - Y: " + std::to_string((int)point->transform.position.y));
 	}
 
@@ -154,13 +153,13 @@ void LevelEditor::render_spline_ui() {
 	ImGui::SameLine();
 
 	if (ImGui::Button("-")) {
-		spline->remove_spline_point();
+		game->spline->remove_spline_point();
 	}
 
 	ImGui::SameLine();
 
 	if (ImGui::Button("+")) {
-		spline->add_spline_point();
+		game->spline->add_spline_point();
 	}
 
 	ImGui::End();
@@ -197,7 +196,7 @@ void LevelEditor::render_grid() {
 
 SplinePoint* LevelEditor::is_over_splinepoint(glm::vec2 mousePos)
 {
-	for (SplinePoint* point : spline->splinePoints) {
+	for (SplinePoint* point : game->spline->splinePoints) {
 		if (point->transform.get_distance(point->transform.position, mousePos) < point->transform.scale.x) {
 			
 			selectedSplinePoint = point;

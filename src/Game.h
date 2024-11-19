@@ -27,6 +27,7 @@
 #include "engine/TextureManager.h"
 #include "engine/ParticleController.h"
 #include "engine/ui/LevelEditor.h"
+#include "engine/ui/Spline.h"
 
 #define MAX_ACTORS 5000
 
@@ -38,10 +39,12 @@ class Game
 {
 public:
 
-	bool bEditor = true;
+	bool bEditor = false;
 
 	Game();
-	~Game();
+	~Game() {
+		delete spline;
+	}
 
 	void init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 
@@ -80,15 +83,17 @@ public:
 	std::array<std::vector<Actor*>, static_cast<size_t>(Render_Layer::LayerCount)> layers;
 	std::vector<std::unique_ptr<ParticleController>> particleControllers;
 
-	Camera* camera;
-	Player* player;
+	Camera* camera = nullptr;
+	Player* player = nullptr;
 
-	LevelEditor* levelEditor;
-	LoadLevel* loadLevel;
-	PathFindingManager* pathFindingManager;
+	LevelEditor* levelEditor = nullptr;
+	LoadLevel* loadLevel = nullptr;
+	PathFindingManager* pathFindingManager = nullptr;
 
-	SDL_Window* window;
-	SDL_Renderer* renderer;
+	SDL_Window* window = nullptr;
+	SDL_Renderer* renderer = nullptr;
+
+	Spline* spline = nullptr;
 
 	float deltaTime;
 

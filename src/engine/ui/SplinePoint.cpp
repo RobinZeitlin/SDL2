@@ -19,18 +19,27 @@ void SplinePoint::render_point()
 {
 	auto renderer = game->renderer;
 
-	if (game->levelEditor->selectedSplinePoint == this) {
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	if (game->levelEditor != nullptr) {
+		if (game->levelEditor->selectedSplinePoint == this) {
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-		DebugDraw::draw_debug_sphere(renderer, glm::vec2(
-			transform.position.x - game->camera->x,
-			transform.position.y - game->camera->y),
-			transform.scale.x * 1.2f, 10);
+			DebugDraw::draw_debug_sphere(renderer, glm::vec2(
+				transform.position.x - game->camera->x,
+				transform.position.y - game->camera->y),
+				transform.scale.x * 1.2f, 10);
 
-		render_handle(renderer);
+			render_handle(renderer);
+		}
+		else {
+			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+
+			DebugDraw::draw_debug_sphere(renderer, glm::vec2(
+				transform.position.x - game->camera->x,
+				transform.position.y - game->camera->y),
+				transform.scale.x, 10);
+		}
 	}
 	else {
-
 		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
 		DebugDraw::draw_debug_sphere(renderer, glm::vec2(
@@ -41,6 +50,8 @@ void SplinePoint::render_point()
 }
 void SplinePoint::render_handle(SDL_Renderer* renderer)
 {
+	if (handles == nullptr) return;
+
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
 	glm::vec2 cameraPos = glm::vec2(game->camera->x, game->camera->y);
