@@ -44,4 +44,23 @@ namespace zmath
             2 * pow(x * 2, 3) / 2 : 
             2 * (1 - pow(2 * (x - 0.5f), 3)) / 2;
     }
+
+    inline glm::vec2 quadratic_lerp(glm::vec2 a, glm::vec2 b, glm::vec2 c, float t) {
+        glm::vec2 ab = glm::mix(a, b, t);
+        glm::vec2 bc = glm::mix(b, c, t);
+
+        return glm::mix(ab, bc, t);
+    }
+
+    inline glm::vec2 cubic_lerp(glm::vec2 a, glm::vec2 b, glm::vec2 c, glm::vec2 d, float t) {
+        glm::vec2 ab_bc = quadratic_lerp(a, b, c, t);
+        glm::vec2 bc_cd = quadratic_lerp(b, c, d, t);
+
+        return glm::mix(ab_bc, bc_cd, t);
+    }
+
+    inline float get_distance(glm::vec2 posA, glm::vec2 posB) {
+        glm::vec2 vectorLength = posA - posB;
+        return glm::length(vectorLength);
+    }
 }

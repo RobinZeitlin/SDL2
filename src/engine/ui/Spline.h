@@ -37,8 +37,8 @@ public:
         }
     }
 
-    glm::vec2 quadratic_lerp(glm::vec2 a, glm::vec2 b, glm::vec2 c, float t);
-    glm::vec2 cubic_lerp(glm::vec2 a, glm::vec2 b, glm::vec2 c, glm::vec2 d, float t);
+    glm::vec2 get_global_position(float globalProgress);
+    glm::vec2 get_closest_point_on_spline(glm::vec2 comparisonPos);
 
 	std::vector<SplinePoint*> splinePoints;
 

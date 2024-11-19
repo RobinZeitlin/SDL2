@@ -195,11 +195,11 @@ void Game::render()
 	if(bEditor)
 	levelEditor->render(renderer);
 
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
-	ImGui::SetNextWindowBgAlpha(0);
-	ImGui::Begin("FPS Display", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar);
-	ImGui::Text("FPS: %.1f", fps);
-	ImGui::End();
+	//ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
+	//ImGui::SetNextWindowBgAlpha(0);
+	//ImGui::Begin("FPS Display", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar);
+	//ImGui::Text("FPS: %.1f", fps);
+	//ImGui::End();
 
 	ImGui::Render();
 
