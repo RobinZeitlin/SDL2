@@ -5,6 +5,8 @@
 
 void CameraController::update(float dt)
 {
+    game->camera->updateCamera(transform.position, dt);
+
     const float playerSpeed = 350.0f;
     const Uint8* currentKeyStates = SDL_GetKeyboardState(nullptr);
 

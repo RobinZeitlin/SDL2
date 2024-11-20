@@ -60,10 +60,12 @@ void LevelEditor::render(SDL_Renderer* renderer) {
 	render_spline_ui();
 
 	selectionBar->render_selection_bar();
+	
 }
 void LevelEditor::update(float dt) {
-	if (cameraController != nullptr)
+	if (cameraController != nullptr) {
 		cameraController->update(dt);
+	}
 }
 
 void LevelEditor::render_level_editor_ui() {

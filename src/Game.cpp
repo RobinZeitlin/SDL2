@@ -149,7 +149,9 @@ void Game::update()
 	}
 
 	if (bEditor)
+	{
 		levelEditor->update(deltaTime);
+	}
 }
 
 void Game::render()
@@ -192,11 +194,20 @@ void Game::render()
 
 	spline->render_debug(renderer);
 
-	//ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
-	//ImGui::SetNextWindowBgAlpha(0);
-	//ImGui::Begin("FPS Display", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar);
-	//ImGui::Text("FPS: %.1f", fps);
-	//ImGui::End();
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
+	ImGui::SetNextWindowBgAlpha(0);
+	ImGui::Begin("FPS Display", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar);
+	ImGui::Text("FPS: %.1f", fps);
+	ImGui::End();
+
+	ImGui::SetNextWindowBgAlpha(0);
+	ImGui::Begin("Play Button", nullptr);
+	if (ImGui::Button("Play"))
+	{
+		std::cout << "Play Level!" << std::endl;
+		switch_play_mode(!bEditor);
+	}
+	ImGui::End();
 
 	ImGui::Render();
 
@@ -222,6 +233,11 @@ Actor* Game::get_overlapping_actor(Actor* other, Collision_Channel channel)
 	}
 
 	return nullptr;
+}
+
+void Game::switch_play_mode(bool inEditorMode)
+{
+	bEditor = inEditorMode;
 }
 
 void Game::clean()

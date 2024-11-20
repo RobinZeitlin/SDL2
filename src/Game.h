@@ -74,6 +74,9 @@ public:
 	}
 
 	Actor* get_overlapping_actor(Actor* other, Collision_Channel channel);
+
+	void switch_play_mode(bool inEditorMode);
+
 	bool running()
 	{
 		return isRunning;

@@ -35,6 +35,8 @@ public:
 	~LevelEditor() {
 		levelNames.clear();
 		splinePointLabels.clear();
+
+		delete cameraController;
 	}
 
 	void place_actor(glm::vec2 alignedPos);
