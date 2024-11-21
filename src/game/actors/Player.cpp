@@ -29,8 +29,6 @@ void Player::update(float dt)
 {
     set_weapon_pos();
 
-    std::cout << "X: " << transform.position.x << "Y: " << transform.position.y << std::endl;
-
     const float playerSpeed = 350.0f;
     const Uint8* currentKeyStates = SDL_GetKeyboardState(nullptr);
 
