@@ -83,10 +83,10 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 		levelEditor = new LevelEditor(renderer, camera);
 }
 
-void Game::spawnPlayer(glm::vec2 position) {
+void Game::spawnPlayer(glm::vec2 spawnPos) {
 	if (!bEditor) {
-		player = new Player(position);
-		spawnActor(player, position);
+		player = new Player(spawnPos);
+		spawnActor(player, spawnPos);
 	}
 }
 
@@ -196,15 +196,16 @@ void Game::render()
 
 	spline->render_debug(renderer);
 
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(30, 10), ImGuiCond_Always);
 	ImGui::SetNextWindowBgAlpha(0);
 	ImGui::Begin("FPS Display", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar);
 	ImGui::Text("FPS: %.1f", fps);
 	ImGui::End();
 
 	ImGui::SetNextWindowBgAlpha(0);
-	ImGui::Begin("Play Button", nullptr);
-	if (ImGui::Button("Play"))
+	ImGui::Begin("Play Button", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoScrollbar);
+	ImTextureID icon = bEditor ? (ImTextureID)textureManager->getTexture("pauseicon") : (ImTextureID)textureManager->getTexture("playicon");
+	if (ImGui::ImageButton("Play", icon, { 30, 30 }))
 	{
 		std::cout << "Play Level!" << std::endl;
 		switch_play_mode(!bEditor);
@@ -242,23 +243,16 @@ void Game::switch_play_mode(bool inEditorMode)
 	bEditor = inEditorMode;
 
 	if (bEditor) {
+		loadLevel->load_level_file(loadLevel->lastLevelWithPath, true);
+
 		player->weapon->destroy();
 		player->destroy();
 		player = nullptr;
-
-		/*if(game->levelEditor != nullptr)
-		if (levelEditor->cameraController == nullptr) {
-			levelEditor->cameraController = new CameraController(game->levelEditor, game->loadLevel);
-			game->spawnActor(levelEditor->cameraController, glm::vec2(0));
-		}*/
 	}
 	else {
-		if (player == nullptr) {
-			spawnPlayer(glm::vec2(100.0f, 100.0f));
-		}
-
-		delete levelEditor->cameraController;
-		levelEditor->cameraController = nullptr;
+		loadLevel->save_level(loadLevel->lastLevelWithPath);
+		loadLevel->load_level_file(loadLevel->lastLevelWithPath, true);
+		levelEditor->cameraController->destroy();
 	}
 }
 

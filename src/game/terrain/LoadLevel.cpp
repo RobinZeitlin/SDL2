@@ -187,6 +187,8 @@ void LoadLevel::spawn_level(const std::vector<std::string>& data, bool bSpawnPla
 
 void LoadLevel::load_level_file(string filePath, bool bSpawnPlayer)
 {
+    lastLevelWithPath = filePath;
+
     if (!game->spline->splinePoints.empty()) game->spline->clear_spline_points();
 
     std::ifstream file(filePath + ".csv");

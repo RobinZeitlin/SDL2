@@ -39,7 +39,7 @@ class Game
 {
 public:
 
-	bool bEditor = false;
+	bool bEditor = true;
 
 	Game();
 	~Game() {
@@ -48,7 +48,7 @@ public:
 
 	void init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
 
-	void spawnPlayer(glm::vec2 position);
+	void spawnPlayer(glm::vec2 spawnPos);
 	void spawn_particle_system(std::unique_ptr<ParticleController> particleCtrl);
 
 	void handleEvents();

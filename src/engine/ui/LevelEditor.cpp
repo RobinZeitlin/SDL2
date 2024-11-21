@@ -49,6 +49,7 @@ void LevelEditor::load_levels() {
 		if (entry.is_regular_file())
 		{
 			std::string levelName = entry.path().stem().string();
+			game->loadLevel->lastLevelWithPath = levelName;
 			levelNames.push_back(levelName);
 			std::cout << "Found level: " << levelName << std::endl;
 		}

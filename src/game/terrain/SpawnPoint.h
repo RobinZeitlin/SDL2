@@ -10,6 +10,7 @@ public:
 	SpawnPoint()
 	{
 		texture = textureManager->getTexture("playerspawnpoint");
+		actorName = "flag";
 	}
 
 	void render(SDL_Renderer* renderer, Camera* camera) override

@@ -37,4 +37,6 @@ public:
 
 	std::vector<std::vector<Actor*>> actorGrid;
 	std::vector<Actor*> currentLevel;
+
+	std::string lastLevelWithPath;
 };
