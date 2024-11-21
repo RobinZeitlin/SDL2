@@ -40,6 +40,7 @@ public:
 	virtual void render(SDL_Renderer* renderer, Camera* camera) {};
 
 	void destroy() {
+		if(this != nullptr)
 		isDestroyed = true;
 	}
 

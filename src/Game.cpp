@@ -141,16 +141,18 @@ void Game::update()
 				layers[layerIndex].erase(std::remove(layers[layerIndex].begin(), layers[layerIndex].end(), actorList[i]), layers[layerIndex].end());
 				actorList[i] = nullptr;
 
-				return;
+				continue;
 			}
 
 			actorList[i]->update(deltaTime);
 		}
 	}
 
-	if (bEditor)
-	{
+	if (bEditor && levelEditor != nullptr) {
 		levelEditor->update(deltaTime);
+	}
+	else if (bEditor && levelEditor == nullptr) {
+		levelEditor = new LevelEditor(renderer, camera);
 	}
 }
 
@@ -238,6 +240,26 @@ Actor* Game::get_overlapping_actor(Actor* other, Collision_Channel channel)
 void Game::switch_play_mode(bool inEditorMode)
 {
 	bEditor = inEditorMode;
+
+	if (bEditor) {
+		player->weapon->destroy();
+		player->destroy();
+		player = nullptr;
+
+		/*if(game->levelEditor != nullptr)
+		if (levelEditor->cameraController == nullptr) {
+			levelEditor->cameraController = new CameraController(game->levelEditor, game->loadLevel);
+			game->spawnActor(levelEditor->cameraController, glm::vec2(0));
+		}*/
+	}
+	else {
+		if (player == nullptr) {
+			spawnPlayer(glm::vec2(100.0f, 100.0f));
+		}
+
+		delete levelEditor->cameraController;
+		levelEditor->cameraController = nullptr;
+	}
 }
 
 void Game::clean()

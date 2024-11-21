@@ -42,6 +42,8 @@ void Boomerang::render(SDL_Renderer* renderer, Camera* camera)
 
 void Boomerang::check_overlap()
 {
+	if (game->player == nullptr) return;
+
 	if (game->player->weapon != nullptr) return;
 
 	Actor* hit_ground_actor = game->get_overlapping_actor(this, Collision_Channel::Ground);

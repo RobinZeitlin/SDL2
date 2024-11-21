@@ -60,6 +60,8 @@ public:
 	SDL_Texture* currentlySelected;
 	std::string currentlySelectedName;
 
+	CameraController* cameraController = nullptr;
+
 private:
 	std::vector<std::string> levelNames;
 	std::vector<std::string> splinePointLabels;
@@ -70,8 +72,6 @@ private:
 
 	SDL_Renderer* renderer;
 	Camera* camera;
-
-	CameraController* cameraController = nullptr;
 
 	const std::string levelFolderPath = "src/levels/";
 	const std::string texturesFolderPath = "src/assets/textures/placeables/";

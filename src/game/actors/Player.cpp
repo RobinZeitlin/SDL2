@@ -29,6 +29,8 @@ void Player::update(float dt)
 {
     set_weapon_pos();
 
+    std::cout << "X: " << transform.position.x << "Y: " << transform.position.y << std::endl;
+
     const float playerSpeed = 350.0f;
     const Uint8* currentKeyStates = SDL_GetKeyboardState(nullptr);
 
@@ -56,7 +58,13 @@ void Player::update(float dt)
     worldSpaceMousePos.x = mouseX + game->camera->x;
     worldSpaceMousePos.y = mouseY + game->camera->y;
 
-    glm::vec2 direction = glm::normalize(worldSpaceMousePos - transform.position);
+    glm::vec2 direction = worldSpaceMousePos - transform.position;
+    if (glm::length(direction) > 0.0f) {
+        direction = glm::normalize(direction);
+    }
+    else {
+        direction = glm::vec2(0.0f, 0.0f);
+    }
  
     float angle = std::atan2(direction.y, direction.x);
 
