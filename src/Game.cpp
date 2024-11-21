@@ -245,9 +245,12 @@ void Game::switch_play_mode(bool inEditorMode)
 	if (bEditor) {
 		loadLevel->load_level_file(loadLevel->lastLevelWithPath, true);
 
-		player->weapon->destroy();
-		player->destroy();
-		player = nullptr;
+		if (player != nullptr)
+		{
+			player->weapon->destroy();
+			player->destroy();
+			player = nullptr;
+		}
 	}
 	else {
 		loadLevel->save_level(loadLevel->lastLevelWithPath);
